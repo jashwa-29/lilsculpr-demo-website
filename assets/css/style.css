@@ -5746,6 +5746,9 @@ ul.comment-list .vs-comment:last-child:not(.children .vs-comment) > .vs-post-com
   top: 19%;
   transform: rotate(3deg);
 }
+.car{
+  width: ;
+}
 
 .con-after {
   position: absolute;
@@ -5888,6 +5891,10 @@ ul.comment-list .vs-comment:last-child:not(.children .vs-comment) > .vs-post-com
   display: block;
   margin-bottom: 15px;
   color: var(--white-color);
+}
+
+.car{
+  width: 20%;
 }
 
 /* Hight Resoulation devices */
@@ -9706,7 +9713,7 @@ span.select2-selection.select2-selection--single:focus {
   line-height: 60px;
   background-color: var(--theme-color);
   color: var(--white-color);
-  font-size: 22px;
+  font-size: 16px;
   font-weight: bold;
   text-align: center;
   border-radius: 50px;
