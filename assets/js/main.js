@@ -177,6 +177,7 @@ $(scrollToTopBtn).each(function () {
 })
 
 
+
 /*---------- 06. Set Background Image & Color & Mask ----------*/
 if ($('[data-bg-src]').length > 0) {
   $('[data-bg-src]').each(function () {
