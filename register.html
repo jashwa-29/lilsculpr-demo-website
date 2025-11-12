@@ -2,7 +2,7 @@
 <html class="no-js" lang="zxx">
 
 
-<!-- Mirrored from html.vecurosoft.com/knirpse/demo/gallery.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 13 Oct 2025 13:42:54 GMT -->
+<!-- Mirrored from html.vecurosoft.com/knirpse/demo/contact.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 13 Oct 2025 13:43:03 GMT -->
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -35,6 +35,8 @@
     <link rel="stylesheet" href="assets/css/slick.min.css">
     <!-- Theme Custom CSS -->
     <link rel="stylesheet" href="assets/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
 
 </head>
 
@@ -74,7 +76,7 @@
     </div>
 
     <!-- Side menu start -->
-      <div class="sidemenu-wrapper">
+    <div class="sidemenu-wrapper">
         <div class="sidemenu-content">
             <button class="closeButton sideMenuCls"><i class="far fa-times"></i></button>
             <div class="widget footer-widget">
@@ -177,7 +179,7 @@
                             <ul>
                                 <li><i class="fal fa-clock"></i>3:00 pm - 8:00 pm - Tue - Sun</li>
                                 <li><i class="fal fa-phone"></i><a href="tel:+25625921589">+91 96 00 44 31 85</a></li>
-                                <li><i class="fal fa-map-marker-alt"></i>468 A, C sector, 2nd Street, AE Block, Anna Nagar West Extension, Chennai - 600101</li>
+                                <li><i class="fal fa-map-marker-alt"></i>468 A, C sector, 2nd Street, AE Block, Anna Nagar West Extension, Chennai - 600101</li>
                             </ul>
                         </div>
                     </div>
@@ -285,142 +287,97 @@
     <!--======== / Header ========-->
 
     <!--======== About Section ========-->
-      <div class="breadcumb-wrapper" data-bg-src="assets/img/claymodeling/coverimg.png">
+    <div class="breadcumb-wrapper" data-bg-src="assets/img/claymodeling/coverimg.png">
         <div class="container">
             <div class="breadcumb-content">
-                <h1 class="breadcumb-title">Our Gallery</h1>
+                <h1 class="breadcumb-title">Register</h1>
                 <ul class="breadcumb-menu">
                     <li><a href="index.html">Home</a></li>
-                    <li class="active">Our Gallery</li>
+                    <li class="active">Register</li>
                 </ul>
             </div>
         </div>
     </div>
     <!--======== / About Section ========-->
 
-    <!--======== Project Section ========-->
-<div class="project-section bg-smoke space-top space-extra-bottom">
-    <div class="container pb-10">
-        <div class="row g-20 justify-content-center">
-            <!-- Single Item -->
-            <div class="col-xl-3 col-lg-4 col-sm-6">
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="assets/img/gallery/gallery1.jpg" alt="Outdoor play area">
-                    </div>
-                    <a href="assets/img/gallery/gallery1.jpg" class="plus-btn popup-image">+</a>
+    <!--======== Appointment Section ========-->
+  <section class="appointment-section space-bottom space-top-shape-plus">
+    <div class="container">
+        <div class="row gx-60 gy-30 flex-column-reverse flex-lg-row align-items-center">
+            <div class="col-lg-7 wow fadeInLeft" data-wow-delay="0.1s">
+             <form id="contactForm" class="appointment-form ajax-contact">
+  <div class="row gx-20">
+    <div class="form-group col-sm-6">
+      <input type="text" class="form-control" name="parent_name" id="gurdian-name" placeholder="Parent / Guardian Name" required>
+    </div>
+    <div class="form-group col-sm-6">
+      <input type="number" class="form-control" name="number" id="number" placeholder="Phone Number" required>
+    </div>
+    <div class="form-group col-12">
+      <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
+    </div>
+    <div class="form-group col-sm-6">
+      <input type="text" class="form-control" name="child_name" id="child-name" placeholder="Child Name" required>
+    </div>
+    <div class="form-group col-sm-6">
+      <input type="number" class="form-control" name="child_age" id="child-age" placeholder="Child’s Age" required>
+    </div>
+        <div class="form-group col-12">
+<select name="batch" id="classselect" class="form-select style2" required>
+  <option value="" disabled selected hidden>Select Course</option>
+  <option value="Children's Day Weekend Special! Free Creative Assessment Day">
+    Children's Day Weekend Special! Free Creative Assessment Day (Saturday, Nov 16 — Limited Slots!)
+  </option>
+  <option value="Kids Clay Modelling Course (Level 1-12)">Kids Clay Modelling Course (Level 1-12)</option>
+  <option value="Terracotta Wheel Throwing Class">Terracotta Wheel Throwing Class</option>
+  <option value="Ceramic Sculpting Course">Ceramic Sculpting Course</option>
+  <option value="Polymer Clay Jewellery Class">Polymer Clay Jewellery Class</option>
+  <option value="Miniature Food Sculpting Class">Miniature Food Sculpting Class</option>
+  <option value="Advanced Sculpture Course">Advanced Sculpture Course</option>
+  <option value="Resin Art & Clay Fusion Class">Resin Art & Clay Fusion Class</option>
+  <option value="Home Décor Clay Crafts">Home Décor Clay Crafts</option>
+  <option value="Mural Making Workshop">Mural Making Workshop</option>
+  <option value="Mixed Media Sculpting">Mixed Media Sculpting</option>
+  <option value="Clay Business Masterclass">Clay Business Masterclass</option>
+  <option value="Parent–Child Clay Day">Parent–Child Clay Day</option>
+  <option value="Clay Birthday Workshops">Clay Birthday Workshops</option>
+  <option value="Seasonal Clay Camps">Seasonal Clay Camps</option>
+</select>
+
+    </div>
+    <div class="form-group col-12">
+      <textarea class="form-control" name="message" id="message" placeholder="Tell us what you’re looking for..." required></textarea>
+    </div>
+    <div class="col-12">
+      <button type="submit" class="vs-btn wave-btn">Submit</button>
+    </div>
+  </div>
+  <p class="form-messages mb-0 mt-3"></p>
+</form>
+            </div>
+            <div class="col-lg-5 wow fadeInRight" data-wow-delay="0.1s">
+                <div class="text-center text-lg-start">
+                    <span class="sub-title">Enroll Now</span>
+                    <h2 class="sec-title big-title">Join Lil Sculpr Clay Modelling Academy</h2>
+                    <p class="fs-md mb-30">Give your child a creative start with our internationally designed clay modelling program!  
+                    Suitable for ages 5 to 15 — from Level 1 to Level 12. Learn everything from basic shapes to advanced sculptures and realistic miniatures, guided by our 15+ years of experience.</p>
+                    <a href="about.html" class="vs-btn wave-btn style-1">Learn More</a>
                 </div>
             </div>
-            <!-- Single Item -->
-            <div class="col-xl-3 col-lg-4 col-sm-6">
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="assets/img/gallery/gallery2.jpg" alt="Party setup">
-                    </div>
-                    <a href="assets/img/gallery/gallery2.jpg" class="plus-btn popup-image">+</a>
-                </div>
-            </div>
-            <!-- Single Item -->
-            <div class="col-xl-3 col-lg-4 col-sm-6">
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="assets/img/gallery/gallery3.jpg" alt="Toddler area">
-                    </div>
-                    <a href="assets/img/gallery/gallery3.jpg" class="plus-btn popup-image">+</a>
-                </div>
-            </div>
-            <!-- Single Item -->
-            <div class="col-xl-3 col-lg-4 col-sm-6">
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="assets/img/gallery/gallery4.jpg" alt="Playground equipment">
-                    </div>
-                    <a href="assets/img/gallery/gallery4.jpg" class="plus-btn popup-image">+</a>
-                </div>
-            </div>
-            <!-- Single Item -->
-            <div class="col-xl-3 col-lg-4 col-sm-6">
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="assets/img/gallery/gallery5.jpg" alt="Birthday party">
-                    </div>
-                    <a href="assets/img/gallery/gallery5.jpg" class="plus-btn popup-image">+</a>
-                </div>
-            </div>
-            <!-- Single Item -->
-            <div class="col-xl-3 col-lg-4 col-sm-6">
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="assets/img/gallery/gallery6.jpg" alt="Toddler play">
-                    </div>
-                    <a href="assets/img/gallery/gallery6.jpg" class="plus-btn popup-image">+</a>
-                </div>
-            </div>
-            <!-- Single Item -->
-            <div class="col-xl-3 col-lg-4 col-sm-6">
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="assets/img/gallery/gallery7.jpg" alt="Party decorations">
-                    </div>
-                    <a href="assets/img/gallery/gallery7.jpg" class="plus-btn popup-image">+</a>
-                </div>
-            </div>
-            <!-- Single Item -->
-            <div class="col-xl-3 col-lg-4 col-sm-6">
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="assets/img/gallery/gallery8.jpg" alt="Toddler activities">
-                    </div>
-                    <a href="assets/img/gallery/gallery8.jpg" class="plus-btn popup-image">+</a>
-                </div>
-            </div>
-            <!-- Single Item -->
-            <div class="col-xl-3 col-lg-4 col-sm-6">
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="assets/img/gallery/gallery9.jpg" alt="Play area">
-                    </div>
-                    <a href="assets/img/gallery/gallery9.jpg" class="plus-btn popup-image">+</a>
-                </div>
-            </div>
-          
         </div>
     </div>
-    <div class="shape-after"><img src="assets/img/shape/after-shape-5.png" alt="shape"></div>
-    <div class="shape-mockup movingX d-none d-hd-block" data-top="15%" data-left="9%"><img src="assets/img/icon/duck.png" alt="duck decoration"></div>
-    <div class="shape-mockup movingX d-none d-hd-block" data-bottom="15%" data-left="9%"><img src="assets/img/icon/butterfly-5.png" alt="butterfly decoration"></div>
-    <div class="shape-mockup shapePulse d-none d-hd-block" data-top="14%" data-right="7%"><img src="assets/img/icon/sun-3.png" alt="sun decoration"></div>
-    <div class="shape-mockup moving d-none d-sm-block" data-bottom="17%" data-right="6%"><img src="assets/img/icon/leaves.png" alt="leaves decoration"></div>
-</div>
-    <!--======== / Project Section ========-->
+    <div class="shape-mockup z-index-3 d-none d-hd-block" data-bottom="-8%" data-right="0%"><img src="assets/img/shape/rainbow-star.png" alt="shapes"></div>
 
-    <!--======== Simple Section ========-->
-    <section class="mockup3 space-top-shape2-plus space-bottom-page">
-        <div class="container">
-            <div class="row gy-40 align-items-center">
-                <div class="col-lg-6 text-center text-lg-start">
-                    <div class="img-box-3">
-                        <img src="assets/img/normal/shape-img-1.png" alt="photo">
-                    </div>
-                </div>
-                <div class="col-xl-5 col-lg-6 offset-xl-1">
-                    <div class="text-center text-lg-start">
-                        <span class="sub-title">Make Appointment</span>
-                        <h2 class="sec-title big-title">Join Our Fun Class with Cutie Kids</h2>
-                        <p class="fs-md mb-30">Formulate innovative web-readiness and installed base ideas. Distinctively integrate high-payoff paradigms without next generation systems disseminate holistic e-services through customer directed expertise.</p>
-                        <a href="about.html" class="vs-btn wave-btn style-1">Learn More</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!--======== / Simple Section ========-->
+    <div class="shape-mockup moving d-none d-hd-block" data-top="22%" data-left="7%"><img src="assets/img/icon/note.png" alt="shapes"></div>
+    <div class="shape-mockup shapePulse d-none d-hd-block" data-bottom="20%" data-left="7%"><img src="assets/img/icon/bird.png" alt="shapes"></div>
+</section>
 
+    <!--======== / Appointment Section ========-->
 
     <!--==============================
 	Footer Area
 	==============================-->
-    <footer class="footer-wrapper footer-layout3" data-bg-src="assets/img/bg/footer-4.jpg">
+      <footer class="footer-wrapper footer-layout3" data-bg-src="assets/img/bg/footer-4.jpg">
         <div class="widget-area">
             <div class="container">
                 <div class="row justify-content-between">
@@ -598,5 +555,5 @@
 </body>
 
 
-<!-- Mirrored from html.vecurosoft.com/knirpse/demo/gallery.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 13 Oct 2025 13:42:55 GMT -->
+<!-- Mirrored from html.vecurosoft.com/knirpse/demo/contact.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 13 Oct 2025 13:43:04 GMT -->
 </html>

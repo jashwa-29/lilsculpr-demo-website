@@ -35,6 +35,7 @@
     <link rel="stylesheet" href="assets/css/slick.min.css">
     <!-- Theme Custom CSS -->
     <link rel="stylesheet" href="assets/css/style.css">
+   
 
 </head>
 
@@ -306,26 +307,35 @@
                     <div class="contact-form-box">
                         <h2 class="contact-title">Leave a Message</h2>
                         <p class="mb-35">Intrinsicly reinvent fully tested portals and performance based scenarios. Phosfluorescently exploit extensive opportunities for future.</p>
-                        <form action="https://html.vecurosoft.com/knirpse/demo/assets/mail.php" method="POST" class="contact-form ajax-contact">
-                            <div class="row">
-                                <div class="form-group col-12">
-                                    <label for="name" class="form-label">Your Name*</label>
-                                    <input type="text" class="form-control" name="name" id="name" placeholder="David Smith..." required>
-                                </div>
-                                <div class="form-group col-12">
-                                    <label for="email" class="form-label">Your Email*</label>
-                                    <input type="email" class="form-control" name="email" id="email" placeholder="info@example.com" required>
-                                </div>
-                                <div class="form-group col-12">
-                                    <label for="message" class="form-label">Your Message*</label>
-                                    <textarea class="form-control" name="message" id="message" placeholder="Describe Your Opinion" required></textarea>
-                                </div>
-                                <div class="form-group col-12">
-                                    <button type="submit" class="vs-btn wave-btn">Send Now</button>
-                                </div>
-                            </div>
-                            <p class="form-messages mb-0 mt-3"></p>
-                        </form>
+  <form class="contact-form ajax-contact" id="contactForm">
+  <div class="row">
+    <div class="form-group col-12">
+      <label for="name" class="form-label">Your Name*</label>
+      <input type="text" class="form-control" name="name" id="name" placeholder="David Smith..." required>
+    </div>
+
+    <div class="form-group col-12">
+      <label for="email" class="form-label">Your Email*</label>
+      <input type="email" class="form-control" name="email" id="email" placeholder="info@example.com" required>
+    </div>
+
+    <div class="form-group col-12">
+      <label for="number" class="form-label">Your Phone Number*</label>
+      <input type="tel" class="form-control" name="number" id="number" placeholder="+91 9876543210" required>
+    </div>
+
+    <div class="form-group col-12">
+      <label for="message" class="form-label">Your Message*</label>
+      <textarea class="form-control" name="message" id="message" placeholder="Describe Your Opinion" required></textarea>
+    </div>
+
+    <div class="form-group col-12">
+      <button type="button" id="sendMessageBtn" class="vs-btn wave-btn">Send Now</button>
+    </div>
+  </div>
+  <p class="form-messages mb-0 mt-3"></p>
+</form>
+
                     </div>
                 </div>
                 <div class="col-lg-7 wow fadeInRight" data-wow-delay="0.1s">
@@ -491,34 +501,61 @@
         <i class="fab fa-whatsapp"></i>
         <div class="whatsapp-tooltip">Tap to Book Free Assessment</div>
     </a>
-    <!--==============================
-        All Js File
-    ============================== -->
-    <!-- Jquery -->
-    <script src="assets/js/jquery-3.5.0.min.js"></script>
-    <!-- Slick Slider -->
-    <script src="assets/js/slick.min.js"></script>
-    <!-- Bootstrap -->
-    <script src="assets/js/bootstrap.min.js"></script>
-    <!-- Magnific Popup -->
-    <script src="assets/js/jquery.magnific-popup.min.js"></script>
-    <!-- Isotope Filter -->
-    <script src="assets/js/imagesloaded.pkgd.min.js"></script>
-    <script src="assets/js/isotope.pkgd.min.js"></script>
-    <!-- Counter up  -->
-    <script src="assets/js/jquery.counterup.min.js"></script>
-    <!-- Parallax  -->
-    <script src="assets/js/parallax.min.js"></script>
-    <!-- Custom Carousel -->
-    <script src="assets/js/vscustom-carousel.min.js"></script>
-    <!-- Range Slider -->
-    <script src="assets/js/jquery-ui.min.js"></script>
-    <!-- WOW JS (Animation JS) -->
-    <script src="assets/js/wow.min.js"></script>
-    <!-- Form Js -->
-    <script src="assets/js/ajax-mail.js"></script>
-    <!-- Main Js File -->
-    <script src="assets/js/main.js"></script>
+          <a href="https://wa.me/1234567890" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+        <div class="whatsapp-tooltip">Tap to Book Free Assessment</div>
+    </a>
+
+
+    <div class="popup-container">
+        <div class="popup">
+            <div class="decoration shape1"></div>
+            <div class="decoration shape2"></div>
+            <div class="decoration shape3"></div>
+            
+            <div class="popup-header">
+                <div class="popup-title">Special Offer!</div>
+                <button class="close-btn">×</button>
+            </div>
+            
+            <div class="popup-content">
+                <div class="sculpture-icon">🎨</div>
+                <div class="event-title">Children's Day Weekend Special!</div>
+                <div class="event-subtitle">Free Creative Assessment Day</div>
+                <div class="event-date">Saturday, Nov 16 — Limited Slots!</div>
+                <p>Discover your child's artistic potential with our expert instructors.</p>
+            </div>
+            
+            <button class="cta-button">Reserve Free Spot Now!</button>
+        </div>
+    </div>
+<!--==============================
+    All Js File
+==============================-->
+<!-- Jquery -->
+<script src="assets/js/jquery-3.5.0.min.js"></script>
+
+<!-- Other JS libraries -->
+<script src="assets/js/slick.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/jquery.magnific-popup.min.js"></script>
+<script src="assets/js/imagesloaded.pkgd.min.js"></script>
+<script src="assets/js/isotope.pkgd.min.js"></script>
+<script src="assets/js/jquery.counterup.min.js"></script>
+<script src="assets/js/parallax.min.js"></script>
+<script src="assets/js/vscustom-carousel.min.js"></script>
+<script src="assets/js/jquery-ui.min.js"></script>
+<script src="assets/js/wow.min.js"></script>
+
+<!-- ✅ Add EmailJS before your contactForm.js -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+<!-- ✅ Your form script -->
+<script src="./assets/js/contactForm.js"></script>
+
+<!-- Main JS -->
+<script src="assets/js/main.js"></script>
+
 
 </body>
 

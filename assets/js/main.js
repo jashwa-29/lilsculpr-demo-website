@@ -177,6 +177,14 @@ $(scrollToTopBtn).each(function () {
 })
 
 
+   document.querySelector('.close-btn').addEventListener('click', function() {
+            document.querySelector('.popup-container').style.display = 'none';
+        });
+        
+        document.querySelector('.cta-button').addEventListener('click', function() {
+             window.location.href = 'register.html';
+        });
+
 
 /*---------- 06. Set Background Image & Color & Mask ----------*/
 if ($('[data-bg-src]').length > 0) {
@@ -592,6 +600,11 @@ if ($(".parallax").length > 0) {
     hoverOnly: true,
   });
 };
+
+
+
+
+
 
 
 

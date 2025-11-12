@@ -3891,6 +3891,168 @@ ul.popular-service-wrap li:hover {
             }
         }
 
+
+
+
+        /* Compact Popup Styles */
+        .popup-container {
+            position: fixed;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+            width: 280px;
+        }
+        
+        .popup {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            border-radius: 0 15px 15px 0;
+            padding: 18px;
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.15);
+            border-left: 6px solid #6a4cdb;
+            position: relative;
+            animation: slideIn 0.6s ease-out;
+        }
+        
+        @keyframes slideIn {
+            0% { transform: translateX(-100%); }
+            70% { transform: translateX(5%); }
+            100% { transform: translateX(0); }
+        }
+        
+        .popup-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .popup-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #6a4cdb;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+        }
+        
+        .close-btn {
+            background: #6a4cdb;
+            color: white;
+            border: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .close-btn:hover {
+            background: #ff6b8b;
+            transform: scale(1.1);
+        }
+        
+        .popup-content {
+            margin-bottom: 15px;
+        }
+        
+        .sculpture-icon {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        
+        .event-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #ff6b8b;
+            margin-bottom: 8px;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+            line-height: 1.2;
+        }
+        
+        .event-subtitle {
+            font-size: 0.9rem;
+            color: #5a4a8c;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .event-date {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 8px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            font-weight: 600;
+            color: #6a4cdb;
+            border: 1px dashed #ff9e7b;
+            font-size: 0.9rem;
+        }
+        
+        .popup-content p {
+            font-size: 0.85rem;
+            color: #5a4a8c;
+            margin-bottom: 0;
+            line-height: 1.4;
+        }
+        
+        .cta-button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background: linear-gradient(to right, #ff9e7b, #ff6b8b);
+            color: white;
+            border: none;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(255, 107, 139, 0.4);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(255, 107, 139, 0.6);
+            background: linear-gradient(to right, #ff6b8b, #ff9e7b);
+        }
+        
+        .decoration {
+            position: absolute;
+            z-index: -1;
+        }
+        
+        .shape1 {
+            width: 50px;
+            height: 50px;
+            background: #ffe45c;
+            border-radius: 50%;
+            top: -15px;
+            left: -15px;
+            opacity: 0.7;
+        }
+        
+        .shape2 {
+            width: 40px;
+            height: 40px;
+            background: #6a4cdb;
+            border-radius: 50%;
+            bottom: -10px;
+            right: 30px;
+            opacity: 0.5;
+        }
+        
+        .shape3 {
+            width: 30px;
+            height: 30px;
+            background: #4ecdc4;
+            border-radius: 50%;
+            bottom: 40px;
+            right: -10px;
+            opacity: 0.6;
+        }
 .vs-header {
   position: relative;
 }
