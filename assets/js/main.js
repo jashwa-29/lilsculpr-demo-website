@@ -177,12 +177,18 @@ $(scrollToTopBtn).each(function () {
 })
 
 
-   document.querySelector('.close-btn').addEventListener('click', function() {
-            document.querySelector('.popup-container').style.display = 'none';
+ document.querySelector('.close-btn').addEventListener('click', function() {
+            document.querySelector('.popup-container').classList.add('collapsed');
+        });
+        
+        document.querySelector('.popup-tab').addEventListener('click', function() {
+            document.querySelector('.popup-container').classList.remove('collapsed');
         });
         
         document.querySelector('.cta-button').addEventListener('click', function() {
-             window.location.href = 'register.html';
+            // alert('Redirecting to registration page...');
+            // In a real implementation, this would be: window.location.href = 'register.html';
+            window.location.href = 'special-offer-register.html';
         });
 
 
