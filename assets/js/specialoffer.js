@@ -27,7 +27,7 @@
     var $email = '[name="email"]';
     var $number = '[name="number"]';
     var $batch = '[name="batch"]';
-    var $validation = '[name="parent_name"],[name="number"],[name="email"],[name="child_name"],[name="child_age"],[name="batch"],[name="message"]';
+    var $validation = '[name="parent_name"],[name="number"],[name="email"],[name="child_name"],[name="child_age"],[name="batch"]';
     var formMessages = $('.form-messages');
 
     // 🔹 Sanitize Firebase key - replace invalid characters with underscores

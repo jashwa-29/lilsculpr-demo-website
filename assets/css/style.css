@@ -4055,6 +4055,7 @@ ul.popular-service-wrap li:hover {
             box-shadow: 0 4px 10px rgba(255, 140, 0, 0.4);
             position: relative;
             overflow: hidden;
+            text-align: center;
         }
         
         .cta-button:hover {

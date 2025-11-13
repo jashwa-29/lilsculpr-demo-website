@@ -200,8 +200,8 @@
   <!-- Infinite News-Style Alert Start -->
     <div class="alert-ticker-wrapper">
         <div class="alert-ticker">
-            <span> Bring Your Child & Get a Free Assessment! | 1st Batch Starts Nov 17 | Admissions Open Now! | Limited Seats Available!</span>
-            <span> Bring Your Child & Get a Free Assessment! | 1st Batch Starts Nov 17 | Admissions Open Now! | Limited Seats Available!</span>
+   <span> Bring Your Child & Get a Free Assessment! | 1st Batch Starts Nov 28 | Admissions Open Now! | Limited Seats Available!</span>
+   <span> Bring Your Child & Get a Free Assessment! | 1st Batch Starts Nov 28 | Admissions Open Now! | Limited Seats Available!</span>
         </div>
     </div>
     <!-- Infinite News-Style Alert End -->
@@ -369,7 +369,7 @@
             <div class="col-xl-6 col-lg-7 col-md-8 col-sm-9">
                 <div class="title-area">
                     <span class="sub-title">Our Clay Modelling Programs</span>
-                    <h2 class="sec-title">Nurturing Creativity in Young Artists (Ages 3-15)</h2>
+                    <h2 class="sec-title">Nurturing Creativity in Young Artists (Ages -15)</h2>
                 </div>
             </div>
         </div>
@@ -909,32 +909,55 @@
     <div class="container">
         <div class="row gx-60 gy-30 flex-column-reverse flex-lg-row align-items-center">
             <div class="col-lg-7 wow fadeInLeft" data-wow-delay="0.1s">
-                <form action="https://html.vecurosoft.com/knirpse/demo/mail.php" method="POST" class="appointment-form ajax-contact">
-                    <div class="row gx-20">
-                        <div class="form-group col-sm-6">
-                            <input type="text" class="form-control" name="parent-name" id="gurdian-name" placeholder="Parent / Guardian Name">
-                        </div>
-                        <div class="form-group col-sm-6">
-                            <input type="number" class="form-control" name="number" id="number" placeholder="Phone Number">
-                        </div>
-                        <div class="form-group col-12">
-                            <input type="email" class="form-control" name="email" id="email" placeholder="Your Email">
-                        </div>
-                        <div class="form-group col-sm-6">
-                            <input type="text" class="form-control" name="child-name" id="child-name" placeholder="Child Name">
-                        </div>
-                        <div class="form-group col-sm-6">
-                            <input type="number" class="form-control" name="child-age" id="child-age" placeholder="Child’s Age">
-                        </div>
-                        <div class="form-group col-12">
-                            <textarea class="form-control" name="message" id="message" placeholder="Tell us what you’re looking for..."></textarea>
-                        </div>
-                        <div class="col-12">
-                            <button type="submit" class="vs-btn wave-btn">Submit</button>
-                        </div>
-                    </div>
-                    <p class="form-messages mb-0 mt-3"></p>
-                </form>
+             <form id="contactForm" class="appointment-form ajax-contact">
+  <div class="row gx-20">
+    <div class="form-group col-sm-6">
+      <input type="text" class="form-control" name="parent_name" id="gurdian-name" placeholder="Parent / Guardian Name" required>
+    </div>
+    <div class="form-group col-sm-6">
+      <input type="number" class="form-control" name="number" id="number" placeholder="Phone Number" required>
+    </div>
+    <div class="form-group col-12">
+      <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
+    </div>
+    <div class="form-group col-sm-6">
+      <input type="text" class="form-control" name="child_name" id="child-name" placeholder="Child Name" required>
+    </div>
+    <div class="form-group col-sm-6">
+      <input type="number" class="form-control" name="child_age" id="child-age" placeholder="Child’s Age" required>
+    </div>
+        <div class="form-group col-12">
+<select name="batch" id="classselect" class="form-select style2" required>
+  <option value="" disabled selected hidden>Select Course</option>
+  <option value="Children's Day Weekend Special! Free Creative Assessment Day">
+    Children's Day Weekend Special! Free Creative Assessment Day (Sunday, Nov 16 — Limited Slots!)
+  </option>
+  <option value="Kids Clay Modelling Course (Level 1-12)">Kids Clay Modelling Course (Level 1-12)</option>
+  <option value="Terracotta Wheel Throwing Class">Terracotta Wheel Throwing Class</option>
+  <option value="Ceramic Sculpting Course">Ceramic Sculpting Course</option>
+  <option value="Polymer Clay Jewellery Class">Polymer Clay Jewellery Class</option>
+  <option value="Miniature Food Sculpting Class">Miniature Food Sculpting Class</option>
+  <option value="Advanced Sculpture Course">Advanced Sculpture Course</option>
+  <option value="Resin Art & Clay Fusion Class">Resin Art & Clay Fusion Class</option>
+  <option value="Home Décor Clay Crafts">Home Décor Clay Crafts</option>
+  <option value="Mural Making Workshop">Mural Making Workshop</option>
+  <option value="Mixed Media Sculpting">Mixed Media Sculpting</option>
+  <option value="Clay Business Masterclass">Clay Business Masterclass</option>
+  <option value="Parent–Child Clay Day">Parent–Child Clay Day</option>
+  <option value="Clay Birthday Workshops">Clay Birthday Workshops</option>
+  <option value="Seasonal Clay Camps">Seasonal Clay Camps</option>
+</select>
+
+    </div>
+    <div class="form-group col-12">
+      <textarea class="form-control" name="message" id="message" placeholder="Tell us what you’re looking for..." required></textarea>
+    </div>
+    <div class="col-12">
+      <button type="submit" class="vs-btn wave-btn">Submit</button>
+    </div>
+  </div>
+  <p class="form-messages mb-0 mt-3"></p>
+</form>
             </div>
             <div class="col-lg-5 wow fadeInRight" data-wow-delay="0.1s">
                 <div class="text-center text-lg-start">
