@@ -4135,6 +4135,13 @@ ul.popular-service-wrap li:hover {
             color: #4B0082;
             margin-bottom: 10px;
         }
+        .popup-container.collapsed {
+  pointer-events: none;
+}
+
+.popup-container.collapsed .popup-tab {
+  pointer-events: auto;
+}
 
 
 
