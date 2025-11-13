@@ -14049,3 +14049,17 @@ span.select2-selection.select2-selection--single:focus {
 }
 
 /*# sourceMappingURL=style.css.map */
+/* Full slot styling */
+select[name="batch"] option.full-slot {
+    color: #dc3545 !important;
+    background-color: #f8d7da !important;
+    font-weight: bold;
+}
+select[name="batch"] option:disabled {
+    color: #6c757d;
+}
+select[name="batch"] option.full-slot:disabled {
+    color: #dc3545 !important;
+    background-color: #f8d7da !important;
+    font-weight: bold;
+}

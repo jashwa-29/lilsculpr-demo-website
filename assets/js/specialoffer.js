@@ -8,7 +8,7 @@
     // Firebase configuration
     const firebaseConfig = {
         apiKey: "AIzaSyDGV0EvpH_jfqk5HN7fFfr79I8gLd7lOxI",
-        authDomain: "lil-sculpr.firebaseapp.com",
+        authDomain: "lil-sculpr.firebasestorage.app",
         databaseURL: "https://lil-sculpr-default-rtdb.asia-southeast1.firebasedatabase.app",
         projectId: "lil-sculpr",
         storageBucket: "lil-sculpr.firebasestorage.app",
@@ -173,7 +173,7 @@
         return false;
     });
 
-    // 🔹 Disable full slots dynamically
+    // 🔹 Disable full slots dynamically with color indication
     async function disableFullSlots() {
         try {
             const batchesRef = firebase.database().ref("batches");
@@ -188,11 +188,13 @@
                 const cleanKey = sanitizeFirebaseKey(val);
                 if (data[cleanKey] >= 10) {
                     $(this).attr("disabled", true);
+                    $(this).addClass('full-slot'); // Add color class
                     if (!$(this).text().includes("(Full)")) {
                         $(this).text($(this).text() + " (Full)");
                     }
                 } else {
                     $(this).attr("disabled", false);
+                    $(this).removeClass('full-slot'); // Remove color class
                     $(this).text($(this).text().replace(" (Full)", ""));
                 }
             });
@@ -287,8 +289,32 @@
         }
     });
 
+    // Add CSS for full slots
+    function addFullSlotStyles() {
+        if (!$('#full-slot-styles').length) {
+            $('head').append(`
+                <style id="full-slot-styles">
+                    select[name="batch"] option.full-slot {
+                        color: #dc3545 !important;
+                        background-color: #f8d7da !important;
+                        font-weight: bold;
+                    }
+                    select[name="batch"] option:disabled {
+                        color: #6c757d;
+                    }
+                    select[name="batch"] option.full-slot:disabled {
+                        color: #dc3545 !important;
+                        background-color: #f8d7da !important;
+                        font-weight: bold;
+                    }
+                </style>
+            `);
+        }
+    }
+
     // Run once when page loads
     $(document).ready(function() {
+        addFullSlotStyles();
         disableFullSlots();
         console.log("Form handler initialized");
     });
