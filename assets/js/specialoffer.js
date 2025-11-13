@@ -34,31 +34,6 @@
         return key.replace(/[.#$\[\]]/g, "_");
     }
 
-    // 🔹 Get client IP address
-    async function getClientIP() {
-        try {
-            const response = await fetch('https://api.ipify.org?format=json');
-            const data = await response.json();
-            return data.ip;
-        } catch (error) {
-            console.error('Error getting IP:', error);
-            return 'fallback-' + Math.random().toString(36).substring(2) + Date.now().toString(36);
-        }
-    }
-
-    // 🔹 Check if IP has already registered
-    async function checkIPRegistration(ip) {
-        try {
-            const sanitizedIP = sanitizeFirebaseKey(ip);
-            const ipRef = firebase.database().ref("registrations/ips/" + sanitizedIP);
-            const snapshot = await ipRef.get();
-            return snapshot.exists();
-        } catch (error) {
-            console.error('Error checking IP registration:', error);
-            return false;
-        }
-    }
-
     // 🔹 Check if email has already registered
     async function checkEmailRegistration(email) {
         try {
@@ -88,31 +63,20 @@
     }
 
     // 🔹 Record registration details after successful registration
-    async function recordRegistration(ip, email, phone) {
+    async function recordRegistration(email, phone) {
         try {
             const timestamp = Date.now();
             
             // Sanitize all keys
-            const sanitizedIP = sanitizeFirebaseKey(ip);
             const normalizedEmail = email.toLowerCase().trim();
             const sanitizedEmail = sanitizeFirebaseKey(normalizedEmail);
             const normalizedPhone = phone.replace(/\s+|[-+()]/g, '');
             const sanitizedPhone = sanitizeFirebaseKey(normalizedPhone);
 
-            // Record IP
-            const ipRef = firebase.database().ref("registrations/ips/" + sanitizedIP);
-            await ipRef.set({ 
-                timestamp: timestamp, 
-                email: email, 
-                phone: phone,
-                originalIP: ip // Store original IP for reference
-            });
-
             // Record Email
             const emailRef = firebase.database().ref("registrations/emails/" + sanitizedEmail);
             await emailRef.set({ 
                 timestamp: timestamp, 
-                ip: ip, 
                 phone: phone,
                 originalEmail: email
             });
@@ -121,7 +85,6 @@
             const phoneRef = firebase.database().ref("registrations/phones/" + sanitizedPhone);
             await phoneRef.set({ 
                 timestamp: timestamp, 
-                ip: ip, 
                 email: email,
                 originalPhone: phone
             });
@@ -152,16 +115,6 @@
         formMessages.removeClass('error success').text('Checking availability...');
 
         try {
-            // ✅ Check IP restrictions
-            const userIP = await getClientIP();
-            const ipRegistered = await checkIPRegistration(userIP);
-
-            if (ipRegistered) {
-                formMessages.removeClass('success').addClass('error');
-                formMessages.text('❌ You have already registered from this device/network. Only one registration per person is allowed.');
-                return false;
-            }
-
             // ✅ Check email restrictions
             const emailRegistered = await checkEmailRegistration(userEmail);
             if (emailRegistered) {
@@ -202,7 +155,7 @@
 
             // Update Firebase count and record registration details
             await batchesRef.update({ [cleanKey]: data[cleanKey] + 1 });
-            await recordRegistration(userIP, userEmail, userPhone);
+            await recordRegistration(userEmail, userPhone);
 
             formMessages.removeClass('error').addClass('success');
             formMessages.text("✅ Registration successful! See you soon!");
