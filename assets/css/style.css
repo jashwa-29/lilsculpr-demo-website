@@ -698,6 +698,7 @@ textarea.form-control.is-invalid {
 
 .form-messages {
   display: none;
+  padding-bottom: 30px;
 }
 .form-messages.mb-0 * {
   margin-bottom: 0;

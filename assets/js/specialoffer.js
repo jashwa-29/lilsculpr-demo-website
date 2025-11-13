@@ -22,6 +22,7 @@
 
     // Selectors and classes
     var form = '.ajax-contact';
+    var submitBtn = '.vs-btn[type="submit"]';
     var invalidCls = 'is-invalid';
     var $email = '[name="email"]';
     var $number = '[name="number"]';
@@ -32,6 +33,20 @@
     // 🔹 Sanitize Firebase key - replace invalid characters with underscores
     function sanitizeFirebaseKey(key) {
         return key.replace(/[.#$\[\]]/g, "_");
+    }
+
+    // 🔹 Show loader in button
+    function showButtonLoader() {
+        var $submitBtn = $(submitBtn);
+        $submitBtn.prop('disabled', true);
+        $submitBtn.html('<span class="button-loader"></span> Processing...');
+    }
+
+    // 🔹 Hide loader and restore button text
+    function hideButtonLoader() {
+        var $submitBtn = $(submitBtn);
+        $submitBtn.prop('disabled', false);
+        $submitBtn.text('Book Your Free Assessment');
     }
 
     // 🔹 Check if email has already registered
@@ -106,6 +121,9 @@
             return false;
         }
 
+        // Show button loader
+        showButtonLoader();
+
         // Get form data
         var selectedBatch = $($batch).val();
         var userEmail = $($email).val().trim();
@@ -121,6 +139,7 @@
                 formMessages.removeClass('success').addClass('error');
                 formMessages.text('❌ This email address has already been registered. Please use a different email.');
                 $($email).addClass(invalidCls);
+                hideButtonLoader();
                 return false;
             }
 
@@ -130,6 +149,7 @@
                 formMessages.removeClass('success').addClass('error');
                 formMessages.text('❌ This phone number has already been registered. Please use a different phone number.');
                 $($number).addClass(invalidCls);
+                hideButtonLoader();
                 return false;
             }
 
@@ -144,6 +164,7 @@
             if (data[cleanKey] >= 10) {
                 formMessages.removeClass('success').addClass('error');
                 formMessages.text('❌ Sorry, this time slot is full.');
+                hideButtonLoader();
                 return false;
             }
 
@@ -168,6 +189,9 @@
             console.error("❌ FAILED:", error);
             formMessages.removeClass('success').addClass('error');
             formMessages.text("❌ Failed to send message. Please try again later.");
+        } finally {
+            // Always hide loader whether success or error
+            hideButtonLoader();
         }
         
         return false;
@@ -289,11 +313,11 @@
         }
     });
 
-    // Add CSS for full slots
-    function addFullSlotStyles() {
-        if (!$('#full-slot-styles').length) {
+    // Add CSS for full slots and button loader
+    function addCustomStyles() {
+        if (!$('#custom-styles').length) {
             $('head').append(`
-                <style id="full-slot-styles">
+                <style id="custom-styles">
                     select[name="batch"] option.full-slot {
                         color: #dc3545 !important;
                         background-color: #f8d7da !important;
@@ -307,6 +331,28 @@
                         background-color: #f8d7da !important;
                         font-weight: bold;
                     }
+                    
+                    /* Button loader styles */
+                    .button-loader {
+                        display: inline-block;
+                        width: 16px;
+                        height: 16px;
+                        border: 2px solid #ffffff;
+                        border-radius: 50%;
+                        border-top-color: transparent;
+                        animation: buttonSpin 1s ease-in-out infinite;
+                        margin-right: 8px;
+                        vertical-align: middle;
+                    }
+                    
+                    @keyframes buttonSpin {
+                        to { transform: rotate(360deg); }
+                    }
+                    
+                    .vs-btn[disabled] {
+                        opacity: 0.7;
+                        cursor: not-allowed;
+                    }
                 </style>
             `);
         }
@@ -314,7 +360,7 @@
 
     // Run once when page loads
     $(document).ready(function() {
-        addFullSlotStyles();
+        addCustomStyles();
         disableFullSlots();
         console.log("Form handler initialized");
     });
