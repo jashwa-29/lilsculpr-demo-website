@@ -2,41 +2,59 @@
 <html class="no-js" lang="zxx">
 
 
-<!-- Mirrored from html.vecurosoft.com/knirpse/demo/class-details.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 13 Oct 2025 13:42:45 GMT -->
+
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Lil Sculpr - Kids Clay Modeling Academy</title>
-<meta name="author" content="Lil Sculpr Clay Modeling Academy">
-<meta name="description" content="Lil Sculpr Clay Modeling Academy — a creative space for learning the art of clay modeling. Explore fun, hands-on workshops and professional sculpting classes for all age groups.">
-<meta name="keywords" content="Lil Sculpr, Clay Modeling, Clay Art Classes, Sculpture Academy, Pottery Classes, Clay Workshop, Art School, Sculpting Classes, Kids Art, Creative Learning">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>Lil Sculpr - Kids Clay Modeling Academy</title>
 
-    <meta name="robots" content="INDEX,FOLLOW">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Mobile Specific Metas -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- SEO Essentials -->
+    <meta name="author" content="Lil Sculpr Clay Modeling Academy">
+    <meta name="description" content="Lil Sculpr Clay Modeling Academy — a creative space for learning the art of clay modeling. Explore fun, hands-on workshops and professional sculpting classes for all age groups.">
+    <meta name="keywords" content="Lil Sculpr, Clay Modeling, Clay Art Classes, Sculpture Academy, Pottery Classes, Clay Workshop, Art School, Sculpting Classes, Kids Art, Creative Learning">
+    <meta name="robots" content="index, follow">
 
-    <!-- Favicons - Place favicon.ico in the root directory -->
-    <link rel="shortcut icon" href="assets/img/Final Logo.png" type="image/x-icon">
-   <link rel="icon" href="assets/img/Final Logo.png" type="image/x-icon">
+    <!-- Favicon -->
+    <link rel="icon" href="assets/img/Final Logo.png" type="image/png">
 
-    <!--==============================
-	    All CSS File
-	============================== -->
-    <!-- Google Fonts-->
-    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&amp;family=Catamaran:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
-    <!-- Bootstrap -->
+    <!-- Preconnect for faster font load -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Google Fonts (Non-blocking) -->
+    <link rel="preload" 
+          href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Catamaran:wght@100;200;300;400;500;600;700;800;900&display=swap" 
+          as="style"
+          onload="this.rel='stylesheet'">
+
+    <noscript>
+        <link 
+          rel="stylesheet" 
+          href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Catamaran:wght@100;200;300;400;500;600;700;800;900&display=swap">
+    </noscript>
+
+    <!-- Critical CSS (bootstrap loads early) -->
+    <link rel="preload" href="assets/css/bootstrap.min.css" as="style">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <!-- Fontawesome Icon -->
-    <link rel="stylesheet" href="assets/css/fontawesome.min.css">
-    <!-- Magnific Popup -->
-    <link rel="stylesheet" href="assets/css/magnific-popup.min.css">
-    <!-- Slick Slider -->
-    <link rel="stylesheet" href="assets/css/slick.min.css">
-    <!-- Theme Custom CSS -->
-      <link rel="stylesheet" href="assets/css/style.min.css">
 
+    <!-- Main Stylesheet (non-blocking) -->
+    <link rel="preload" href="assets/css/style.min.css" as="style" onload="this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="assets/css/style.min.css"></noscript>
+
+    <!-- Plugin CSS (defer using print trick) -->
+    <link rel="stylesheet" href="assets/css/fontawesome.min.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="assets/css/magnific-popup.min.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="assets/css/slick.min.css" media="print" onload="this.media='all'">
+
+    <noscript>
+        <link rel="stylesheet" href="assets/css/fontawesome.min.css">
+        <link rel="stylesheet" href="assets/css/magnific-popup.min.css">
+        <link rel="stylesheet" href="assets/css/slick.min.css">
+    </noscript>
 </head>
+
 
 <body>
 
@@ -620,10 +638,10 @@ Reserve Free Sp</p>
     <!-- Form Js -->
     <script src="assets/js/ajax-mail.js"></script>
     <!-- Main Js File -->
-    <script src="assets/js/main.js"></script>
+        <script src="assets/js/main.min.js"></script>
 
 </body>
 
 
-<!-- Mirrored from html.vecurosoft.com/knirpse/demo/class-details.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 13 Oct 2025 13:42:48 GMT -->
+
 </html>
