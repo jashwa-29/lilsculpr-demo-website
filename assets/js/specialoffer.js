@@ -27,12 +27,18 @@
     var $email = '[name="email"]';
     var $number = '[name="number"]';
     var $batch = '[name="batch"]';
+    var $childName = '[name="child_name"]';
     var $validation = '[name="parent_name"],[name="number"],[name="email"],[name="child_name"],[name="child_age"],[name="batch"]';
     var formMessages = $('.form-messages');
 
     // 🔹 Sanitize Firebase key - replace invalid characters with underscores
     function sanitizeFirebaseKey(key) {
         return key.replace(/[.#$\[\]]/g, "_");
+    }
+
+    // 🔹 Normalize child name for consistent comparison
+    function normalizeChildName(name) {
+        return name.trim().toLowerCase().replace(/\s+/g, ' ');
     }
 
     // 🔹 Show loader in button
@@ -49,36 +55,57 @@
         $submitBtn.text('Book Your Free Assessment');
     }
 
-    // 🔹 Check if email has already registered
-    async function checkEmailRegistration(email) {
+    // 🔹 NEW: Check if the exact same registration exists (email + phone + child name)
+    async function checkExactRegistration(email, phone, childName) {
         try {
             const normalizedEmail = email.toLowerCase().trim();
-            const sanitizedEmail = sanitizeFirebaseKey(normalizedEmail);
-            const emailRef = firebase.database().ref("registrations/emails/" + sanitizedEmail);
-            const snapshot = await emailRef.get();
-            return snapshot.exists();
-        } catch (error) {
-            console.error('Error checking email registration:', error);
-            return false;
-        }
-    }
-
-    // 🔹 Check if phone number has already registered
-    async function checkPhoneRegistration(phone) {
-        try {
             const normalizedPhone = phone.replace(/\s+|[-+()]/g, '');
-            const sanitizedPhone = sanitizeFirebaseKey(normalizedPhone);
-            const phoneRef = firebase.database().ref("registrations/phones/" + sanitizedPhone);
-            const snapshot = await phoneRef.get();
-            return snapshot.exists();
+            const normalizedChildName = normalizeChildName(childName);
+            
+            // Check in email registrations
+            const emailRef = firebase.database().ref("registrations/emails");
+            const emailSnapshot = await emailRef.get();
+            
+            if (emailSnapshot.exists()) {
+                const emailData = emailSnapshot.val();
+                for (const [emailKey, emailDetails] of Object.entries(emailData)) {
+                    // Check if this email has the same child name
+                    if (emailDetails.children && emailDetails.children[normalizedChildName]) {
+                        return {
+                            exists: true,
+                            message: `❌ This child "${childName}" is already registered with the provided email and phone number.`
+                        };
+                    }
+                }
+            }
+
+            // Check in phone registrations
+            const phoneRef = firebase.database().ref("registrations/phones");
+            const phoneSnapshot = await phoneRef.get();
+            
+            if (phoneSnapshot.exists()) {
+                const phoneData = phoneSnapshot.val();
+                for (const [phoneKey, phoneDetails] of Object.entries(phoneData)) {
+                    // Check if this phone has the same child name
+                    if (phoneDetails.children && phoneDetails.children[normalizedChildName]) {
+                        return {
+                            exists: true,
+                            message: `❌ This child "${childName}" is already registered with the provided email and phone number.`
+                        };
+                    }
+                }
+            }
+
+            return { exists: false };
+
         } catch (error) {
-            console.error('Error checking phone registration:', error);
-            return false;
+            console.error('Error checking exact registration:', error);
+            return { exists: false };
         }
     }
 
     // 🔹 Record registration details after successful registration
-    async function recordRegistration(email, phone) {
+    async function recordRegistration(email, phone, childName) {
         try {
             const timestamp = Date.now();
             
@@ -87,24 +114,46 @@
             const sanitizedEmail = sanitizeFirebaseKey(normalizedEmail);
             const normalizedPhone = phone.replace(/\s+|[-+()]/g, '');
             const sanitizedPhone = sanitizeFirebaseKey(normalizedPhone);
+            const normalizedChildName = normalizeChildName(childName);
+            const sanitizedChildName = sanitizeFirebaseKey(normalizedChildName);
 
-            // Record Email
+            // Record Email with child information
             const emailRef = firebase.database().ref("registrations/emails/" + sanitizedEmail);
-            await emailRef.set({ 
-                timestamp: timestamp, 
+            const emailData = {
+                timestamp: timestamp,
                 phone: phone,
-                originalEmail: email
-            });
+                originalEmail: email,
+                lastUpdated: timestamp
+            };
+            
+            // Add child to children subnode
+            emailData.children = {};
+            emailData.children[sanitizedChildName] = {
+                name: childName,
+                registeredAt: timestamp
+            };
+            
+            await emailRef.set(emailData);
 
-            // Record Phone
+            // Record Phone with child information
             const phoneRef = firebase.database().ref("registrations/phones/" + sanitizedPhone);
-            await phoneRef.set({ 
-                timestamp: timestamp, 
+            const phoneData = {
+                timestamp: timestamp,
                 email: email,
-                originalPhone: phone
-            });
+                originalPhone: phone,
+                lastUpdated: timestamp
+            };
+            
+            // Add child to children subnode
+            phoneData.children = {};
+            phoneData.children[sanitizedChildName] = {
+                name: childName,
+                registeredAt: timestamp
+            };
+            
+            await phoneRef.set(phoneData);
 
-            console.log("✅ Registration recorded successfully");
+            console.log("✅ Registration recorded successfully with child name");
 
         } catch (error) {
             console.error('Error recording registration:', error);
@@ -128,27 +177,18 @@
         var selectedBatch = $($batch).val();
         var userEmail = $($email).val().trim();
         var userPhone = $($number).val().trim();
+        var childName = $($childName).val().trim();
 
         // Show loading state
         formMessages.removeClass('error success').text('Checking availability...');
 
         try {
-            // ✅ Check email restrictions
-            const emailRegistered = await checkEmailRegistration(userEmail);
-            if (emailRegistered) {
+            // ✅ NEW: Only check if the exact same registration exists (email + phone + child name)
+            const exactRegistrationCheck = await checkExactRegistration(userEmail, userPhone, childName);
+            if (exactRegistrationCheck.exists) {
                 formMessages.removeClass('success').addClass('error');
-                formMessages.text('❌ This email address has already been registered. Please use a different email.');
-                $($email).addClass(invalidCls);
-                hideButtonLoader();
-                return false;
-            }
-
-            // ✅ Check phone restrictions
-            const phoneRegistered = await checkPhoneRegistration(userPhone);
-            if (phoneRegistered) {
-                formMessages.removeClass('success').addClass('error');
-                formMessages.text('❌ This phone number has already been registered. Please use a different phone number.');
-                $($number).addClass(invalidCls);
+                formMessages.text(exactRegistrationCheck.message);
+                $($childName).addClass(invalidCls);
                 hideButtonLoader();
                 return false;
             }
@@ -176,7 +216,7 @@
 
             // Update Firebase count and record registration details
             await batchesRef.update({ [cleanKey]: data[cleanKey] + 1 });
-            await recordRegistration(userEmail, userPhone);
+            await recordRegistration(userEmail, userPhone, childName);
 
             formMessages.removeClass('error').addClass('success');
             formMessages.text("✅ Registration successful! See you soon!");
@@ -281,35 +321,113 @@
         return valid;
     }
 
-    // 🔹 Real-time validation for email and phone
-    $(document).on('blur', $email, async function() {
-        const email = $(this).val().trim();
-        if (email && email.match(/^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})$/)) {
-            const emailRegistered = await checkEmailRegistration(email);
-            if (emailRegistered) {
-                $(this).addClass(invalidCls);
+    // 🔹 UPDATED: Real-time validation - only check exact registration when all three fields are filled
+    function checkAllFieldsFilled() {
+        const email = $($email).val().trim();
+        const phone = $($number).val().trim();
+        const childName = $($childName).val().trim();
+        
+        return email && phone && childName;
+    }
+
+    // 🔹 UPDATED: Check for exact duplicate registration
+    async function validateExactRegistration() {
+        if (!checkAllFieldsFilled()) {
+            return;
+        }
+
+        const email = $($email).val().trim();
+        const phone = $($number).val().trim();
+        const childName = $($childName).val().trim();
+        
+        const emailValid = email.match(/^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})$/);
+        const phoneValid = /^[6-9]\d{9}$/.test(phone.replace(/\s+|[-+()]/g, ''));
+        
+        if (emailValid && phoneValid) {
+            formMessages.removeClass('success error').text('Checking registration...');
+            
+            const exactCheck = await checkExactRegistration(email, phone, childName);
+            if (exactCheck.exists) {
                 formMessages.removeClass('success').addClass('error');
-                formMessages.text('❌ This email is already registered.');
+                formMessages.text(exactCheck.message);
+                $($childName).addClass(invalidCls);
             } else {
-                $(this).removeClass(invalidCls);
+                formMessages.removeClass('error').addClass('success');
+                formMessages.text('✅ All details are available for registration!');
+                $($email).removeClass(invalidCls);
+                $($number).removeClass(invalidCls);
+                $($childName).removeClass(invalidCls);
+            }
+        }
+    }
+
+    // 🔹 UPDATED: Real-time validation events - only check for exact duplicates
+    $(document).on('blur', $email, function() {
+        // Only do basic format validation
+        const email = $(this).val().trim();
+        if (email && !email.match(/^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})$/)) {
+            $(this).addClass(invalidCls);
+            formMessages.removeClass('success').addClass('error');
+            formMessages.text('❌ Please enter a valid email address.');
+        } else {
+            $(this).removeClass(invalidCls);
+            // Clear message if it was about email format
+            if (formMessages.text().includes('email address')) {
                 formMessages.text('');
             }
+            // Check exact registration if all fields are filled
+            validateExactRegistration();
         }
     });
 
-    $(document).on('blur', $number, async function() {
+    $(document).on('blur', $number, function() {
+        // Only do basic format validation
         const phone = $(this).val().trim();
         const cleanPhone = phone.replace(/\s+|[-+()]/g, '');
-        if (cleanPhone && /^[6-9]\d{9}$/.test(cleanPhone)) {
-            const phoneRegistered = await checkPhoneRegistration(phone);
-            if (phoneRegistered) {
-                $(this).addClass(invalidCls);
-                formMessages.removeClass('success').addClass('error');
-                formMessages.text('❌ This phone number is already registered.');
-            } else {
-                $(this).removeClass(invalidCls);
+        if (cleanPhone && !/^[6-9]\d{9}$/.test(cleanPhone)) {
+            $(this).addClass(invalidCls);
+            formMessages.removeClass('success').addClass('error');
+            formMessages.text('❌ Please enter a valid 10-digit Indian phone number.');
+        } else {
+            $(this).removeClass(invalidCls);
+            // Clear message if it was about phone format
+            if (formMessages.text().includes('phone number')) {
                 formMessages.text('');
             }
+            // Check exact registration if all fields are filled
+            validateExactRegistration();
+        }
+    });
+
+    $(document).on('blur', $childName, function() {
+        const childName = $(this).val().trim();
+        if (!childName) {
+            $(this).addClass(invalidCls);
+            formMessages.removeClass('success').addClass('error');
+            formMessages.text('❌ Please enter child name.');
+        } else {
+            $(this).removeClass(invalidCls);
+            // Clear message if it was about child name being empty
+            if (formMessages.text().includes('child name')) {
+                formMessages.text('');
+            }
+            // Check exact registration if all fields are filled
+            validateExactRegistration();
+        }
+    });
+
+    // 🔹 NEW: Also validate when any field changes and all are filled
+    $(document).on('input', $email + ', ' + $number + ', ' + $childName, function() {
+        if (checkAllFieldsFilled()) {
+            // Small delay to let user finish typing
+            clearTimeout(window.validationTimeout);
+            window.validationTimeout = setTimeout(validateExactRegistration, 500);
+        } else {
+            // Clear any previous success/error messages if not all fields are filled
+            formMessages.removeClass('success error').text('');
+            $($email).removeClass(invalidCls);
+            $($number).removeClass(invalidCls);
+            $($childName).removeClass(invalidCls);
         }
     });
 
@@ -362,7 +480,7 @@
     $(document).ready(function() {
         addCustomStyles();
         disableFullSlots();
-        console.log("Form handler initialized");
+        console.log("Form handler initialized - only checks exact duplicates");
     });
 
 })(jQuery);
