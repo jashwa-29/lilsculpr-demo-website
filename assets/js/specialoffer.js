@@ -485,6 +485,6 @@
 
     // hello
 
-    alert("hello");
+
 
 })(jQuery);
