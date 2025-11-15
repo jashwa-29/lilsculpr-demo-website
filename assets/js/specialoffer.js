@@ -55,6 +55,75 @@
         $submitBtn.text('Book Your Free Assessment');
     }
 
+    // 🔹 NEW: Get slot availability count
+    async function getSlotAvailability(batchName) {
+        try {
+            const batchesRef = firebase.database().ref("batches");
+            const snapshot = await batchesRef.get();
+            const data = snapshot.exists() ? snapshot.val() : {};
+
+            const cleanKey = sanitizeFirebaseKey(batchName);
+            const currentCount = data[cleanKey] || 0;
+            const availableSlots = Math.max(0, 10 - currentCount);
+            
+            return {
+                current: currentCount,
+                available: availableSlots,
+                isFull: currentCount >= 10
+            };
+        } catch (error) {
+            console.error('Error getting slot availability:', error);
+            return { current: 0, available: 10, isFull: false };
+        }
+    }
+
+    // 🔹 NEW: Update batch options with live slot counts
+    async function updateBatchOptionsWithAvailability() {
+        try {
+            const $batchSelect = $($batch);
+            const batchesRef = firebase.database().ref("batches");
+            const snapshot = await batchesRef.get();
+            const data = snapshot.exists() ? snapshot.val() : {};
+
+            $batchSelect.find('option').each(function() {
+                const val = $(this).val();
+                if (!val) return;
+
+                const cleanKey = sanitizeFirebaseKey(val);
+                const currentCount = data[cleanKey] || 0;
+                const availableSlots = Math.max(0, 10 - currentCount);
+                
+                // Get original option text without any slot info
+                let originalText = $(this).attr('data-original-text') || $(this).text();
+                // Remove any existing slot info from original text
+                originalText = originalText.replace(/\s*\(\d+\s*slots? available\)\s*$/, '')
+                                          .replace(/\s*\(Full\)\s*$/, '')
+                                          .trim();
+                
+                // Store original text for future use
+                if (!$(this).attr('data-original-text')) {
+                    $(this).attr('data-original-text', originalText);
+                }
+                
+                if (currentCount >= 10) {
+                    $(this).text(originalText + ' (Full)');
+                    $(this).attr("disabled", true);
+                    $(this).addClass('full-slot');
+                } else {
+                    const slotText = availableSlots === 1 ? 'slot' : 'slots';
+                    $(this).text(originalText + ` (${availableSlots} ${slotText} available)`);
+                    $(this).attr("disabled", false);
+                    $(this).removeClass('full-slot');
+                }
+            });
+
+            console.log("✅ Batch options updated with live availability");
+            
+        } catch (error) {
+            console.error('Error updating batch options:', error);
+        }
+    }
+
     // 🔹 NEW: Check if the exact same registration exists (email + phone + child name)
     async function checkExactRegistration(email, phone, childName) {
         try {
@@ -203,7 +272,7 @@
 
             if (data[cleanKey] >= 10) {
                 formMessages.removeClass('success').addClass('error');
-                formMessages.text('❌ Sorry, this time slot is full.');
+                formMessages.text('❌ Sorry, this time slot is full. Please select another slot.');
                 hideButtonLoader();
                 return false;
             }
@@ -221,9 +290,9 @@
             formMessages.removeClass('error').addClass('success');
             formMessages.text("✅ Registration successful! See you soon!");
 
-            // Reset form
+            // Reset form and update slot display
             $(this).trigger('reset');
-            await disableFullSlots();
+            await updateBatchOptionsWithAvailability();
             
         } catch (error) {
             console.error("❌ FAILED:", error);
@@ -237,34 +306,26 @@
         return false;
     });
 
-    // 🔹 Disable full slots dynamically with color indication
+    // 🔹 UPDATED: Disable full slots and show availability
     async function disableFullSlots() {
         try {
-            const batchesRef = firebase.database().ref("batches");
-            const snapshot = await batchesRef.get();
-            if (!snapshot.exists()) return;
-
-            const data = snapshot.val();
-            $('select[name="batch"] option').each(function () {
-                const val = $(this).val();
-                if (!val) return;
-                
-                const cleanKey = sanitizeFirebaseKey(val);
-                if (data[cleanKey] >= 10) {
-                    $(this).attr("disabled", true);
-                    $(this).addClass('full-slot'); // Add color class
-                    if (!$(this).text().includes("(Full)")) {
-                        $(this).text($(this).text() + " (Full)");
-                    }
-                } else {
-                    $(this).attr("disabled", false);
-                    $(this).removeClass('full-slot'); // Remove color class
-                    $(this).text($(this).text().replace(" (Full)", ""));
-                }
-            });
+            await updateBatchOptionsWithAvailability();
         } catch (error) {
             console.error('Error disabling full slots:', error);
         }
+    }
+
+    // 🔹 NEW: Real-time slot monitoring
+    function startSlotMonitoring() {
+        const batchesRef = firebase.database().ref("batches");
+        
+        // Listen for real-time changes
+        batchesRef.on('value', function(snapshot) {
+            console.log("🔄 Real-time slot update detected");
+            updateBatchOptionsWithAvailability();
+        });
+        
+        console.log("✅ Real-time slot monitoring started");
     }
 
     // 🔹 Enhanced validation function
@@ -450,6 +511,12 @@
                         font-weight: bold;
                     }
                     
+                    /* Available slots styling */
+                    select[name="batch"] option:not(.full-slot):not(:disabled) {
+                        color: #198754 !important;
+                        font-weight: 500;
+                    }
+                    
                     /* Button loader styles */
                     .button-loader {
                         display: inline-block;
@@ -471,20 +538,34 @@
                         opacity: 0.7;
                         cursor: not-allowed;
                     }
+                    
+                    /* Slot availability info */
+                    .slot-info {
+                        margin-top: 8px;
+                        font-size: 14px;
+                        color: #6c757d;
+                        font-style: italic;
+                    }
                 </style>
             `);
+        }
+    }
+
+    // 🔹 NEW: Add slot information display
+    function addSlotInfoDisplay() {
+        if (!$('.slot-info').length) {
+            $($batch).after('<div class="slot-info"></div>');
         }
     }
 
     // Run once when page loads
     $(document).ready(function() {
         addCustomStyles();
+        addSlotInfoDisplay();
         disableFullSlots();
-        console.log("Form handler initialized - only checks exact duplicates");
+        startSlotMonitoring(); // Start real-time monitoring
+        
+        console.log("Form handler initialized - with live slot availability");
     });
-
-    // hello
-
-
 
 })(jQuery);
