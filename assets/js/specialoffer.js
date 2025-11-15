@@ -20,6 +20,9 @@
     const app = firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
+    // 🔹 UPDATED: Batch capacity increased to 15
+    const BATCH_CAPACITY = 15;
+
     // Selectors and classes
     var form = '.ajax-contact';
     var submitBtn = '.vs-btn[type="submit"]';
@@ -55,7 +58,7 @@
         $submitBtn.text('Book Your Free Assessment');
     }
 
-    // 🔹 NEW: Get slot availability count
+    // 🔹 UPDATED: Get slot availability count with new capacity
     async function getSlotAvailability(batchName) {
         try {
             const batchesRef = firebase.database().ref("batches");
@@ -64,20 +67,20 @@
 
             const cleanKey = sanitizeFirebaseKey(batchName);
             const currentCount = data[cleanKey] || 0;
-            const availableSlots = Math.max(0, 10 - currentCount);
+            const availableSlots = Math.max(0, BATCH_CAPACITY - currentCount);
             
             return {
                 current: currentCount,
                 available: availableSlots,
-                isFull: currentCount >= 10
+                isFull: currentCount >= BATCH_CAPACITY
             };
         } catch (error) {
             console.error('Error getting slot availability:', error);
-            return { current: 0, available: 10, isFull: false };
+            return { current: 0, available: BATCH_CAPACITY, isFull: false };
         }
     }
 
-    // 🔹 NEW: Update batch options with live slot counts
+    // 🔹 UPDATED: Update batch options with live slot counts
     async function updateBatchOptionsWithAvailability() {
         try {
             const $batchSelect = $($batch);
@@ -91,7 +94,7 @@
 
                 const cleanKey = sanitizeFirebaseKey(val);
                 const currentCount = data[cleanKey] || 0;
-                const availableSlots = Math.max(0, 10 - currentCount);
+                const availableSlots = Math.max(0, BATCH_CAPACITY - currentCount);
                 
                 // Get original option text without any slot info
                 let originalText = $(this).attr('data-original-text') || $(this).text();
@@ -105,7 +108,8 @@
                     $(this).attr('data-original-text', originalText);
                 }
                 
-                if (currentCount >= 10) {
+                // UPDATED: Check against new capacity
+                if (currentCount >= BATCH_CAPACITY) {
                     $(this).text(originalText + ' (Full)');
                     $(this).attr("disabled", true);
                     $(this).addClass('full-slot');
@@ -270,7 +274,8 @@
             const cleanKey = sanitizeFirebaseKey(selectedBatch);
             if (!data[cleanKey]) data[cleanKey] = 0;
 
-            if (data[cleanKey] >= 10) {
+            // UPDATED: Check against new capacity
+            if (data[cleanKey] >= BATCH_CAPACITY) {
                 formMessages.removeClass('success').addClass('error');
                 formMessages.text('❌ Sorry, this time slot is full. Please select another slot.');
                 hideButtonLoader();
@@ -565,7 +570,7 @@
         disableFullSlots();
         startSlotMonitoring(); // Start real-time monitoring
         
-        console.log("Form handler initialized - with live slot availability");
+        console.log("Form handler initialized - with live slot availability (Capacity: " + BATCH_CAPACITY + ")");
     });
 
 })(jQuery);
