@@ -485,4 +485,6 @@
 
     // hello
 
+    alert("hello");
+
 })(jQuery);
