@@ -23,34 +23,22 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <!-- Google Fonts - Non-blocking -->
+    <!-- Google Fonts - Optimized Loading -->
     <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Catamaran:wght@100;200;300;400;500;600;700;800;900&display=swap"
-          media="print" 
-          onload="this.media='all'">
+        href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Catamaran:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        media="print"
+        onload="this.media='all'">
 
     <noscript>
-        <link rel="stylesheet" 
-              href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Catamaran:wght@100;200;300;400;500;600;700;800;900&display=swap">
+        <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Catamaran:wght@100;200;300;400;500;600;700;800;900&display=swap">
     </noscript>
 
-    <!-- Bootstrap (Deferred) -->
-    <link rel="preload" href="assets/css/bootstrap.min.css" as="style">
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css" media="print" onload="this.media='all'">
+    <!-- CRITICAL CSS (No Defer to Prevent FOUC) -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.min.css">
 
-    <noscript>
-        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    </noscript>
-
-    <!-- Main Stylesheet (Deferred) -->
-    <link rel="preload" href="assets/css/style.min.css" as="style">
-    <link rel="stylesheet" href="assets/css/style.min.css" media="print" onload="this.media='all'">
-
-    <noscript>
-        <link rel="stylesheet" href="assets/css/style.min.css">
-    </noscript>
-
-    <!-- Plugin CSS (Deferred) -->
+    <!-- Plugin CSS (Deferred Loading for Performance) -->
     <link rel="stylesheet" href="assets/css/fontawesome.min.css" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="assets/css/magnific-popup.min.css" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="assets/css/slick.min.css" media="print" onload="this.media='all'">
@@ -60,8 +48,8 @@
         <link rel="stylesheet" href="assets/css/magnific-popup.min.css">
         <link rel="stylesheet" href="assets/css/slick.min.css">
     </noscript>
-
 </head>
+
 
 
 
@@ -328,65 +316,51 @@
     <!--======== / Header ========-->
 
     <!--======== Hero Section ========-->
-    <section class="vs-hero-wrapper position-relative">
-        <div class="section-before">
-            <img src="assets/img/shape/header-after.png" alt="shape">
-        </div>
-        <div class="section-after d-none d-md-block">
-            <img src="assets/img/shape/hero-after.png" alt="shape">
-        </div>
-        <div class="hero-slider1 vs-carousel" data-slide-show="1" data-md-slide-show="1" data-fade="true">
-            <!-- Single Slide -->
-            <div class="vs-hero-inner">
-                <div class="vs-hero-bg" data-bg-src="assets/img/claymodeling/heroimg.png"></div>
-                <div class="hero-content" data-bg-src="assets/img/shape/hcontent-bg.png">
-                    <img class="con-before" data-ani="slideinleft" data-ani-delay="0.2s" src="assets/img/shape/hero-con-before.png" alt="shape">
-                    <img class="con-after" data-ani="slideinright" data-ani-delay="0.2s" src="assets/img/shape/hero-con-after.png" alt="shape">
-                    <img class="car" data-ani="slidetopleft" data-ani-delay="0.4s" src="assets/img/claymodeling/car.png" alt="icon">
-                    <div class="hero-text" data-ani="slideinup" data-ani-delay="0s">
-                        <span>Create</span>
-                        <i class="fas fa-circle"></i>
-                        <span>Explore</span>
-                    </div>
-                    <h1 class="hero-title text-title mb-30" data-ani="slideinup" data-ani-delay="0.2s">Welcome to <span class="focus text-theme">Lil Sculpr</span> Clay Modelling for Kids</h1>
-                    <a href="contact.html" class="vs-btn wave-btn" data-ani="slideinup" data-ani-delay="0.4s">Visit for a FREE Demo Class</a>
+<!--======== Hero Section ========-->
+<section class="vs-hero-wrapper position-relative">
+    <div class="section-before">
+        <img src="assets/img/shape/header-after.png" alt="shape">
+    </div>
+    <div class="section-after d-none d-md-block">
+        <img src="assets/img/shape/hero-after.png" alt="shape">
+    </div>
+    <div class="hero-slider1 vs-carousel" data-slide-show="1" data-md-slide-show="1" data-fade="true">
+        <!-- Single Slide -->
+        <div class="vs-hero-inner">
+            <div class="vs-hero-bg" data-bg-src="assets/img/claymodeling/heroimg.png" style="background-image: url('assets/img/claymodeling/heroimg.png');"></div>
+            <div class="hero-content" data-bg-src="assets/img/shape/hcontent-bg.png">
+                <img class="con-before" data-ani="slideinleft" data-ani-delay="0.2s" src="assets/img/shape/hero-con-before.png" alt="shape">
+                <img class="con-after" data-ani="slideinright" data-ani-delay="0.2s" src="assets/img/shape/hero-con-after.png" alt="shape">
+                <img class="car" data-ani="slidetopleft" data-ani-delay="0.4s" src="assets/img/claymodeling/car.png" alt="icon">
+                <div class="hero-text" data-ani="slideinup" data-ani-delay="0s">
+                    <span>Create</span>
+                    <i class="fas fa-circle"></i>
+                    <span>Explore</span>
                 </div>
+                <h1 class="hero-title text-title mb-30" data-ani="slideinup" data-ani-delay="0.2s">Welcome to <span class="focus text-theme">Lil Sculpr</span> Clay Modelling for Kids</h1>
+                <a href="contact.html" class="vs-btn wave-btn" data-ani="slideinup" data-ani-delay="0.4s">Visit for a FREE Demo Class</a>
             </div>
+        </div>
 
-            <!-- Single Slide -->
-            <div class="vs-hero-inner">
-                <div class="vs-hero-bg" data-bg-src="assets/img/claymodeling/heroimg2.png"></div>
-                <div class="hero-content" data-bg-src="assets/img/shape/hcontent-bg.png">
-                    <img class="con-before" data-ani="slideinleft" data-ani-delay="0.2s" src="assets/img/shape/hero-con-before.png" alt="shape">
-                    <img class="con-after" data-ani="slideinright" data-ani-delay="0.2s" src="assets/img/shape/hero-con-after.png" alt="shape">
-                    <img class="car" data-ani="slidetopleft" data-ani-delay="0.4s" src="assets/img/claymodeling/car.png" alt="icon">
-                    <div class="hero-text" data-ani="slideinup" data-ani-delay="0s">
-                        <span>Imagine</span>
-                        <i class="fas fa-circle"></i>
-                        <span>Create</span>
-                    </div>
-                    <h1 class="hero-title text-title mb-30" data-ani="slideinup" data-ani-delay="0.2s">A Premier<span class="focus text-theme">Clay Modelling</span> Academy for Kids</h1>
-                    <a href="contact.html" class="vs-btn wave-btn" data-ani="slideinup" data-ani-delay="0.4s">Visit for a FREE Demo Class</a>
+        <!-- Single Slide -->
+        <div class="vs-hero-inner">
+            <div class="vs-hero-bg" data-bg-src="assets/img/claymodeling/heroimg2.png" style="background-image: url('assets/img/claymodeling/heroimg2.png');"></div>
+            <div class="hero-content" data-bg-src="assets/img/shape/hcontent-bg.png">
+                <img class="con-before" data-ani="slideinleft" data-ani-delay="0.2s" src="assets/img/shape/hero-con-before.png" alt="shape">
+                <img class="con-after" data-ani="slideinright" data-ani-delay="0.2s" src="assets/img/shape/hero-con-after.png" alt="shape">
+                <img class="car" data-ani="slidetopleft" data-ani-delay="0.4s" src="assets/img/claymodeling/car.png" alt="icon">
+                <div class="hero-text" data-ani="slideinup" data-ani-delay="0s">
+                    <span>Imagine</span>
+                    <i class="fas fa-circle"></i>
+                    <span>Create</span>
                 </div>
+                <h1 class="hero-title text-title mb-30" data-ani="slideinup" data-ani-delay="0.2s">A Premier<span class="focus text-theme">Clay Modelling</span> Academy for Kids</h1>
+                <a href="contact.html" class="vs-btn wave-btn" data-ani="slideinup" data-ani-delay="0.4s">Visit for a FREE Demo Class</a>
             </div>
-            <!-- Single Slide -->
-            <!-- <div class="vs-hero-inner">
-                <div class="vs-hero-bg" data-bg-src="assets/img/bg/hero1-3.jpg"></div>
-                <div class="hero-content" data-bg-src="assets/img/shape/hcontent-bg.png">
-                    <img class="con-before" data-ani="slideinleft" data-ani-delay="0.2s" src="assets/img/shape/hero-con-before.png" alt="shape">
-                    <img class="con-after" data-ani="slideinright" data-ani-delay="0.2s" src="assets/img/shape/hero-con-after.png" alt="shape">
-                    <img class="car" data-ani="slidetopleft" data-ani-delay="0.4s" src="assets/img/icon/car.png" alt="icon">
-                    <div class="hero-text" data-ani="slideinup" data-ani-delay="0s">
-                        <span>Shape</span>
-                        <i class="fas fa-circle"></i>
-                        <span>Dreams</span>
-                    </div>
-                    <h1 class="hero-title text-title mb-30" data-ani="slideinup" data-ani-delay="0.2s">We Help to <span class="focus text-theme">Grow Up</span> Your Children</h1>
-                    <a href="contact.html" class="vs-btn wave-btn" data-ani="slideinup" data-ani-delay="0.4s">Book a visit</a>
-                </div>
-            </div> -->
         </div>
-    </section>
+    </div>
+</section>
+<!--======== / Hero Section ========-->
     <!--======== / Hero Section ========-->
 
     <!--======== Service Section ========-->
@@ -1334,7 +1308,7 @@
     </a>
         
 
-      <div class="popup-container">
+      <div class="popup-container d-none">
         <div class="popup">
             <div class="decoration shape1"></div>
             <div class="decoration shape2"></div>

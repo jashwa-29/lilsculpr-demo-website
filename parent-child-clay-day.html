@@ -23,34 +23,22 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <!-- Google Fonts - Non-blocking -->
+    <!-- Google Fonts - Optimized Loading -->
     <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Catamaran:wght@100;200;300;400;500;600;700;800;900&display=swap"
-          media="print" 
-          onload="this.media='all'">
+        href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Catamaran:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        media="print"
+        onload="this.media='all'">
 
     <noscript>
-        <link rel="stylesheet" 
-              href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Catamaran:wght@100;200;300;400;500;600;700;800;900&display=swap">
+        <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Catamaran:wght@100;200;300;400;500;600;700;800;900&display=swap">
     </noscript>
 
-    <!-- Bootstrap (Deferred) -->
-    <link rel="preload" href="assets/css/bootstrap.min.css" as="style">
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css" media="print" onload="this.media='all'">
+    <!-- CRITICAL CSS (No Defer to Prevent FOUC) -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.min.css">
 
-    <noscript>
-        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    </noscript>
-
-    <!-- Main Stylesheet (Deferred) -->
-    <link rel="preload" href="assets/css/style.min.css" as="style">
-    <link rel="stylesheet" href="assets/css/style.min.css" media="print" onload="this.media='all'">
-
-    <noscript>
-        <link rel="stylesheet" href="assets/css/style.min.css">
-    </noscript>
-
-    <!-- Plugin CSS (Deferred) -->
+    <!-- Plugin CSS (Deferred Loading for Performance) -->
     <link rel="stylesheet" href="assets/css/fontawesome.min.css" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="assets/css/magnific-popup.min.css" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="assets/css/slick.min.css" media="print" onload="this.media='all'">
@@ -60,7 +48,6 @@
         <link rel="stylesheet" href="assets/css/magnific-popup.min.css">
         <link rel="stylesheet" href="assets/css/slick.min.css">
     </noscript>
-
 </head>
 
 
@@ -604,7 +591,7 @@
           
 
 
-        <div class="popup-container">
+        <div class="popup-container d-none">
         <div class="popup">
             <div class="decoration shape1"></div>
             <div class="decoration shape2"></div>
