@@ -590,7 +590,7 @@
     </a>
         
 
-        <div class="popup-container d-none">
+              <div class="popup-container d-none">
         <div class="popup">
             <div class="decoration shape1"></div>
             <div class="decoration shape2"></div>
@@ -617,6 +617,42 @@ Reserve Free Sp</p>
         <div class="popup-tab">
   <div class="open-icon">
     <i class="fas fa-chevron-right"></i>
+        </div>
+    </div>
+
+    </div>
+
+    
+        <!-- Spinner Popup -->
+      <div class="spinner-popup active d-none" id="spinner-popup">
+        <div class="popup-header">
+            <h2 class="popup-title">Spin & Win Amazing Prizes!</h2>
+            <button class="close-popup" id="close-popup">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="wheel-container">
+            <div class="wheel-wrapper">
+                <div class="pointer"></div>
+                <canvas id="wheel" width="500" height="500"></canvas>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button id="spin-btn">
+                <i class="fas fa-play-circle"></i> Spin the Wheel
+            </button>
+        </div>
+    </div>
+
+    <!-- Winner Popup -->
+    <div class="winner-popup" id="winner-popup">
+        <h2 class="winner-title">🎉 You Won! 🎉</h2>
+        <p class="winner-text" id="winner-text">You won: Free Trial Class</p>
+        <div class="winner-actions">
+            <button class="winner-btn claim-btn" id="claim-btn">Claim Prize</button>
+            <button class="winner-btn close-winner d-none" id="close-winner">Close</button>
         </div>
     </div>
     <!--==============================
@@ -647,6 +683,7 @@ Reserve Free Sp</p>
     <script src="assets/js/ajax-mail.js"></script>
     <!-- Main Js File -->
         <script src="assets/js/main.min.js"></script>
+                <script src="./assets/js/spinner.js"></script>
 
 </body>
 

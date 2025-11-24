@@ -14087,3 +14087,257 @@ select[name="batch"] option.full-slot:disabled {
     background-color: #f8d7da !important;
     font-weight: bold;
 }
+
+
+/*=================================
+    05. Spinner Wheel Style
+
+        /* Spinner Popup */
+        .spinner-popup {
+            position: fixed;
+            top: 50%;
+            left: -100%;
+            transform: translateY(-50%);
+            width: 90%;
+            max-width: 600px;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+            transition: left 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+
+        .spinner-popup.active {
+            left: 50px;
+        }
+
+        .popup-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .popup-title {
+            color: white;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .close-popup {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .close-popup:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        /* Wheel Container */
+        .wheel-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .wheel-wrapper {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 100%; /* Makes it square */
+            margin: 20px auto;
+        }
+
+        .pointer {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 25px solid transparent;
+            border-right: 25px solid transparent;
+            border-top: 40px solid #ff3366;
+            z-index: 20;
+            filter: drop-shadow(0 0 15px rgba(255, 51, 102, 0.8));
+        }
+
+        #wheel {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            display: block;
+            box-shadow: 0 0 0 15px #ffcc00, 
+                        0 0 40px rgba(255, 204, 0, 0.8), 
+                        inset 0 0 40px rgba(0, 0, 0, 0.2);
+            background: #fff;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            margin: 25px 0;
+        }
+
+        #spin-btn {
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff3366, #ff6633);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(255, 51, 102, 0.4);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #spin-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(255, 51, 102, 0.6);
+        }
+
+        #spin-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .confetti {
+            position: fixed;
+            width: 12px;
+            height: 12px;
+            opacity: 0;
+            z-index: 1002;
+            pointer-events: none;
+        }
+
+        /* Winner Popup */
+        .winner-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            color: white;
+            z-index: 1003;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .winner-popup.active {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .winner-title {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: #ffcc00;
+        }
+
+        .winner-text {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+        }
+
+        .winner-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .winner-btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .claim-btn {
+            background: white;
+            color: #ff6b6b;
+        }
+
+        .close-winner {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .winner-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .spinner-popup.active {
+                left: 20px;
+            }
+            
+            .spinner-popup {
+                width: calc(100% - 40px);
+            }
+            
+            .popup-title {
+                font-size: 1.4rem;
+            }
+            
+            .winner-popup {
+                width: 90%;
+                padding: 30px 20px;
+            }
+            
+            .winner-title {
+                font-size: 1.6rem;
+            }
+            
+            .winner-text {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .spinner-popup.active {
+                left: 10px;
+            }
+            
+            .spinner-popup {
+                width: calc(100% - 20px);
+                padding: 20px 15px;
+            }
+            
+            .popup-title {
+                font-size: 1.2rem;
+            }
+            
+            #spin-btn {
+                padding: 12px 30px;
+                font-size: 1.1rem;
+            }
+        }
