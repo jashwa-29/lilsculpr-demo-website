@@ -5350,14 +5350,21 @@ ul.popular-service-wrap li:hover {
 }
 
 .blog-img {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio (9/16 = 0.5625) */
   border-radius: 50px;
   overflow: hidden;
-  display: block;
 }
+
 .blog-img img {
-  transition: 0.4s ease-in-out;
-  border-radius: 50px;
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: 0.4s ease-in-out;
 }
 
 .block-quote {
