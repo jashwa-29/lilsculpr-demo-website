@@ -53,6 +53,21 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <link rel="stylesheet" href="assets/css/magnific-popup.min.css">
         <link rel="stylesheet" href="assets/css/slick.min.css">
     </noscript>
+
+    <!-- Razorpay SDK -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '886450287373984');
+fbq('track', 'PageView');
+</script>
 </head>
 
 
@@ -60,10 +75,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <body>
 
 
-    <!-- Google Tag Manager (noscript) -->
+    <!-- Googl Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KK89945D"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+ <noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=886450287373984&ev=PageView&noscript=1"
+/></noscript>
 
     <div class="popup-search-box d-none d-lg-block  ">
         <button class="searchClose border-theme text-theme"><i class="fal fa-times"></i></button>
@@ -313,77 +331,146 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!--======== / About Section ========-->
 
     <!--======== Appointment Section ========-->
+<!--======== Appointment Section ========-->
 <section class="appointment-section space-bottom space-top-shape-plus">
     <div class="container">
         <div class="row gx-60 gy-30 flex-column-reverse flex-lg-row align-items-center">
             <div class="col-lg-7 wow fadeInLeft" data-wow-delay="0.1s">
-             <form id="contactForm" class="appointment-form ajax-contact">
-                <h3 class="form-messages mb-0 mt-3"></h3>
-  <div class="row gx-20">
-    <div class="form-group col-sm-6">
-      <input type="text" class="form-control" name="parent_name" id="gurdian-name" placeholder="Parent / Guardian Name" required>
-    </div>
-    <div class="form-group col-sm-6">
-      <input type="number" class="form-control" name="number" id="number" placeholder="Phone Number" required>
-    </div>
-    <div class="form-group col-12">
-      <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
-    </div>
-    <div class="form-group col-sm-6">
-      <input type="text" class="form-control" name="child_name" id="child-name" placeholder="Child Name" required>
-    </div>
-    <div class="form-group col-sm-6">
-      <input type="number" class="form-control" name="child_age" id="child-age" placeholder="Child’s Age" required>
-    </div>
-        <div class="form-group col-12">
-<select name="batch" id="classselect" class="form-select style2" required>
-  <option value="" disabled selected hidden>Select Slot</option>
-  <option value="Children's Day Weekend Special! Free Creative Assessment Day ⏰ 10:00 – 11:00 AM">
-⏰ 10:00 – 11:00 AM slot
-</option>
-<option value="Children's Day Weekend Special! Free Creative Assessment Day ⏰ 11:00 – 12:00 PM">
- ⏰ 11:00 – 12:00 PM slot
-</option>
-<!-- <option value="Children's Day Weekend Special! Free Creative Assessment Day ⏰ 12:00 – 1:00 PM">
-⏰ 12:00 – 1:00 PM slot
-</option> -->
-<option value="Children's Day Weekend Special! Free Creative Assessment Day ⏰ 3:00 – 4:00 PM">
-⏰ 3:00 – 4:00 PM slot
-</option>
-<option value="Children's Day Weekend Special! Free Creative Assessment Day ⏰ 4:00 – 5:00 PM">
-⏰ 4:00 – 5:00 PM slot
-</option>
-<option value="Children's Day Weekend Special! Free Creative Assessment Day ⏰ 5:00 – 6:00 PM">
-⏰ 5:00 – 6:00 PM slot
-</option>
-</select>
-    </div>
-    <div class="form-group col-12">
-      <textarea class="form-control" name="message" id="message" placeholder="Tell us what you’re looking for..." ></textarea>
-    </div>
-    <div class="col-12">
-      <button type="submit" class="vs-btn wave-btn">Book Your Free Assessment</button>
-    </div>
-  </div>
-</form>
+                <!-- Payment Status Messages -->
+                <div id="payment-status" class="payment-status"></div>
+                
+                <form id="contactForm" class="appointment-form ajax-contact">
+                    <h3 class="form-messages mb-0 mt-3"></h3>
+                    <div class="row gx-20">
+                        <div class="form-group col-sm-6">
+                            <input type="text" class="form-control" name="parent_name" id="gurdian-name" placeholder="Parent / Guardian Name" required>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <input type="number" class="form-control" name="number" id="number" placeholder="Phone Number" required>
+                        </div>
+                        <div class="form-group col-12">
+                            <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <input type="text" class="form-control" name="child_name" id="child-name" placeholder="Child Name" required>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <input type="number" class="form-control" name="child_age" id="child-age" placeholder="Child's Age" required>
+                        </div>
+                        
+                        <!-- DATE SELECTION -->
+                        <div class="form-group col-12">
+                            <label class="form-label fw-bold mb-2">
+                                <i class="fas fa-calendar-alt me-2"></i>Select Workshop Date
+                            </label>
+                            <div class="date-selection d-flex flex-wrap gap-3 mb-3">
+                                <div class="date-option" data-date="2025-12-21">
+                                    <input type="radio" name="selectedDate" id="date-2025-12-21" value="2025-12-21" class="date-radio" required>
+                                    <label for="date-2025-12-21" class="date-label">
+                                        <span class="date-day">Sunday</span>
+                                        <span class="date-number">21</span>
+                                        <span class="date-month">December 2025</span>
+                                    </label>
+                                </div>
+                                <div class="date-option" data-date="2025-12-22">
+                                    <input type="radio" name="selectedDate" id="date-2025-12-22" value="2025-12-22" class="date-radio" required>
+                                    <label for="date-2025-12-22" class="date-label">
+                                        <span class="date-day">Monday</span>
+                                        <span class="date-number">22</span>
+                                        <span class="date-month">December 2025</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div id="date-error" class="text-danger small mt-1" style="display: none;"></div>
+                        </div>
+                        
+                        <!-- BATCH SELECTION (Dynamic based on date) -->
+                        <div class="form-group col-12">
+                            <label class="form-label fw-bold mb-2">
+                                <i class="fas fa-clock me-2"></i>Select Time Slot
+                            </label>
+                            <select name="batch" id="classselect" class="form-select style2" required disabled>
+                                <option value="" disabled selected>Please select a date first</option>
+                            </select>
+                            <div id="batch-summary" class="batch-summary" style="display: none;"></div>
+                            <div id="batch-error" class="text-danger small mt-1" style="display: none;"></div>
+                        </div>
+                        
+                        <div class="form-group col-12">
+                            <textarea class="form-control" name="message" id="message" placeholder="Tell us what you're looking for..."></textarea>
+                        </div>
+                        
+                        <!-- Hidden Carnival Name -->
+                        <input type="hidden" name="carnivalName" value="Winter Carnival Workshop 🎄">
+                        
+                        <!-- Payment Confirmation -->
+                        <div class="col-12 mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="payment-confirm" required>
+                                <label class="form-check-label" for="payment-confirm">
+                                    I understand that ₹499 payment is required to confirm my registration. 
+                                    This amount will be deducted from the total workshop fee.
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-12">
+                            <button type="submit" class="vs-btn wave-btn">
+                                <span class="btn-text">Pay ₹499 & Confirm Registration</span>
+                                <span class="button-loader" style="display: none;"></span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
+            
             <div class="col-lg-5 wow fadeInRight" data-wow-delay="0.1s">
                 <div class="text-center text-lg-start">
-                    <span class="sub-title">Children's Day Weekend Special!</span>
-                    <h2 class="sec-title big-title">Free Creative Assessment Day</h2>
-                    <p class="fs-md mb-30">Thanks for your interest in Lil Sculpr's Free Assessment Day!<br><br>
-                    It's happening on <strong>Sunday, Nov 16</strong>.<br><br>
-                    Join our Children's Day Weekend Special Event! This Free Creative Assessment Day is perfect for discovering your child's artistic potential. Limited slots available - don't miss out!<br><br>
-                    We can't wait to see you at Lil Sculpr on Nov 16! 🧡</p>
+                    <span class="sub-title">Winter Carnival Workshops 🎄</span>
+                    <h2 class="sec-title big-title">Christmas Clay Workshop</h2>
+                    <p class="fs-md mb-30">
+                        <strong>🎯 Workshop Dates:</strong> December 21-22, 2025<br>
+                        <strong>⏰ Timings:</strong> Multiple batches available daily<br>
+                        <strong>🎪 Venue:</strong> Lil Sculpr Clay Academy, Anna Nagar<br><br>
+                        
+                        Thanks for your interest in Lil Sculpr's Winter Carnival Workshop!<br><br>
+                        It's happening this festive season for <strong>kids from LKG–8th</strong>.<br><br>
+                        A fun-filled 2 hr Christmas-themed clay session — fully guided and
+                        <strong>materials included</strong>. Limited seats available, so secure your spot soon!<br><br>
+                        Give your child a festive weekend of creativity & joy! 🎄✨
+                    </p>
+                    
+                    <!-- Workshop Dates Info -->
+                    <!-- <div class="workshop-dates-info mb-30">
+                        <h4><i class="fas fa-calendar-check me-2"></i>Available Dates:</h4>
+                        <div class="date-list">
+                            <div class="date-item">
+                                <span class="date-badge">Sunday</span>
+                                <strong>December 21, 2025</strong>
+                                <span class="badge bg-success">Available</span>
+                            </div>
+                            <div class="date-item mt-2">
+                                <span class="date-badge">Monday</span>
+                                <strong>December 22, 2025</strong>
+                                <span class="badge bg-success">Available</span>
+                            </div>
+                        </div>
+                    </div> -->
+                    
                     <a href="about.html" class="vs-btn wave-btn style-1">Learn More About Us</a>
                 </div>
             </div>
         </div>
     </div>
-    <div class="shape-mockup z-index-3 d-none d-hd-block" data-bottom="-8%" data-right="0%"><img src="assets/img/shape/rainbow-star.png" alt="shapes"></div>
-
-    <div class="shape-mockup moving d-none d-hd-block" data-top="22%" data-left="7%"><img src="assets/img/icon/note.png" alt="shapes"></div>
-    <div class="shape-mockup shapePulse d-none d-hd-block" data-bottom="20%" data-left="7%"><img src="assets/img/icon/bird.png" alt="shapes"></div>
+    
+    <!-- Payment Loading Overlay -->
+    <div id="payment-loading" class="payment-loading">
+        <div class="payment-loading-content">
+            <div class="payment-spinner"></div>
+            <h4>Processing Payment...</h4>
+            <p>Please wait while we process your payment. Do not close this window.</p>
+        </div>
+    </div>
 </section>
 
     <!--======== / Appointment Section ========-->
@@ -415,7 +502,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </div>
                     <!-- Footer Widget-->
                     <div class="col-xl-auto col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="widget footer-widget widget_nav_menu">
+                                          <div class="widget footer-widget widget_nav_menu">
                             <h4 class="widget_title">Details Info</h4>
                             <ul class="menu">
                                 <li><a href="classes.html">Classes</a></li>
@@ -423,6 +510,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                                 <li><a href="about.html">About Us</a></li>
                                 <li><a href="blogs.html">Our Team</a></li>
                                 <li><a href="gallery.html">Gallery</a></li>
+                                <li><a href="return-refund-policy.html">Return & Refund Policy</a></li>
+                                <li><a href="terms-and-conditions.html">Terms & Conditions</a></li>
+                                <li><a href="privacy-policy.html">Privacy Policy</a></li>
                             </ul>
                         </div>
                     </div>
@@ -609,6 +699,7 @@ Reserve Free Sp</p>
     <!-- Main Js File -->
         <script src="assets/js/main.min.js"></script>
                 <script src="./assets/js/spinner.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 </body>
 
