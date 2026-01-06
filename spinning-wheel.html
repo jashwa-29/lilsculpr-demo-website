@@ -7,6 +7,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="./assets/css/style.css">
+
+    <style>
+        /* Stabilize icons while font loads */
+        .fal, .fab, .fas, .far { font-display: swap; }
+    </style>
 </head>
 <body>
 
@@ -126,13 +131,13 @@
                                         </li> -->
                                     </ul>
                                 </nav>
-                                <button type="button" class="vs-menu-toggle d-block d-lg-none"><i class="far fa-bars"></i> Menu</button>
+                                <button type="button" class="vs-menu-toggle d-block d-lg-none" aria-label="Open mobile menu"><i class="fal fa-bars" aria-hidden="true"></i> Menu</button>
                             </div>
                             <div class="col-auto d-none d-xl-block">
                                 <div class="header-button">
                                     <a href="contact.html" class="vs-btn wave-btn">Contact Us</a>
                                     <!-- <button type="button" class="searchBoxToggler icon-btn"><i class="far fa-search"></i></button> -->
-                                    <button type="button" class="sideMenuToggler icon-btn"><i class="fal fa-bars"></i></button>
+                                    <button type="button" class="sideMenuToggler icon-btn"><i class="fal fa-bars" aria-hidden="true"></i></button>
                                 </div>
                             </div>
                         </div>
