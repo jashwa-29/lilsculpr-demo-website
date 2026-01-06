@@ -180,9 +180,7 @@
             spinBtn.addEventListener('click', spin);
             
             claimBtn.addEventListener('click', function() {
-                // Replace with your desired action
-                alert("Prize claimed! Thank you for participating.");
-                winnerPopup.classList.remove('active');
+                window.location.href = 'contact.html';
             });
             
             closeWinner.addEventListener('click', function() {

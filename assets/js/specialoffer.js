@@ -4,7 +4,7 @@
     "use strict";
 
     // ==================== CONFIGURATION ====================
-    const RAZORPAY_KEY = "rzp_live_mTBnRikOBzrdpK";
+    const RAZORPAY_KEY = "rzp_live_RrosCeY3cSnO6e";
     const WORKSHOP_FEE = 499;
     const BACKEND_API = 'http://localhost:5000/api/special-course'; // Change for production
     const CARNIVAL_NAME = "Winter Carnival Workshop 🎄";

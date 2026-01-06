@@ -3705,6 +3705,9 @@ ul.popular-service-wrap li:hover {
             border-bottom: 3px solid #ff6b00; */
             background-color: #ff6b00;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            height: 48px; 
+            display: flex;
+            align-items: center;
         }
 
         .alert-ticker {
@@ -4163,6 +4166,7 @@ ul.popular-service-wrap li:hover {
   padding-top: 12px;
   padding-bottom: 12px;
   line-height: 1;
+  min-height: 40px;
 }
 .header-top-area.style-2 {
   background-color: var(--white-color);
@@ -6161,7 +6165,11 @@ ul.comment-list .vs-comment:last-child:not(.children .vs-comment) > .vs-post-com
   position: relative;
 }
 .hero-slider1 .vs-hero-inner {
-  padding: 100px 0 140px 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
 }
 
 .vs-hero-bg {
@@ -6185,7 +6193,7 @@ ul.comment-list .vs-comment:last-child:not(.children .vs-comment) > .vs-post-com
 
 .hero-content {
   max-width: 660px;
-  padding: 150px;
+  padding: 100px 150px;
   right: 180px;
   margin-left: auto;
   text-align: center;
@@ -6210,8 +6218,8 @@ ul.comment-list .vs-comment:last-child:not(.children .vs-comment) > .vs-post-com
   top: 19%;
   transform: rotate(3deg);
 }
-.car{
-  width: ;
+.car {
+  display: block;
 }
 
 .con-after {
@@ -14348,3 +14356,252 @@ select[name="batch"] option.full-slot:disabled {
                 font-size: 1.1rem;
             }
         }
+
+
+/* Christmas overlay for background image */
+.bg-overlay {
+  position: relative;
+}
+
+.bg-overlay::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    rgba(178, 34, 34, 0.15),  /* Christmas red */
+    rgba(34, 139, 34, 0.1)   /* Christmas green */
+  );
+  z-index: 1;
+}
+
+/* Ensure content stays above overlay */
+.breadcumb-content,
+.container {
+  position: relative;
+  z-index: 2;
+}
+
+/* Christmas text colors only */
+.special-text {
+  color: #b22222 !important;
+  -webkit-text-stroke: 3px white;
+  text-stroke: 1px white;
+  paint-order: stroke fill; /* Makes outline appear behind fill */
+}
+/* Optional: Darker red for links on hover */
+.breadcumb-menu li a.special-text:hover {
+  color: #8b0000 !important; /* Darker red */
+}
+
+/* Optional: Christmas green for active breadcrumb */
+.breadcumb-menu li.active .special-text {
+  color: #228b22 !important; /* Christmas green */
+}
+
+
+
+/* ==========================================================================
+   Elegant Winter Hero Styling
+   ========================================================================== */
+
+.winter-hero-mode .hero-slider1 .vs-hero-inner {
+    padding: 120px 0; /* Minimized vertical space */
+    
+    min-height: 550px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.winter-hero-mode .vs-hero-bg {
+    z-index: 1;
+}
+
+/* Gradient Overlay for Depth - Darker for better text visibility */
+.winter-hero-mode .vs-hero-bg[data-overlay]:before {
+    z-index: 2;
+    background: radial-gradient(circle at center, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.9) 100%);
+    opacity: 0.9 !important; 
+}
+
+/* Centered Elegant Content */
+.winter-hero-mode .hero-content {
+    position: relative;
+    z-index: 3;
+    left: 0;
+    right: 0;
+    top: 0;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    padding: 0 30px;
+    max-width: 950px;
+}
+
+/* Refined Pill Tag - Lighter color for visibility */
+.winter-title-tag {
+    display: inline-block;
+    font-family: 'Catamaran', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #e3a9f0; /* Lighter violet/pink for better contrast on dark */
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    margin-bottom: 25px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(227, 169, 240, 0.5);
+}
+
+/* Typography Ultra-Refinement - Increased weight */
+.winter-hero-heading {
+    font-family: 'Playfair Display', serif; 
+    font-size: 85px; 
+    font-weight: 600; /* Increased from 400 */
+    line-height: 1.1;
+    color: var(--white-color);
+    margin-bottom: 35px;
+    letter-spacing: -1px;
+    text-shadow: 0 4px 15px rgba(0,0,0,0.7); /* Stronger shadow */
+}
+
+/* Highlight Effect - Sophisticated Violet */
+.winter-hero-heading .highlight {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700; 
+    font-style: italic;
+    color: #d76ae9; /* Lighter highlight color */
+    position: relative;
+    display: inline-block;
+    background: linear-gradient(to bottom, #d76ae9 0%, #e3a9f0 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding-right: 10px;
+}
+
+.winter-hero-desc {
+    font-family: 'Catamaran', sans-serif;
+    font-size: 21px; /* Slightly larger */
+    color: #ffffff; /* Pure white */
+    line-height: 1.7;
+    margin-bottom: 50px;
+    font-weight: 500; /* Increased from 300 to 500 */
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    letter-spacing: 0.5px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+}
+
+/* Simple Design-Focused Button */
+.elegant-btn {
+    position: relative;
+    display: inline-block;
+    font-family: 'Catamaran', sans-serif; /* Clean sans-serif */
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    padding: 15px 40px;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.3);
+    transition: all 0.5s ease;
+    overflow: hidden;
+}
+
+/* Violet fill on hover */
+.elegant-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--theme-color);
+    z-index: -1;
+    transition: all 0.5s ease;
+}
+
+.elegant-btn:hover {
+    color: #fff;
+    border-color: var(--theme-color);
+}
+
+.elegant-btn:hover::before {
+    left: 0;
+}
+
+/* Subtle vertical line decoration - Violet */
+.winter-hero-mode .hero-content::after {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 60px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0), #9C29B2);
+    margin: 40px auto 0;
+    opacity: 0.8;
+}
+
+/* Responsive */
+@media (max-width: 1199px) {
+    .winter-hero-heading {
+        font-size: 70px;
+    }
+}
+@media (max-width: 767px) {
+    .winter-hero-mode .hero-slider1 .vs-hero-inner {
+        padding: 150px 0;
+        min-height: 600px;
+    }
+    .winter-hero-heading {
+        font-size: 48px;
+        font-weight: 300;
+        letter-spacing: -1px;
+    }
+    .winter-hero-desc {
+        font-size: 18px;
+        margin-bottom: 40px;
+    }
+    .elegant-btn {
+        padding: 12px 30px;
+        font-size: 14px;
+        letter-spacing: 2px;
+    }
+}
+
+
+
+/* Responsive */
+@media (max-width: 1199px) {
+    .winter-hero-heading {
+        font-size: 70px;
+    }
+}
+@media (max-width: 767px) {
+    .winter-hero-mode .hero-slider1 .vs-hero-inner {
+        padding: 100px 0;
+        min-height: 450px;
+    }
+    .winter-hero-heading {
+        font-size: 42px;
+        font-weight: 500;
+        margin-bottom: 20px;
+    }
+    .winter-hero-desc {
+        font-size: 16px;
+        margin-bottom: 30px;
+    }
+    .winter-title-tag {
+        font-size: 11px;
+        margin-bottom: 15px;
+    }
+    .elegant-btn {
+        padding: 12px 30px;
+        font-size: 13px;
+    }
+}
+
