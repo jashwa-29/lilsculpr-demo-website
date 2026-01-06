@@ -1553,8 +1553,8 @@ textarea.form-control.is-invalid {
 
 .sub-title {
   font-size: 24px;
-  font-weight: 500;
-  color: var(--theme-color);
+  font-weight: 600;
+  color: #9C29B2; /* Ensuring high contrast violet */
   display: block;
   margin-bottom: 29px;
   margin-top: -4px;
@@ -14610,19 +14610,24 @@ select[name="batch"] option.full-slot:disabled {
     }
 }
 /* Performance Optimizations - CLS Stability */
-.vs-hero-wrapper {
-    min-height: 800px;
-}
-.vs-hero-inner {
+.vs-hero-wrapper, .vs-hero-inner {
     min-height: 800px;
 }
 @media (max-width: 991px) {
-    .vs-hero-wrapper, .vs-hero-inner {
-        min-height: 600px;
-    }
+    .vs-hero-wrapper, .vs-hero-inner { min-height: 600px; }
 }
 @media (max-width: 767px) {
-    .vs-hero-wrapper, .vs-hero-inner {
-        min-height: 500px;
-    }
+    .vs-hero-wrapper, .vs-hero-inner { min-height: 500px; }
+}
+
+/* Carousel Stability */
+.classes-section .vs-carousel,
+.blog-section .vs-carousel {
+    min-height: 500px;
+    background: #fdfdfd;
+}
+
+/* Fix for shape mockups causing shifts */
+.shape-mockup {
+    pointer-events: none;
 }
