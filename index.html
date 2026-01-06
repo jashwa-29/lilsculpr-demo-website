@@ -32,7 +32,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Catamaran:wght@100;200;300;400;500;600;700;800;900&display=swap"
         media="print"
-        onload="this.media='all'">
+        onload="this.media='all'"
+        font-display="swap">
 
     <noscript>
         <link rel="stylesheet"
@@ -40,7 +41,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     </noscript>
 
     <!-- Preload Critical LCP Image -->
-    <link rel="preload" href="assets/img/lil-sculpr/DSC01311.webp" as="image">
+    <link rel="preload" href="assets/img/lil-sculpr/DSC01311.webp" as="image" fetchpriority="high">
 
     <!-- CRITICAL CSS (Inline to prevent CLS) -->
     <style>
@@ -49,15 +50,22 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         .header-links ul li { display: inline-block; min-width: 150px; }
         .header-links ul li i { width: 24px; text-align: center; }
         .sticky-wrapper { min-height: 80px; }
+        .vs-hero-wrapper { min-height: 800px; background: #fef5ff; overflow: hidden; position: relative; }
+        .vs-hero-inner { min-height: 800px; display: flex; align-items: center; position: relative; }
+        .vs-hero-bg { position: absolute; inset: 0; background-size: cover; background-position: center; }
         @media (max-width: 991px) {
             .header-top-area { display: none; }
             .alert-ticker-wrapper { height: 44px; }
+            .vs-hero-wrapper, .vs-hero-inner { min-height: 600px; }
+        }
+        @media (max-width: 767px) {
+            .vs-hero-wrapper, .vs-hero-inner { min-height: 500px; }
         }
     </style>
 
     <!-- MAIN CSS -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.min.css">
 
     <!-- Plugin CSS (Deferred Loading for Performance) -->
     <link rel="stylesheet" href="assets/css/fontawesome.min.css" media="print" onload="this.media='all'">

@@ -465,7 +465,6 @@ select {
   display: block;
   width: 100%;
   line-height: 1.5;
-  vertical-align: middle;
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 0.75rem center;
@@ -537,6 +536,9 @@ input.form-control::-webkit-inner-spin-button {
 /* Firefox */
 input.form-control[type=number] {
   -moz-appearance: textfield;
+  appearance: textfield;
+  appearance: none;
+  appearance: textfield;
 }
 
 textarea.form-control {
@@ -1061,7 +1063,7 @@ textarea.form-control.is-invalid {
   width: 18px;
   height: 18px;
   line-height: 18px;
-  display: inline-block;
+  display: block;
   text-align: center;
   font-size: 12px;
   border-radius: 50px;
@@ -7126,7 +7128,6 @@ table.variations select {
   width: max-content;
   font-weight: 400;
   line-height: 1.5;
-  vertical-align: middle;
   margin: 0;
   padding-right: 54px;
   padding-left: 20px;
@@ -7658,6 +7659,8 @@ del .amount {
 }
 .quantity input[type=number] {
   -moz-appearance: textfield;
+  appearance: textfield;
+  appearance: none;
 }
 .quantity .qut-btn {
   border: none;
@@ -8047,6 +8050,8 @@ del .amount {
 }
 .cart_table .qty-input[type=number] {
   -moz-appearance: textfield;
+  appearance: textfield;
+  appearance: none;
 }
 .cart_table .actions {
   text-align: right;
@@ -14387,9 +14392,9 @@ select[name="batch"] option.full-slot:disabled {
 /* Christmas text colors only */
 .special-text {
   color: #b22222 !important;
-  -webkit-text-stroke: 3px white;
+  -webkit-text-stroke: 1px white;
   text-stroke: 1px white;
-  paint-order: stroke fill; /* Makes outline appear behind fill */
+  paint-order: stroke fill;
 }
 /* Optional: Darker red for links on hover */
 .breadcumb-menu li a.special-text:hover {
@@ -14604,4 +14609,20 @@ select[name="batch"] option.full-slot:disabled {
         font-size: 13px;
     }
 }
-
+/* Performance Optimizations - CLS Stability */
+.vs-hero-wrapper {
+    min-height: 800px;
+}
+.vs-hero-inner {
+    min-height: 800px;
+}
+@media (max-width: 991px) {
+    .vs-hero-wrapper, .vs-hero-inner {
+        min-height: 600px;
+    }
+}
+@media (max-width: 767px) {
+    .vs-hero-wrapper, .vs-hero-inner {
+        min-height: 500px;
+    }
+}
