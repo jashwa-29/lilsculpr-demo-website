@@ -2,24 +2,27 @@
   "use strict";
 
   $(document).ready(function () {
-    const form = '.ajax-register';
+    // Target the specific appointment form by class or ID
+    const form = '.appointment-form';
     const invalidCls = 'is-invalid';
     const $form = $(form);
 
     if ($form.length === 0) {
-      console.log('Registration form not found');
+      console.log('Appointment form not found');
       return;
     }
 
+    // Update field selectors to match index.html form
     const $email = $form.find('[name="email"]');
     const $phone = $form.find('[name="number"]');
-    const $validation = $form.find('[name="name"],[name="email"],[name="number"],[name="child_name"],[name="batch"]');
+    // Validation selectors including new fields
+    const $validation = $form.find('[name="parent_name"],[name="email"],[name="number"],[name="child_name"],[name="child_age"],[name="batch"]');
     const $formMessages = $form.find('.form-messages');
 
     // Initialize EmailJS
     if (typeof emailjs !== 'undefined') {
       emailjs.init("URBQj-2FY8XO7TEQg");
-      console.log('EmailJS initialized for registration form');
+      console.log('EmailJS initialized for appointment form');
     } else {
       console.error('EmailJS not loaded');
     }
@@ -73,38 +76,41 @@
         return;
       }
 
-      $formMessages.removeClass('error success').text('⏳ Submitting your registration...');
+      $formMessages.removeClass('error success').text('⏳ Submitting your request...');
       $form.find('button').prop('disabled', true);
-      $form.find('.vs-btn').html('<i class="fal fa-spinner fa-spin"></i> Sending...');
+      const originalBtnText = $form.find('.vs-btn').text();
+      $form.find('.vs-btn').text('Sending...');
 
       const templateParams = {
-        name: $form.find('[name="name"]').val().trim(),
+        parent_name: $form.find('[name="parent_name"]').val().trim(), // Mapped from parent_name
+        name: $form.find('[name="parent_name"]').val().trim(), // Fallback for templates using 'name'
         email: $email.val().trim(),
         number: $phone.val().trim().replace(/\s+/g, ''),
         child_name: $form.find('[name="child_name"]').val().trim(),
+        child_age: $form.find('[name="child_age"]').val().trim(),
         batch: $form.find('[name="batch"]').val().trim(),
         message: $form.find('[name="message"]').val().trim() || 'No additional message provided',
       };
 
-      console.log('Sending registration with params:', templateParams);
+      console.log('Sending appointment request with params:', templateParams);
 
       emailjs.send("service_gyorn2l", "template_nuqzlp6", templateParams)
         .then((response) => {
-          console.log('Registration email sent successfully:', response);
-          $formMessages.addClass('success').text("✅ Registration successful! We'll contact you soon.");
+          console.log('Email sent successfully:', response);
+          $formMessages.addClass('success').text("✅ Appointment request sent successfully! We'll contact you soon.");
           $form[0].reset();
           $validation.removeClass(invalidCls);
 
           setTimeout(() => {
             $form.find('button').prop('disabled', false);
-            $form.find('.vs-btn').html('<i class="fal fa-paper-plane"></i> Register Now');
+            $form.find('.vs-btn').text(originalBtnText); // Restore original text
           }, 2000);
         })
         .catch((error) => {
-          console.error('EmailJS Registration Error:', error);
-          $formMessages.addClass('error').text("❌ Failed to send registration. Please try again later.");
+          console.error('EmailJS Error:', error);
+          $formMessages.addClass('error').text("❌ Failed to send request. Please try again later.");
           $form.find('button').prop('disabled', false);
-          $form.find('.vs-btn').html('<i class="fal fa-paper-plane"></i> Register Now');
+          $form.find('.vs-btn').text(originalBtnText);
         });
     }
 
@@ -118,7 +124,7 @@
 
     // Handle submit
     $form.on('submit', function (e) {
-      console.log('Registration form submit event triggered - PREVENTING DEFAULT');
+      console.log('Appointment form submit event triggered - PREVENTING DEFAULT');
       e.preventDefault();
       e.stopPropagation();
       e.stopImmediatePropagation();
@@ -128,7 +134,7 @@
 
     // Extra safety for buttons
     $form.find('button').on('click', function (e) {
-      console.log('Register button clicked - PREVENTING DEFAULT');
+      console.log('Button clicked - PREVENTING DEFAULT');
       e.preventDefault();
       e.stopPropagation();
       $form.trigger('submit');
@@ -137,7 +143,7 @@
 
     $('.vs-btn').on('click', function (e) {
       if ($(this).closest(form).length) {
-        console.log('VS button clicked inside register form');
+        console.log('VS button clicked inside form');
         e.preventDefault();
         e.stopPropagation();
         $form.trigger('submit');
@@ -145,7 +151,7 @@
       }
     });
 
-    console.log('Registration form handler initialized');
+    console.log('Course form handler initialized for .appointment-form');
   });
 
 })(jQuery);
