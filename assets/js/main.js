@@ -33,8 +33,26 @@
 
 /*---------- 01. On Load Function ----------*/
 $(window).on('load', function () {
-  $('.preloader').fadeOut();
+  // Wait for carousel to initialize before hiding preloader
+  var checkCarousel = setInterval(function() {
+    if ($('.vs-carousel.slick-initialized').length > 0) {
+      clearInterval(checkCarousel);
+      $('.preloader').addClass('fade-out');
+      setTimeout(function() {
+        $('.preloader').hide();
+      }, 300);
+    }
+  }, 50);
   
+  // Fallback: hide after 2 seconds even if carousel doesn't initialize
+  setTimeout(function() {
+    if ($('.preloader').is(':visible')) {
+      $('.preloader').addClass('fade-out');
+      setTimeout(function() {
+        $('.preloader').hide();
+      }, 300);
+    }
+  }, 2000);
 });
 
 /*---------- 02. Preloader ----------*/

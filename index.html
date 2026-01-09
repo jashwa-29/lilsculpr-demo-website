@@ -6,27 +6,23 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="IE=edge">
-    <title>Lil Sculpr - Kids Clay Modeling Academy</title>
+    <title>Kids Clay Modelling Classes in Chennai | Lil Sculpr Academy</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- SEO Essentials -->
     <meta name="author" content="Lil Sculpr Clay Modeling Academy">
-    <meta name="description" content="Lil Sculpr Clay Modeling Academy — a creative space for learning the art of clay modeling. Explore fun, hands-on workshops and professional sculpting classes for all age groups.">
+    <meta name="description" content="Lil Sculpr offers fun and structured clay modelling classes for kids in Chennai. Learn clay art from basics to advanced with expert guidance.">
     <meta name="keywords" content="Lil Sculpr, Clay Modeling, Clay Art Classes, Sculpture Academy, Pottery Classes, Clay Workshop, Art School, Sculpting Classes, Kids Art, Creative Learning">
     <meta name="robots" content="index, follow">
 
-   <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-KK89945D');</script>
     <link rel="icon" href="assets/img/Final Logo.webp" type="image/png">
 
-    <!-- Preconnect for Google Fonts -->
+    <!-- Preconnect for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://connect.facebook.net">
 
     <!-- Google Fonts - Optimized Loading -->
     <link rel="stylesheet"
@@ -40,32 +36,90 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Catamaran:wght@100;200;300;400;500;600;700;800;900&display=swap">
     </noscript>
 
-    <!-- Preload Critical LCP Image -->
     <link rel="preload" href="assets/img/lil-sculpr/DSC01311.webp" as="image" fetchpriority="high">
+    <link rel="preload" href="assets/img/lil-sculpr/DSC01329.webp" as="image">
+    <link rel="preload" href="assets/img/logo.webp" as="image" fetchpriority="high">
+    
+    <!-- Preload Critical Fonts to Prevent Layout Shift -->
+    <link rel="preload" href="https://fonts.gstatic.com/s/baloo2/v23/wXKrE3kTposypRyd51jcAA.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="https://fonts.gstatic.com/s/catamaran/v28/o-0IIpQoyXQa2RxT7-5B6Ryxs2E_6n1iPHjc1anXuluiLyw.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="assets/fonts/fontawesome/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="assets/fonts/fontawesome/fa-light-300.woff2" as="font" type="font/woff2" crossorigin>
 
-    <!-- CRITICAL CSS (Inline to prevent CLS) -->
+    <!-- CRITICAL CSS (Zero-CLS & Stability) -->
     <style>
+        :root { --theme-color: #9C29B2; --title-font: "Baloo 2", cursive; --para-font: "Catamaran", sans-serif; }
+        body { margin: 0; padding: 0; font-family: var(--title-font); overflow-x: hidden; }
         .header-top-area { min-height: 40px; background-color: #9C29B2; }
         .alert-ticker-wrapper { height: 48px; overflow: hidden; background-color: #ff6b00; display: flex; align-items: center; }
-        .header-links ul li { display: inline-block; min-width: 150px; }
-        .header-links ul li i { width: 24px; text-align: center; }
         .sticky-wrapper { min-height: 80px; }
-        .vs-hero-wrapper { min-height: 800px; background: #fef5ff; overflow: hidden; position: relative; }
-        .vs-hero-inner { min-height: 800px; display: flex; align-items: center; position: relative; }
-        .vs-hero-bg { position: absolute; inset: 0; background-size: cover; background-position: center; }
+        .vs-header { position: relative; z-index: 40; }
+        
+        /* Zero-CLS Hero Carousel */
+        .vs-hero-wrapper { min-height: 800px; background: #fef5ff; overflow: hidden; position: relative; width: 100%; display: block; }
+        .vs-carousel:not(.slick-initialized) { display: flex; overflow: hidden; }
+        .vs-carousel:not(.slick-initialized) > .vs-hero-inner:not(:first-child) { display: none; }
+        .vs-carousel:not(.slick-initialized) > .vs-hero-inner:first-child { width: 100%; display: flex !important; }
+        
+        .vs-hero-inner { min-height: 800px; display: flex; align-items: center; position: relative; width: 100%; }
+        .vs-hero-bg { position: absolute; inset: 0; background-size: cover; background-position: center; height: 100%; width: 100%; }
+        .hero-slide { min-height: 800px; }
+        .hero-content { max-width: 660px; width: 100%; margin: 70px auto; padding: 100px 35px; position: relative; z-index: 2; }
+        
+        h1, h2, h3, h4, .hero-title { font-family: var(--title-font); }
+        p, span { font-family: var(--para-font); }
+        .fal, .fab, .fas, .far { width: 1em; display: inline-block; text-align: center; }
+
+        /* Bootstrap Grid Essentials (Above the fold) */
+        .container { width: 100%; padding-right: 15px; padding-left: 15px; margin-right: auto; margin-left: auto; max-width: 1230px; }
+        .row { display: flex; flex-wrap: wrap; margin-right: -15px; margin-left: -15px; }
+        .col-auto { flex: 0 0 auto; width: auto; }
+        .col-lg-6 { flex: 0 0 auto; width: 50%; }
+        .align-items-center { align-items: center; }
+        .justify-content-between { justify-content: space-between; }
+        .gx-20 { --bs-gutter-x: 20px; }
+        .d-none { display: none; }
+        @media (min-width: 992px) { .d-lg-block { display: block !important; } .d-lg-inline-block { display: inline-block !important; } }
+
         @media (max-width: 991px) {
             .header-top-area { display: none; }
             .alert-ticker-wrapper { height: 44px; }
-            .vs-hero-wrapper, .vs-hero-inner { min-height: 600px; }
+            .vs-hero-wrapper, .vs-hero-inner, .vs-hero-inner:first-child, .hero-slide { min-height: 600px; }
+            .col-lg-6 { width: 100%; }
         }
         @media (max-width: 767px) {
-            .vs-hero-wrapper, .vs-hero-inner { min-height: 500px; }
+            .vs-hero-wrapper, .vs-hero-inner, .vs-hero-inner:first-child, .hero-slide { min-height: 500px; }
+        }
+        
+        /* Layout Fixes */
+        .section-before { height: 25px; overflow: hidden; }
+        .section-after { height: 62px; overflow: hidden; }
+        .hero-title { font-size: 45px; line-height: 1.2; }
+        @media (max-width: 767px) { .hero-title { font-size: 30px; } }
+
+        /* Preloader Stability (Critical) */
+        .preloader { position: fixed; inset: 0; z-index: 10000; background-color: #fff; display: flex; align-items: center; justify-content: center; transition: opacity 0.3s ease; }
+        .preloader.fade-out { opacity: 0; pointer-events: none; }
+        .preloader-inner { text-align: center; }
+        .loader-logo { width: 150px; height: auto; margin-bottom: 20px; animation: pulse 1.5s ease-in-out infinite; }
+        @keyframes pulse { 0% { transform: scale(0.95); opacity: 0.8; } 50% { transform: scale(1); opacity: 1; } 100% { transform: scale(0.95); opacity: 0.8; } }
+        
+        /* Force Slick Container Height (Zero-CLS) */
+        .vs-hero-wrapper .slick-list { min-height: 800px !important; }
+        .vs-hero-wrapper .slick-track { min-height: 800px !important; }
+        @media (max-width: 991px) {
+            .vs-hero-wrapper .slick-list { min-height: 600px !important; }
+            .vs-hero-wrapper .slick-track { min-height: 600px !important; }
+        }
+        @media (max-width: 767px) {
+            .vs-hero-wrapper .slick-list { min-height: 500px !important; }
+            .vs-hero-wrapper .slick-track { min-height: 500px !important; }
         }
     </style>
 
-    <!-- MAIN CSS -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/style.min.css">
+    <!-- MAIN CSS (Deferred for Performance) -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="assets/css/style.min.css" media="print" onload="this.media='all'">
 
     <!-- Plugin CSS (Deferred Loading for Performance) -->
     <link rel="stylesheet" href="assets/css/fontawesome.min.css" media="print" onload="this.media='all'">
@@ -82,24 +136,19 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <link rel="stylesheet" href="assets/css/magnific-popup.min.css">
         <link rel="stylesheet" href="assets/css/slick.min.css">
     </noscript>
-    <script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '886450287373984');
-fbq('track', 'PageView');
-</script>
 </head>
 
 
 
 
 <body>
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="preloader-inner">
+            <img src="assets/img/logo.webp" alt="Lil Sculpr" class="loader-logo" width="188" height="102">
+       
+        </div>
+    </div>
 
 
     <!-- Googl Tag Manager (noscript) -->
@@ -196,7 +245,7 @@ src="https://www.facebook.com/tr?id=886450287373984&ev=PageView&noscript=1"
   <div class="vs-menu-area">
     <button class="vs-menu-toggle" aria-label="Close mobile menu"><i class="fal fa-times" aria-hidden="true"></i></button>
     <div class="mobile-logo">
-      <a href="index.html"><img src="assets/img/logo.webp" alt="Lil Sculpr Logo" width="180" height="60"></a>
+      <a href="index.html"><img src="assets/img/logo.webp" alt="Lil Sculpr Logo" width="188" height="102"></a>
     </div>
     <div class="vs-mobile-menu">
       <ul>
@@ -264,7 +313,7 @@ src="https://www.facebook.com/tr?id=886450287373984&ev=PageView&noscript=1"
                             <div class="col-auto">
                                 <div class="header-logo">
                                     <a href="index.html">
-                                        <img src="assets/img/logo.webp" alt="Lil Sculpr Logo" width="180" height="60">
+                                        <img src="assets/img/logo.webp" alt="Lil Sculpr Logo" width="188" height="102">
                                     </a>
                                 </div>
                             </div>
@@ -361,14 +410,15 @@ src="https://www.facebook.com/tr?id=886450287373984&ev=PageView&noscript=1"
             <div class="hero-content" data-bg-src="assets/img/shape/hcontent-bg.webp">
                 <img class="con-before" data-ani="slideinleft" data-ani-delay="0.2s" src="assets/img/shape/hero-con-before.webp" alt="shape" width="102" height="392">
                 <img class="con-after" data-ani="slideinright" data-ani-delay="0.2s" src="assets/img/shape/hero-con-after.webp" alt="shape" width="107" height="231">
-
+<img class="car slidetopleft" data-ani="slidetopleft" data-ani-delay="0.4s" src="assets/img/claymodeling/car.webp" alt="icon" width="165" height="128" style="animation-delay: 0.4s;">
                 <div class="hero-text" data-ani="slideinup" data-ani-delay="0s">
                     <span>Create</span>
                     <i class="fas fa-circle"></i>
                     <span>Explore</span>
                 </div>
-                <h1 class="hero-title text-title mb-30" data-ani="slideinup" data-ani-delay="0.2s">Welcome to <span class="focus text-theme">Lil Sculpr</span> Clay Modelling for Kids</h1>
-                <a href="contact.html" class="vs-btn wave-btn" data-ani="slideinup" data-ani-delay="0.4s">Admissions Open</a>
+     <h1 class="hero-title text-title mb-30" data-ani="slideinup" data-ani-delay="0.2s">Kids<span class="focus text-theme">Clay Modelling</span>Classes in Chennai for Creative Children</h1>
+                     <p data-ani="slideinup" data-ani-delay="0.2s">Lil Sculpr is a creative clay modelling academy where kids learn to shape, sculpt, and express their imagination using clay. Our classes help children grow creatively while having fun.</p>
+                <a href="contact.html" class="vs-btn wave-btn" data-ani="slideinup" data-ani-delay="0.4s">Enroll Your Child Today</a>
             </div>
         </div>
 
@@ -378,14 +428,15 @@ src="https://www.facebook.com/tr?id=886450287373984&ev=PageView&noscript=1"
             <div class="hero-content" data-bg-src="assets/img/shape/hcontent-bg.webp">
                 <img class="con-before" data-ani="slideinleft" data-ani-delay="0.2s" src="assets/img/shape/hero-con-before.webp" alt="shape" width="102" height="392">
                 <img class="con-after" data-ani="slideinright" data-ani-delay="0.2s" src="assets/img/shape/hero-con-after.webp" alt="shape" width="107" height="231">
-
+<img class="car slidetopleft" data-ani="slidetopleft" data-ani-delay="0.4s" src="assets/img/claymodeling/car.webp" alt="icon" style="animation-delay: 0.4s;">
                 <div class="hero-text" data-ani="slideinup" data-ani-delay="0s">
                     <span>Imagine</span>
                     <i class="fas fa-circle"></i>
                     <span>Create</span>
                 </div>
-                <h1 class="hero-title text-title mb-30" data-ani="slideinup" data-ani-delay="0.2s">A Premier<span class="focus text-theme">Clay Modelling</span> Academy for Kids</h1>
-                <a href="contact.html" class="vs-btn wave-btn" data-ani="slideinup" data-ani-delay="0.4s">Visit for a FREE Demo Class</a>
+                <h1 class="hero-title text-title mb-30" data-ani="slideinup" data-ani-delay="0.2s">Kids<span class="focus text-theme">Clay Modelling</span>Classes in Chennai for Creative Children</h1>
+                <p data-ani="slideinup" data-ani-delay="0.2s">Lil Sculpr is a creative clay modelling academy where kids learn to shape, sculpt, and express their imagination using clay. Our classes help children grow creatively while having fun.</p>
+                <a href="contact.html" class="vs-btn wave-btn" data-ani="slideinup" data-ani-delay="0.4s">Book a Free Trial Class</a>
             </div>
         </div>
     </div>
@@ -393,76 +444,65 @@ src="https://www.facebook.com/tr?id=886450287373984&ev=PageView&noscript=1"
 <!--======== / Hero Section ========-->
     <!--======== / Hero Section ========-->
 
-    <!--======== Service Section ========-->
-  <section class="service-section space">
-    <div class="container">
-        <div class="row text-center justify-content-center wow fadeInUp" data-wow-delay="0.1s">
-            <div class="col-xl-6 col-lg-7 col-md-8 col-sm-9">
-                <div class="title-area">
-                    <span class="sub-title">Our Clay Modelling Programs</span>
-                    <h2 class="sec-title">Nurturing Creativity in Young Artists (Ages -15)</h2>
-                </div>
-            </div>
-        </div>
-        <div class="row gy-30">
-            <!-- Single item -->
-            <div class="col-lg-3 col-md-6 service-card wow fadeInUp" data-wow-delay="0.1s">
-                <div class="service-card-inner">
-                    <div class="sr-icon">
-                        <img src="assets/img/icon/service-1.webp" alt="icon" width="88" height="87" loading="lazy">
-                    </div>
-                    <h2 class="sr-title h4"><a href="service-details.html">Level 1-3: Basic Shapes</a></h2>
-                    <p class="sr-text">Perfect for beginners! Kids learn fundamental techniques like rolling, pinching, and shaping to create simple forms and characters.</p>
-                </div>
-            </div>
-            <!-- Single item -->
-            <div class="col-lg-3 col-md-6 service-card wow fadeInUp" data-wow-delay="0.1s">
-                <div class="service-card-inner">
-                    <div class="sr-icon">
-                        <img src="assets/img/icon/service-2.webp" alt="icon" width="85" height="84" loading="lazy">
-                    </div>
-                    <h2 class="sr-title h4"><a href="service-details.html">Level 4-6: Intermediate Sculpting</a></h2>
-                    <p class="sr-text">Building on basics, students create more complex forms, animals, and simple structures with improved detail and technique.</p>
-                </div>
-            </div>
-            <!-- Single item -->
-            <div class="col-lg-3 col-md-6 service-card wow fadeInUp" data-wow-delay="0.1s">
-                <div class="service-card-inner">
-                    <div class="sr-icon">
-                        <img src="assets/img/icon/service-3.webp" alt="icon" width="84" height="84" loading="lazy">
-                    </div>
-                    <h2 class="sr-title h4"><a href="service-details.html">Level 7-9: Advanced Techniques</a></h2>
-                    <p class="sr-text">Students master complex sculpting methods, texture creation, and begin working on multi-piece projects with professional finishing.</p>
-                </div>
-            </div>
-            <!-- Single item -->
-            <div class="col-lg-3 col-md-6 service-card wow fadeInUp" data-wow-delay="0.1s">
-                <div class="service-card-inner">
-                    <div class="sr-icon">
-                        <img src="assets/img/icon/service-4.webp" alt="icon" width="85" height="87" loading="lazy">
-                    </div>
-                    <h2 class="sr-title h4"><a href="service-details.html">Level 10-12: Master Sculptor</a></h2>
-                    <p class="sr-text">Our highest level focuses on realistic miniatures, detailed sculptures, and portfolio development following international standards.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="shape-mockup z-index-3 d-none d-xl-block" data-top="-4%" data-left="4%"><img src="assets/img/shape/service-line.webp" alt="shapes" width="825" height="58" loading="lazy"></div>
-    <div class="shape-mockup shapePulse z-index-negative d-none d-xl-block" data-top="27%" data-left="9%"><img src="assets/img/icon/lolypop.webp" alt="shapes" width="96" height="104" loading="lazy"></div>
-    <div class="shape-mockup shapePulse rotate z-index-negative" data-top="19%" data-right="21%"><img src="assets/img/icon/star-sm.webp" alt="shapes" width="31" height="29" loading="lazy"></div>
-    <div class="shape-mockup shapePulse rotate z-index-negative" data-bottom="20%" data-right="10%"><img src="assets/img/icon/star.webp" alt="shapes" width="60" height="62" loading="lazy"></div>
-</section>
-    <!--======== / Service Section ========-->
 
-    <!--======== About Section ========-->
+        <!--======== Why Section ========-->
+    <section class="why-section  space-shape-plus">
+        <div class="container">
+            <div class="row gx-70 gy-30 align-items-center">
+                <div class="col-lg-6 wow fadeInLeft" data-wow-delay="0.1s">
+                    <div class="row why-images">
+                        <div class="col-6">
+                            <div class="long-img">
+                                <a href="assets/img/lil-sculpr/whysculpting1.webp" class="popup-image"><img src="assets/img/lil-sculpr/whysculpting1.webp" alt="photo" width="377" height="713" loading="lazy"></a>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="short-img mb-30">
+                                <a href="assets/img/lil-sculpr/whysculpting2.png" class="popup-image"><img src="assets/img/lil-sculpr/whysculpting2.png" alt="photo" width="341" height="338" loading="lazy"></a>
+                            </div>
+                            <div class="short-img">
+                                <a href="assets/img/lil-sculpr/whysculpting3.png" class="popup-image"><img src="assets/img/lil-sculpr/whysculpting3.png" alt="photo" width="341" height="338" loading="lazy"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 text-center text-lg-start wow fadeInRight" data-wow-delay="0.1s">
+                    <div class="title-area">
+                   <span class="sub-title">Why Clay Modelling</span>
+                        <h2 class="sec-title big-title">Why Clay Modelling is Important for Kids</h2>
+                    </div>
+                 
+                    <div class="tab-content choose-content">
+                        <div class="tab-pane fade show active" id="choose-one" role="tabpanel" aria-labelledby="choose-one-tab">
+                          <p>Clay modelling is more than just play. It helps children improve focus, patience, and hand strength. When kids work with clay, they learn problem-solving, creativity, and confidence.</p>
+                               <ul>
+                                <h4>Our clay art classes help kids:</h4>
+                                <li>Improve fine motor skills</li>
+                                <li>Boost imagination and creativity</li>
+                                <li>Reduce screen time</li>
+                                <li>Build confidence through hands-on learning</li>
+                                <li>Enjoy learning in a calm and happy space</li>
+                               </ul>
+                        </div>
+                      
+                    </div>
+                </div>
+            </div>
+        </div>
+    <div class="shape-mockup z-index-3 d-none d-xl-block" data-top="-4%" data-left="4%"><img src="assets/img/shape/service-line.webp" alt="shapes" width="825" height="58" loading="lazy"></div>
+    </section>
+    <!--======== / Why Section ========-->
+
+        <!--======== About Section ========-->
 <section class="about-section bg-smoke space">
     <div class="container">
         <div class="row flex-column-reverse flex-lg-row align-items-center gy-30">
             <div class="col-lg-5 wow fadeInUp" data-wow-delay="0.1s">
                 <div class="text-center text-lg-start">
                     <span class="sub-title">About Lil Sculpr</span>
-                    <h2 class="sec-title big-title">India's First Clay Modelling Academy for Kids</h2>
-                    <p class="fs-md mb-30">With over 15 years of dedicated experience in clay art education, Lil Sculpr has pioneered creative development for children across India. We've successfully trained students from 5 years to 80 years through both online and offline platforms, making us the most trusted name in clay modelling education.</p>
+                    <h2 class="sec-title big-title">Lil Sculpr – A Trusted Clay Modelling Academy for Kids</h2>
+                    <p class="fs-md mb-1">Lil Sculpr is a dedicated clay modelling academy for children. We follow a step-by-step learning method that starts from basic shapes and goes up to advanced clay sculptures.</p>
+                   <p class="fs-md mb-30">Each child learns at their own pace with personal attention. Our goal is to make clay art easy, joyful, and meaningful for every child.</p>
                     
                     <!-- <div class="feature-list mb-30">
                         <div class="feature-item">
@@ -500,17 +540,17 @@ src="https://www.facebook.com/tr?id=886450287373984&ev=PageView&noscript=1"
                         <div class="slide-item">
                             <img class="line-1" data-ani="slideinup" data-ani-delay=".2s" src="assets/img/shape/line-1.webp" alt="shape" width="225" height="55" loading="lazy">
                             <img class="line-2" data-ani="slideinup" data-ani-delay=".5s" src="assets/img/shape/line-2.webp" alt="shape" width="383" height="94" loading="lazy">
-                            <img src="assets/img/claymodeling/1.webp" alt="shape" width="936" height="624" loading="lazy" decoding="async">
+                            <img src="assets/img/claymodeling/1.webp" alt="shape" width="813" height="542" loading="lazy" decoding="async">
                         </div>
                         <div class="slide-item">
                             <img class="line-1" data-ani="slideinup" data-ani-delay=".2s" src="assets/img/shape/line-1.webp" alt="shape" width="225" height="55" loading="lazy">
                             <img class="line-2" data-ani="slideinup" data-ani-delay=".5s" src="assets/img/shape/line-2.webp" alt="shape" width="383" height="94" loading="lazy">
-                            <img src="assets/img/claymodeling/2.webp" alt="shape" width="936" height="624" loading="lazy" decoding="async">
+                            <img src="assets/img/claymodeling/2.webp" alt="shape" width="813" height="542" loading="lazy" decoding="async">
                         </div>
                         <div class="slide-item">
                             <img class="line-1" data-ani="slideinup" data-ani-delay=".2s" src="assets/img/shape/line-1.webp" alt="shape" width="225" height="55" loading="lazy">
                             <img class="line-2" data-ani="slideinup" data-ani-delay=".5s" src="assets/img/shape/line-2.webp" alt="shape" width="383" height="94" loading="lazy">
-                            <img src="assets/img/claymodeling/Layer.webp" alt="shape" width="936" height="624" loading="lazy">
+                            <img src="assets/img/claymodeling/Layer.webp" alt="shape" width="813" height="542" loading="lazy">
                         </div>
                     </div>
                 </div>
@@ -521,10 +561,65 @@ src="https://www.facebook.com/tr?id=886450287373984&ev=PageView&noscript=1"
     </div>
     <div class="shape-mockup d-none d-hd-block" data-top="17%" data-left="6%"><img src="assets/img/icon/cap-plane.webp" alt="shapes" width="142" height="106" loading="lazy">
     </div>
-    <div class="shape-mockup rotate d-none d-sm-block z-index-2" data-bottom="-7%" data-left="6%"><img src="assets/img/icon/busket-ball.webp" alt="shapes" width="94" height="93" loading="lazy">
-    </div>
+    <div class="shape-mockup rotate d-none d-sm-block z-index-2" data-bottom="-7%" data-left="6%"><img src="assets/img/icon/busket-ball.webp" alt="shapes" width="94" height="93" loading="lazy"></div>
 </section>
     <!--======== / About Section ========-->
+
+    <!--======== Service Section ========-->
+  <section class="service-section space">
+    <div class="container">
+        <div class="row text-center justify-content-center wow fadeInUp" data-wow-delay="0.1s">
+            <div class="col-xl-6 col-lg-7 col-md-8 col-sm-9">
+                <div class="title-area">
+                    <span class="sub-title">Our Clay Modelling Programs for Kids</span>
+                    <h2 class="sec-title">Kids Clay Modelling Classes in Chennai – Step by Step Learning (Ages 5–15)</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row gy-30">
+            <!-- Single item -->
+            <div class="col-lg-3 col-md-6 service-card wow fadeInUp" data-wow-delay="0.1s">
+                <div class="service-card-inner">
+               
+                    <h2 class="sr-title h4"><a href="service-details.html">Level 1–3: Basic Clay Shapes for Kids</a></h2>
+                    <p class="sr-text">In these beginner levels, kids learn basic clay modelling shapes like balls, coils, hearts, leaves, fruits, and vegetables. These levels help children understand clay handling and build a strong foundation for clay modelling.</p>
+                </div>
+            </div>
+            <!-- Single item -->
+            <div class="col-lg-3 col-md-6 service-card wow fadeInUp" data-wow-delay="0.1s">
+                <div class="service-card-inner">
+                
+                    <h2 class="sr-title h4"><a href="service-details.html">Level 4–6: Intermediate Clay Modelling for Kids</a></h2>
+                    <p class="sr-text">At this stage, kids move on to simple household objects, aquarium models, and pet animals. These levels improve shape control, creativity, and confidence in clay modelling classes for kids.</p>
+                </div>
+            </div>
+            <!-- Single item -->
+            <div class="col-lg-3 col-md-6 service-card wow fadeInUp" data-wow-delay="0.1s">
+                <div class="service-card-inner">
+           
+                    <h2 class="sr-title h4"><a href="service-details.html">Level 7–9: Advanced Clay Sculpting for Kids</a></h2>
+                    <p class="sr-text">Kids learn advanced clay modelling by creating wild animals, planetarium models, and realistic miniature food items. These levels focus on detailing, textures, and creative thinking.</p>
+                </div>
+            </div>
+            <!-- Single item -->
+            <div class="col-lg-3 col-md-6 service-card wow fadeInUp" data-wow-delay="0.1s">
+                <div class="service-card-inner">
+                 
+                    <h2 class="sr-title h4"><a href="service-details.html">Level 10–11: Master Clay Sculpting Program</a></h2>
+                    <p class="sr-text">In the advanced stage, students create trees, forests, plants, human figurines, and god idols. These levels help kids develop professional sculpting skills and artistic expression through clay art.</p>
+                </div>
+            </div>
+        </div>
+        <p class="text-center mt-5">Lil Sculpr offers structured kids clay modelling classes in Chennai with a level-based syllabus designed to grow along with your child’s creativity.</p>
+    </div>
+
+    <div class="shape-mockup shapePulse z-index-negative d-none d-xl-block" data-top="27%" data-left="9%"><img src="assets/img/icon/lolypop.webp" alt="shapes" width="96" height="104" loading="lazy"></div>
+    <div class="shape-mockup shapePulse rotate z-index-negative" data-top="19%" data-right="21%"><img src="assets/img/icon/star-sm.webp" alt="shapes" width="31" height="29" loading="lazy"></div>
+    <div class="shape-mockup shapePulse rotate z-index-negative" data-bottom="20%" data-right="10%"><img src="assets/img/icon/star.webp" alt="shapes" width="60" height="62" loading="lazy"></div>
+</section>
+    <!--======== / Service Section ========-->
+
+
 
     <!--======== counter Section ========-->
     <div class="counter-section bg-smoke-blue space">
@@ -572,13 +667,16 @@ src="https://www.facebook.com/tr?id=886450287373984&ev=PageView&noscript=1"
 <section class="classes-section space">
   <div class="container">
     <div class="row text-center justify-content-center wow fadeInUp" data-wow-delay="0.1s">
-      <div class="col-xl-6 col-lg-7 col-md-8 col-sm-9">
+      <div class="col-xl-9 col-lg-10">
         <div class="title-area">
-          <span class="sub-title">On Going Classes</span>
-          <h2 class="sec-title">Take The Classes & Start Learning From Today</h2>
+          <span class="sub-title">OUR CLAY MODELLING CLASSES</span>
+          <h2 class="sec-title">Structured Clay Modelling Courses for Kids</h2>
+          <p>Our clay modelling courses are designed specially for kids of different age groups. The syllabus is divided into levels so children can learn step by step.</p>
         </div>
       </div>
     </div>
+
+
 
     <div class="row vs-carousel" data-slide-show="3" data-arrows="true">
 
@@ -865,6 +963,39 @@ src="https://www.facebook.com/tr?id=886450287373984&ev=PageView&noscript=1"
     </div>
   </div>
 
+      <div class="row justify-content-center mb-40 wow fadeInUp" data-wow-delay="0.2s">
+        <div class="col-lg-10">
+            <div class="p-3 p-md-4 bg-smoke text-center" style="border-radius: 40px;">
+                <div class="mb-20">
+                    <h4 class="h5 mb-2 text-theme">What Your Child Will Learn</h4>
+                    <p class="mb-0" style="font-size: 14px;">Classes are suitable for beginners as well as advanced learners.</p>
+                </div>
+                <div class="row g-2 justify-content-center" style="font-size: 13px;">
+                    <div class="col-6 col-lg-3">
+                        <div class="p-2 border rounded-pill bg-white">
+                            <i class="fas fa-check-circle text-theme me-1"></i>Basic shapes & forms
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-3">
+                        <div class="p-2 border rounded-pill bg-white">
+                            <i class="fas fa-check-circle text-theme me-1"></i>Miniature food sculpting
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-3">
+                        <div class="p-2 border rounded-pill bg-white">
+                            <i class="fas fa-check-circle text-theme me-1"></i>Animal & character
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-3">
+                        <div class="p-2 border rounded-pill bg-white">
+                            <i class="fas fa-check-circle text-theme me-1"></i>Advanced sculptures
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
   <!-- Shapes -->
   <div class="shape-mockup shapePulse d-none d-xl-block" data-top="15%" data-left="7%">
     <img src="assets/img/icon/dog.webp" alt="shapes" width="155" height="175" loading="lazy">
@@ -883,9 +1014,46 @@ src="https://www.facebook.com/tr?id=886450287373984&ev=PageView&noscript=1"
 
     <!--======== / Classes Section ========-->
 
+    <section class="online-offline-section space bg-smoke">
+        <div class="container py-5">
+            <div class="row align-items-center gx-80">
+                <div class="col-lg-6 wow fadeInLeft" data-wow-delay="0.1s">
+                    <div class="title-area">
+                        <span class="sub-title">ONLINE & OFFLINE LEARNING</span>
+                        <h2 class="sec-title">Online and Offline Clay Modelling Classes Available</h2>
+                        <p>We offer both online and offline clay modelling classes for kids. Children can learn from home through live online sessions or attend in-person classes at our academy.</p>
+                    </div>
+                    <div class="list-style1 mb-40">
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="fas fa-check-circle text-theme me-2"></i> One-on-one attention</li>
+                            <li class="mb-2"><i class="fas fa-check-circle text-theme me-2"></i> Small batch learning</li>
+                            <li class="mb-2"><i class="fas fa-check-circle text-theme me-2"></i> Simple tools and easily available clay</li>
+                            <li class="mb-2"><i class="fas fa-check-circle text-theme me-2"></i> Friendly and supportive teaching</li>
+                        </ul>
+                    </div>
+                    <a href="contact.html" class="vs-btn wave-btn">👉 Choose Online or Offline Classes</a>
+                </div>
+                <div class="col-lg-6 wow fadeInRight" data-wow-delay="0.1s">
+                    <div class="img-box1">
+                        <img src="assets/img/lil-sculpr/onlinecourse.webp" alt="Online & Offline Classes" width="1000" height="667" loading="lazy" class="w-100" style="border-radius: 30px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!--======== Process Section ========-->
-<section class="process-section bg-smoke-blue space-extra">
+<section class="process-section bg-smoke-blue space">
     <div class="container">
+          <div class="row text-center justify-content-center wow fadeInUp" data-wow-delay="0.1s">
+      <div class="col-xl-9 col-lg-10">
+        <div class="title-area">
+          <span class="sub-title">WHY CHOOSE US</span>
+          <h2 class="sec-title">Why Parents Choose Lil Sculpr for Kids Clay Modelling Classes </h2>
+          <p>Lil Sculpr offers the best kids clay modelling classes in Chennai with a structured syllabus, expert guidance, and a fun learning environment.</p>
+        </div>
+      </div>
+    </div>
         <div class="row gx-150 gy-30 justify-content-center">
             <!-- Single Item -->
             <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
@@ -896,9 +1064,9 @@ src="https://www.facebook.com/tr?id=886450287373984&ev=PageView&noscript=1"
                         <div class="process-icon">
                             <img src="assets/img/icon/process-1.webp" alt="icon" width="50" height="55" loading="lazy">
                         </div>
-                        <h4 class="process-title">Step-by-Step Learning Approach</h4>
+                        <h4 class="process-title">Step-by-Step Clay Modelling Learning</h4>
                     </div>
-                    <p class="process-text">At Lil Sculpr, every child begins their creative journey with simple shapes and gradually moves to advanced sculpting. Our structured, level-based curriculum ensures steady skill growth and confidence at every stage.</p>
+                    <p class="process-text">At Lil Sculpr, kids learn clay modelling step by step, starting from basic shapes and moving to advanced sculptures. Our level-based clay modelling classes help children learn at their own pace and build confidence at every stage.</p>
                 </div>
             </div>
             <!-- Single Item -->
@@ -910,9 +1078,9 @@ src="https://www.facebook.com/tr?id=886450287373984&ev=PageView&noscript=1"
                         <div class="process-icon">
                             <img src="assets/img/icon/process-2.webp" alt="icon" width="64" height="64" loading="lazy">
                         </div>
-                        <h4 class="process-title">Interactive & Fun Learning Sessions</h4>
+                        <h4 class="process-title">Interactive & Fun Clay Modelling Sessions</h4>
                     </div>
-                    <p class="process-text">Our classes are designed to make learning fun through interactive activities, storytelling, and theme-based projects. Kids learn to express ideas through clay while developing creativity, patience, and focus.</p>
+                    <p class="process-text">Our kids clay modelling classes are fun, interactive, and activity-based. Children learn through stories, themes, and hands-on projects, which helps improve creativity, focus, patience, and imagination.</p>
                 </div>
             </div>
             <!-- Single Item -->
@@ -923,9 +1091,10 @@ src="https://www.facebook.com/tr?id=886450287373984&ev=PageView&noscript=1"
                         <div class="process-icon">
                             <img src="assets/img/icon/process-3.webp" alt="icon" width="64" height="64" loading="lazy">
                         </div>
-                        <h4 class="process-title">Expert Mentorship & Global Exposure</h4>
+                        <h4 class="process-title">Expert Guidance & Creative Exposure
+</h4>
                     </div>
-                    <p class="process-text">Our expert mentors guide each child personally, helping them build fine motor skills and artistic confidence. Lil Sculpr also offers global art exposure through exhibitions and online workshops with international artists.</p>
+                    <p class="process-text">Experienced mentors guide every child personally in our clay modelling classes. We help kids improve fine motor skills and artistic confidence while giving them exposure through workshops, displays, and creative projects.</p>
                 </div>
             </div>
         </div>
@@ -1152,7 +1321,7 @@ src="https://www.facebook.com/tr?id=886450287373984&ev=PageView&noscript=1"
                 <div class="vs-blog blog-card">
                     <div class="blog-img">
                         <a href="./clay-modelling-activities-for-kids.html">
-                            <img src="assets/img/claymodeling/clay-modelling-activities-for-kids.webp" alt="Why Lil Sculpr is the best clay modelling academy for kids" width="5328" height="4000" loading="lazy">
+                            <img src="assets/img/claymodeling/clay-modelling-activities-for-kids.webp" alt="Why Lil Sculpr is the best clay modelling academy for kids" width="400" height="300" loading="lazy">
                         </a>
                     </div>
                     <div class="blog-content">
@@ -1230,9 +1399,21 @@ src="https://www.facebook.com/tr?id=886450287373984&ev=PageView&noscript=1"
     <div class="shape-mockup moving d-none d-hd-block" data-bottom="22%" data-left="4%"><img src="assets/img/icon/ruler.webp" alt="shapes" width="97" height="52" loading="lazy"></div>
     <div class="shape-mockup movingX d-none d-xl-block" data-top="17%" data-right="6%"><img src="assets/img/icon/cloud-3.webp" alt="shapes" width="119" height="97" loading="lazy"></div>
     <div class="shape-mockup rotate d-none d-hd-block" data-bottom="24%" data-right="6%"><img src="assets/img/icon/math-2.webp" alt="shapes" width="57" height="39" loading="lazy"></div>
-</section>
+    </section>
+    <section class="cta-section space bg-theme" data-bg-src="assets/img/shape/cta-bg.webp">
+        <div class="container">
+            <div class="row justify-content-center text-center">
+                <div class="col-xl-8 col-lg-10 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="cta-content">
+                        <h2 class="sec-title big-title" style="color: var(--white-color);">Give Your Child a Creative Start Today</h2>
+                        <p style="color: var(--white-color);" class="mb-30">If you are looking for the best clay modelling classes for kids in Chennai, Lil Sculpr is the right place. Let your child explore creativity, imagination, and joy through clay art.</p>
+                        <a href="contact.html" class="vs-btn wave-btn btn-white">Book a Free Trial Class</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <!--======== / Blog Section ========-->
     </main>
     <!--==============================
 	Footer Area
@@ -1469,6 +1650,32 @@ src="https://www.facebook.com/tr?id=886450287373984&ev=PageView&noscript=1"
     <!-- Main Js File -->
         <script src="assets/js/main.min.js" defer></script>
         <script src="./assets/js/spinner.js" defer></script>
+
+    <!-- Tracking Scripts (Throttled for Performance) -->
+    <script>
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                // GTM
+                (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                })(window,document,'script','dataLayer','GTM-KK89945D');
+                
+                // Facebook Pixel
+                !function(f,b,e,v,n,t,s)
+                {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+                n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+                if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+                n.queue=[];t=b.createElement(e);t.async=!0;
+                t.src=v;s=b.getElementsByTagName(e)[0];
+                s.parentNode.insertBefore(t,s)}(window, document,'script',
+                'https://connect.facebook.net/en_US/fbevents.js');
+                fbq('init', '886450287373984');
+                fbq('track', 'PageView');
+            }, 3000);
+        });
+    </script>
 
 </body>
 

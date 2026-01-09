@@ -98,7 +98,7 @@ Version: 1.0.0
   --icon-font: "Font Awesome 6 Pro";
   --main-container: 1220px;
   --container-gutters: 30px;
-  --section-space: 120px;
+  --section-space: 80px;
   --section-space-mobile: 80px;
   --section-title-space: 60px;
   --ripple-ani-duration: 5s;
@@ -270,12 +270,12 @@ span a {
 
 .h1,
 h1 {
-  font-size: 48px;
+  font-size: 45px;
 }
 
 .h2,
 h2 {
-  font-size: 36px;
+  font-size: 30px;
 }
 
 .h3,
@@ -1542,12 +1542,12 @@ textarea.form-control.is-invalid {
 }
 /*------------------- 3.3. Titles -------------------*/
 .sec-title {
-  font-size: 48px;
+  font-size: 47px;
   margin-top: -0.8rem;
   line-height: 1.208;
 }
 .sec-title.big-title {
-  font-size: 60px;
+  font-size: 49px;
   margin-top: -1.1rem;
 }
 
@@ -6195,9 +6195,9 @@ ul.comment-list .vs-comment:last-child:not(.children .vs-comment) > .vs-post-com
 
 .hero-content {
   max-width: 660px;
-  padding: 100px 150px;
+  padding: 100px 35px;
   right: 180px; 
-  margin-top: 70px;
+  margin: 70px 0px;
   display: flex; flex-direction: column; align-items: center; 
   margin-left: auto;
   text-align: center;
@@ -6234,7 +6234,7 @@ ul.comment-list .vs-comment:last-child:not(.children .vs-comment) > .vs-post-com
 }
 
 .hero-title .focus {
-  font-size: 60px;
+  font-size: 50px;
   margin-bottom: -4px;
   line-height: 1.1;
   display: block;
@@ -6397,8 +6397,8 @@ ul.comment-list .vs-comment:last-child:not(.children .vs-comment) > .vs-post-com
     right: 50px;
     margin-left: auto;
     text-align: center;
-    max-width: 580px;
-    padding: 130px 100px;
+  
+ 
   }
   .hero-title .focus {
     font-size: 70px;
