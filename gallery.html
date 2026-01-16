@@ -6,86 +6,184 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="IE=edge">
-    <title> Kids Clay Modelling Classes in Chennai | Lil Sculpr Academy</title>
+    <title>Kids Clay Art Gallery | Lil Sculpr Clay Modelling Academy</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- SEO Essentials -->
     <meta name="author" content="Lil Sculpr Clay Modeling Academy">
-    <meta name="description" content="Lil Sculpr offers fun and structured clay modelling classes for kids in Chennai. Learn clay art from basics to advanced with expert guidance.">
+    <meta name="description" content="Explore creative clay models made by kids at Lil Sculpr. View our clay modelling gallery featuring student artwork and class activities.">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Gallery - Creative Kids' Sculptures | Lil Sculpr Academy">
-    <meta property="og:description" content="View the amazing clay art and sculptures created by our students in Chennai.">
+    <meta property="og:title" content="Kids Clay Art Gallery | Lil Sculpr Clay Modelling Academy">
+    <meta property="og:description" content="Explore creative clay models made by kids at Lil Sculpr. View our clay modelling gallery featuring student artwork and class activities.">
     <meta property="og:image" content="assets/img/logo.webp">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="Gallery - Creative Kids' Sculptures | Lil Sculpr Academy">
-    <meta property="twitter:description" content="View the amazing clay art and sculptures created by our students in Chennai.">
+    <meta property="twitter:title" content="Kids Clay Art Gallery | Lil Sculpr Clay Modelling Academy">
+    <meta property="twitter:description" content="Explore creative clay models made by kids at Lil Sculpr. View our clay modelling gallery featuring student artwork and class activities.">
     <meta property="twitter:image" content="assets/img/logo.webp">
  
 
-   <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-KK89945D');</script>
     <link rel="icon" href="assets/img/Final Logo.webp" type="image/webp">
 
-    <!-- Preconnect for Google Fonts -->
+    <!-- Preconnect for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://connect.facebook.net">
 
     <!-- Google Fonts - Optimized Loading -->
     <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Catamaran:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Catamaran:wght@100;200;300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&display=swap"
         media="print"
-        onload="this.media='all'">
+        onload="this.media='all'"
+        font-display="swap">
 
     <noscript>
         <link rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Catamaran:wght@100;200;300;400;500;600;700;800;900&display=swap">
     </noscript>
 
-    <!-- CRITICAL CSS (No Defer to Prevent FOUC) -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/style.min.css">
+    <link rel="preload" href="assets/img/lil-sculpr/DSC01311.webp" as="image" fetchpriority="high">
+    <link rel="preload" href="assets/img/lil-sculpr/DSC01329.webp" as="image">
+    <link rel="preload" href="assets/img/logo.webp" as="image" fetchpriority="high">
+    
+    <!-- Preload Critical Fonts to Prevent Layout Shift -->
+    <link rel="preload" href="https://fonts.gstatic.com/s/baloo2/v23/wXKrE3kTposypRyd51jcAA.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="https://fonts.gstatic.com/s/catamaran/v28/o-0IIpQoyXQa2RxT7-5B6Ryxs2E_6n1iPHjc1anXuluiLyw.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="assets/fonts/fontawesome/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="assets/fonts/fontawesome/fa-light-300.woff2" as="font" type="font/woff2" crossorigin>
+
+    <!-- CRITICAL CSS (Zero-CLS & Stability) -->
+    <style>
+        :root { --theme-color: #9C29B2; --title-font: "Baloo 2", cursive; --para-font: "Catamaran", sans-serif; }
+        body { margin: 0; padding: 0; font-family: var(--title-font); overflow-x: hidden; }
+        .header-top-area { height: 40px; background-color: #9C29B2; }
+        .alert-ticker-wrapper { height: 48px; overflow: hidden; background-color: #ff6b00; display: flex; align-items: center; }
+        .vs-header { position: relative; z-index: 40; }
+        
+        /* Zero-CLS Hero Carousel */
+        .vs-hero-wrapper { min-height: 800px; background: #fef5ff; overflow: hidden; position: relative; width: 100%; display: block; }
+        .vs-carousel:not(.slick-initialized) { display: flex; overflow: hidden; }
+        .vs-carousel:not(.slick-initialized) > .vs-hero-inner:not(:first-child) { display: none; }
+        .vs-carousel:not(.slick-initialized) > .vs-hero-inner:first-child { width: 100%; display: flex !important; }
+        
+        .vs-hero-inner { min-height: 800px; display: flex; align-items: center; position: relative; width: 100%; }
+        .vs-hero-bg { position: absolute; inset: 0; background-size: cover; background-position: center; height: 100%; width: 100%; }
+        .hero-slide { min-height: 800px; }
+        .hero-content { max-width: 660px; width: 100%; margin: 70px auto; padding: 100px 35px; position: relative; z-index: 2; }
+        
+        h1, h2, h3, h4, .hero-title { font-family: var(--title-font); }
+        p, span { font-family: var(--para-font); }
+        /* Stabilize icons while font loads */
+        .fal, .fab, .fas, .far { font-display: swap; width: 1em; display: inline-block; text-align: center; }
+
+        /* Hero Section Fixes */
+        .vs-hero-bg {
+            position: absolute !important;
+            top: 0;
+            left: 0;
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+            opacity: 0.85; /* Increased opacity to minimize purple overlay intensity */
+            z-index: 1;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        .vs-hero-inner {
+            position: relative;
+            min-height: 800px;
+            background-color: var(--theme-color, #9C29B2); /* Purple overlay effect */
+        }
+        @media (max-width: 991px) {
+            .vs-hero-inner { min-height: 600px; }
+        }
+        @media (max-width: 767px) {
+            .vs-hero-inner { min-height: 500px; }
+        }
+
+        /* Bootstrap Grid Essentials (Above the fold) */
+        .container { width: 100%; padding-right: 15px; padding-left: 15px; margin-right: auto; margin-left: auto; max-width: 1230px; }
+        .row { display: flex; flex-wrap: wrap; margin-right: -15px; margin-left: -15px; }
+        .col-auto { flex: 0 0 auto; width: auto; }
+        .col-lg-6 { flex: 0 0 auto; width: 50%; }
+        .align-items-center { align-items: center; }
+        .justify-content-between { justify-content: space-between; }
+        .gx-20 { --bs-gutter-x: 20px; }
+        .d-none { display: none; }
+        @media (min-width: 992px) { .d-lg-block { display: block !important; } .d-lg-inline-block { display: inline-block !important; } }
+
+        @media (max-width: 991px) {
+            .header-top-area { display: none; }
+            .alert-ticker-wrapper { height: 44px; }
+            .vs-hero-wrapper, .vs-hero-inner, .vs-hero-inner:first-child, .hero-slide { min-height: 600px; }
+            .col-lg-6 { width: 100%; }
+        }
+        @media (max-width: 767px) {
+            .vs-hero-wrapper, .vs-hero-inner, .vs-hero-inner:first-child, .hero-slide { min-height: 500px; }
+        }
+        
+        /* Layout Fixes */
+        .section-before { height: 25px; overflow: hidden; }
+        .section-after { height: 62px; overflow: hidden; }
+        .hero-title { font-size: 45px; line-height: 1.2; }
+        @media (max-width: 767px) { .hero-title { font-size: 30px; } }
+
+        /* Preloader Stability (Critical) */
+        .preloader { position: fixed; inset: 0; z-index: 10000; background-color: #fff; display: flex; align-items: center; justify-content: center; transition: opacity 0.3s ease; }
+        .preloader.fade-out { opacity: 0; pointer-events: none; }
+        .preloader-inner { text-align: center; }
+        .loader-logo { width: 150px; height: auto; margin-bottom: 20px; animation: pulse 1.5s ease-in-out infinite; }
+        @keyframes pulse { 0% { transform: scale(0.95); opacity: 0.8; } 50% { transform: scale(1); opacity: 1; } 100% { transform: scale(0.95); opacity: 0.8; } }
+        
+        /* Force Slick Container Height (Zero-CLS) */
+        .vs-hero-wrapper .slick-list { min-height: 800px !important; }
+        .vs-hero-wrapper .slick-track { min-height: 800px !important; }
+        @media (max-width: 991px) {
+            .vs-hero-wrapper .slick-list { min-height: 600px !important; }
+            .vs-hero-wrapper .slick-track { min-height: 600px !important; }
+        }
+        @media (max-width: 767px) {
+            .vs-hero-wrapper .slick-list { min-height: 500px !important; }
+            .vs-hero-wrapper .slick-track { min-height: 500px !important; }
+        }
+    </style>
+
+    <!-- MAIN CSS (Deferred for Performance) -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="assets/css/style.min.css" media="print" onload="this.media='all'">
 
     <!-- Plugin CSS (Deferred Loading for Performance) -->
     <link rel="stylesheet" href="assets/css/fontawesome.min.css" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="assets/css/magnific-popup.min.css" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="assets/css/slick.min.css" media="print" onload="this.media='all'">
+    
+
 
     <noscript>
         <link rel="stylesheet" href="assets/css/fontawesome.min.css">
         <link rel="stylesheet" href="assets/css/magnific-popup.min.css">
         <link rel="stylesheet" href="assets/css/slick.min.css">
     </noscript>
-    <script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '886450287373984');
-fbq('track', 'PageView');
-</script>
-
-    <style>
-        /* Stabilize icons while font loads */
-        .fal, .fab, .fas, .far { font-display: swap; }
-    </style>
 </head>
 
 
 
+
 <body>
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="preloader-inner">
+            <img src="assets/img/logo.webp" alt="Lil Sculpr" class="loader-logo" width="188" height="102">
+       
+        </div>
+    </div>
 
 
     <!-- Googl Tag Manager (noscript) -->
@@ -96,30 +194,30 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 src="https://www.facebook.com/tr?id=886450287373984&ev=PageView&noscript=1"
 /></noscript>
 
-    <div class="popup-search-box d-none d-lg-block  ">
-        <button class="searchClose border-theme text-theme"><i class="fal fa-times"></i></button>
+    <div class="popup-search-box d-none d-lg-block">
+        <button class="searchClose border-theme text-theme" aria-label="Close search"><i class="fal fa-times" aria-hidden="true"></i></button>
         <form action="#">
-            <input type="text" class="border-theme" placeholder="What are you looking for">
-            <button type="submit"><i class="fal fa-search"></i></button>
+            <input type="text" class="border-theme" placeholder="What are you looking for" aria-label="Search query">
+            <button type="submit" aria-label="Submit search"><i class="fal fa-search" aria-hidden="true"></i></button>
         </form>
     </div>
 
     <!-- Side menu start -->
       <div class="sidemenu-wrapper">
         <div class="sidemenu-content">
-            <button class="closeButton sideMenuCls"><i class="far fa-times"></i></button>
+<button class="closeButton sideMenuCls" aria-label="Close side menu"><i class="fa fa-times" aria-hidden="true"></i></button>
             <div class="widget footer-widget">
                 <div class="vs-widget-about">
                     <div class="about-logo">
                         <a href="index.html">
-                            <img src="assets/img/logo.webp" alt="Knirpse">
+                            <img src="assets/img/logo.webp" alt="Lil Sculpr Logo" width="180" height="60">
                         </a>
                     </div>
                     <p class="about-text">Lil Sculpr is a creative academy that inspires kids to learn and express through art. We make learning fun and hands-on with classes that spark imagination, confidence, and creativity.</p>
                     <div class="multi-social">
-                           <a href="https://www.facebook.com/profile.php?id=61583300934216"><i class="fab fa-facebook-f"></i></a>
-                                                      <a href="https://www.pinterest.com/lilsculpr/"><i class="fab fa-pinterest-p"></i></a>
-<a href="https://www.instagram.com/lilsculpr/"><i class="fab fa-instagram"></i></a>
+                           <a href="https://www.facebook.com/profile.php?id=61583300934216" aria-label="Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+                                                      <a href="https://www.pinterest.com/lilsculpr/" aria-label="Pinterest"><i class="fab fa-pinterest-p" aria-hidden="true"></i></a>
+<a href="https://www.instagram.com/lilsculpr/" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
                     </div>
                 </div>
             </div>
@@ -129,11 +227,11 @@ src="https://www.facebook.com/tr?id=886450287373984&ev=PageView&noscript=1"
                 <div class="vs-widget-contact">
                     <p class="footer-info"><i class="fas fa-map-marker-alt"></i>468 A, C sector, 2nd Street, AE Block, Anna Nagar West Extension, Chennai - 600101</p>
                     <p class="footer-info"><i class="fas fa-envelope"></i><a href="mailto:lilsculpr@gmail.com">lilsculpr@gmail.com</a></p>
-                                   <p class="footer-info"><i class="fas fa-phone-alt"></i><a href="tel:+91 96 00 44 31 85 ">+91 96 00 44 31 85 </a></p>
+                    <p class="footer-info"><i class="fas fa-phone-alt"></i><a href="tel:+91 96 00 44 31 85 ">+91 96 00 44 31 85 </a></p>
                 </div>
             </div>
 
-           <div class="widget footer-widget">
+            <div class="widget footer-widget">
     <h4 class="widget_title">Our Blogs</h4>
     <div class="recent-post-wrap">
       
@@ -141,7 +239,7 @@ src="https://www.facebook.com/tr?id=886450287373984&ev=PageView&noscript=1"
       <div class="recent-post">
         <div class="media-img">
           <a href="./best-clay-modelling-academies-in-india.html">
-            <img src="assets/img/claymodeling/blog2.webp" alt="Best clay modelling academies in India">
+            <img src="assets/img/claymodeling/blog2.webp" alt="Best clay modelling academies in India" width="80" height="80" loading="lazy">
           </a>
         </div>
         <div class="media-body">
@@ -158,7 +256,7 @@ src="https://www.facebook.com/tr?id=886450287373984&ev=PageView&noscript=1"
       <div class="recent-post">
         <div class="media-img">
           <a href="./why-lil-sculptr-is-the-best-clay-modelling-academy-for-kids.html">
-            <img src="assets/img/claymodeling/blog3.webp" alt="Why Lil Sculpr is the best clay modelling academy for kids">
+            <img src="assets/img/claymodeling/blog3.webp" alt="Why Lil Sculpr is the best clay modelling academy for kids" width="80" height="80" loading="lazy">
           </a>
         </div>
         <div class="media-body">
@@ -176,12 +274,13 @@ src="https://www.facebook.com/tr?id=886450287373984&ev=PageView&noscript=1"
         </div>
     </div>
     <!-- Side menu end -->
+    
     <!--vs-mobile-menu start-->
    <div class="vs-menu-wrapper">
   <div class="vs-menu-area">
-    <button class="vs-menu-toggle" aria-label="Open mobile menu"><i class="fal fa-times"></i></button>
+    <button class="vs-menu-toggle" aria-label="Close mobile menu"><i class="fal fa-times" aria-hidden="true"></i></button>
     <div class="mobile-logo">
-      <a href="index.html"><img src="assets/img/logo.webp" alt="logo"></a>
+      <a href="index.html"><img src="assets/img/logo.webp" alt="Lil Sculpr Logo" width="188" height="102"></a>
     </div>
     <div class="vs-mobile-menu">
       <ul>
@@ -195,10 +294,11 @@ src="https://www.facebook.com/tr?id=886450287373984&ev=PageView&noscript=1"
     </div>
   </div>
 </div>
+
     <!--vs-mobile-menu end-->
 
     <!--======== Header ========-->
-      <header class="vs-header">
+    <header class="vs-header">
         <!--header-top-wrapper start-->
         <div class="header-top-area d-none d-lg-block">
             <div class="container">
@@ -248,7 +348,7 @@ src="https://www.facebook.com/tr?id=886450287373984&ev=PageView&noscript=1"
                             <div class="col-auto">
                                 <div class="header-logo">
                                     <a href="index.html">
-                                        <img src="assets/img/logo.webp" alt="logo">
+                                        <img src="assets/img/logo.webp" alt="Lil Sculpr Logo" width="188" height="102">
                                     </a>
                                 </div>
                             </div>
@@ -316,8 +416,8 @@ src="https://www.facebook.com/tr?id=886450287373984&ev=PageView&noscript=1"
                             <div class="col-auto d-none d-xl-block">
                                 <div class="header-button">
                                     <a href="contact.html" class="vs-btn wave-btn">Contact Us</a>
-                                    <!-- <button type="button" class="searchBoxToggler icon-btn"><i class="far fa-search"></i></button> -->
-                                    <button type="button" class="sideMenuToggler icon-btn"><i class="fal fa-bars" aria-hidden="true"></i></button>
+                                    <!-- <button type="button" class="searchBoxToggler icon-btn" aria-label="Search"><i class="far fa-search"></i></button> -->
+                                    <button type="button" class="sideMenuToggler icon-btn" aria-label="Open side menu"><i class="fal fa-bars" aria-hidden="true"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -328,139 +428,628 @@ src="https://www.facebook.com/tr?id=886450287373984&ev=PageView&noscript=1"
         <!--vs-main-menu-wrapper end-->
     </header>
     <!--======== / Header ========-->
-
-    <!--======== About Section ========-->
-         <div class="breadcumb-wrapper" data-bg-src="assets/img/lil-sculpr/coverimg4.png">
-        <div class="container">
-            <div class="breadcumb-content">
-                <h1 class="breadcumb-title">Our Gallery</h1>
-                <ul class="breadcumb-menu">
-                    <li><a href="index.html">Home</a></li>
-                    <li class="active">Our Gallery</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <!--======== / About Section ========-->
-
-    <!--======== Project Section ========-->
-<div class="project-section bg-smoke space-top space-extra-bottom">
-    <div class="container pb-10">
-        <div class="row g-20 justify-content-center">
-            <!-- Single Item -->
-            <div class="col-xl-3 col-lg-4 col-sm-6">
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="assets/img/gallery/gallery1.webp" alt="Outdoor play area">
-                    </div>
-                    <a href="assets/img/gallery/gallery1.webp" class="plus-btn popup-image">+</a>
-                </div>
-            </div>
-            <!-- Single Item -->
-            <div class="col-xl-3 col-lg-4 col-sm-6">
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="assets/img/gallery/gallery2.webp" alt="Party setup">
-                    </div>
-                    <a href="assets/img/gallery/gallery2.webp" class="plus-btn popup-image">+</a>
-                </div>
-            </div>
-            <!-- Single Item -->
-            <div class="col-xl-3 col-lg-4 col-sm-6">
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="assets/img/gallery/gallery3.webp" alt="Toddler area">
-                    </div>
-                    <a href="assets/img/gallery/gallery3.webp" class="plus-btn popup-image">+</a>
-                </div>
-            </div>
-            <!-- Single Item -->
-            <div class="col-xl-3 col-lg-4 col-sm-6">
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="assets/img/gallery/gallery4.webp" alt="Playground equipment">
-                    </div>
-                    <a href="assets/img/gallery/gallery4.webp" class="plus-btn popup-image">+</a>
-                </div>
-            </div>
-            <!-- Single Item -->
-            <div class="col-xl-3 col-lg-4 col-sm-6">
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="assets/img/gallery/gallery5.webp" alt="Birthday party">
-                    </div>
-                    <a href="assets/img/gallery/gallery5.webp" class="plus-btn popup-image">+</a>
-                </div>
-            </div>
-            <!-- Single Item -->
-            <div class="col-xl-3 col-lg-4 col-sm-6">
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="assets/img/gallery/gallery6.webp" alt="Toddler play">
-                    </div>
-                    <a href="assets/img/gallery/gallery6.webp" class="plus-btn popup-image">+</a>
-                </div>
-            </div>
-            <!-- Single Item -->
-            <div class="col-xl-3 col-lg-4 col-sm-6">
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="assets/img/gallery/gallery7.webp" alt="Party decorations">
-                    </div>
-                    <a href="assets/img/gallery/gallery7.webp" class="plus-btn popup-image">+</a>
-                </div>
-            </div>
-            <!-- Single Item -->
-            <div class="col-xl-3 col-lg-4 col-sm-6">
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="assets/img/gallery/gallery8.webp" alt="Toddler activities">
-                    </div>
-                    <a href="assets/img/gallery/gallery8.webp" class="plus-btn popup-image">+</a>
-                </div>
-            </div>
-            <!-- Single Item -->
-            <div class="col-xl-3 col-lg-4 col-sm-6">
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="assets/img/gallery/gallery9.webp" alt="Play area">
-                    </div>
-                    <a href="assets/img/gallery/gallery9.webp" class="plus-btn popup-image">+</a>
-                </div>
-            </div>
-          
-        </div>
-    </div>
-    <div class="shape-after"><img src="assets/img/shape/after-shape-5.webp" alt="shape"></div>
-    <div class="shape-mockup movingX d-none d-hd-block" data-top="15%" data-left="9%"><img src="assets/img/icon/duck.webp" alt="duck decoration"></div>
-    <div class="shape-mockup movingX d-none d-hd-block" data-bottom="15%" data-left="9%"><img src="assets/img/icon/butterfly-5.webp" alt="butterfly decoration"></div>
-    <div class="shape-mockup shapePulse d-none d-hd-block" data-top="14%" data-right="7%"><img src="assets/img/icon/sun-3.webp" alt="sun decoration"></div>
-    <div class="shape-mockup moving d-none d-sm-block" data-bottom="17%" data-right="6%"><img src="assets/img/icon/leaves.webp" alt="leaves decoration"></div>
-</div>
-    <!--======== / Project Section ========-->
-
-    <!--======== Simple Section ========-->
-    <section class="mockup3 space-top-shape2-plus space-bottom-page">
-        <div class="container">
-            <div class="row gy-40 align-items-center">
-                <div class="col-lg-6 text-center text-lg-start">
-                    <div class="img-box-3">
-                        <img src="assets/img/normal/shape-img-1.webp" alt="photo">
-                    </div>
-                </div>
-                <div class="col-xl-5 col-lg-6 offset-xl-1">
-                    <div class="text-center text-lg-start">
-                        <span class="sub-title">Make Appointment</span>
-                        <h2 class="sec-title big-title">Join Our Fun Class with Cutie Kids</h2>
-                        <p class="fs-md mb-30">Formulate innovative web-readiness and installed base ideas. Distinctively integrate high-payoff paradigms without next generation systems disseminate holistic e-services through customer directed expertise.</p>
-                        <a href="about.html" class="vs-btn wave-btn style-1">Learn More</a>
-                    </div>
+    <main>
+        <!--======== Breadcrumb ========-->
+    <div class="breadcumb-wrapper" data-bg-src="./assets/img/lil-sculpr/coverimg3.png">
+            <div class="container">
+                <div class="breadcumb-content text-center">
+                    <h1 class="breadcumb-title" style="font-size: 3.2rem; margin-bottom: 20px; line-height: 1.2;">Kids Clay Modelling Gallery – Student Artwork at Lil Sculpr</h1>
+                    <p style="font-size: 1.15rem; color: rgba(255,255,255,0.95); max-width: 750px; margin: 0 auto 30px; line-height: 1.8; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">Welcome to the Lil Sculpr clay modelling gallery. Here you can see creative clay models made by our students during their clay art classes. Each artwork shows a child’s imagination, effort, and learning journey.</p>
+                    <ul class="breadcumb-menu" style="margin-top: 25px;">
+                        <li><a href="index.html">Home</a></li>
+                        <li class="active">Gallery</li>
+                    </ul>
                 </div>
             </div>
         </div>
-    </section>
-    <!--======== / Simple Section ========-->
+        <!--======== / Breadcrumb ========-->
 
+        <!--======== Gallery Section ========-->
+        <section style="background: white; position: relative; padding: 60px 0;">
+            <div class="container">
+                <!-- Elegant Title Area -->
+                <div class="row justify-content-center text-center mb-40">
+                    <div class="col-xl-9 col-lg-10 wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="title-area">
+                            <span class="sub-title" style="color: var(--theme-color); letter-spacing: 2px; text-transform: uppercase; font-size: 0.9rem; font-weight: 700; margin-bottom: 15px; display: block;">Student Creations</span>
+                            <h2 class="sec-title" style="font-size: 2.8rem; line-height: 1.2; margin-bottom: 25px;">Creative Clay Art by <span style="color: var(--theme-color);">Kids</span></h2>
+                            <div style="width: 80px; height: 4px; background: linear-gradient(90deg, #9C29B2, #D171E8); border-radius: 3px; margin: 0 auto 30px;"></div>
+                            <p class="fs-md" style="font-size: 1.1rem; color: #4A5568; line-height: 1.8; max-width: 800px; margin: 0 auto 30px;">Our gallery showcases clay models created by kids of different age groups. These artworks are made during regular classes and workshops at Lil Sculpr.</p>
+                            
+                            <!-- Gallery Features List -->
+                            <div class="row justify-content-center">
+                                <div class="col-xl-10">
+                                    <div class="d-flex flex-wrap justify-content-center gap-3 gap-md-4">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <i class="fas fa-check-circle text-theme"></i>
+                                            <span style="color: #4A5568; font-weight: 500;">Miniature clay food models</span>
+                                        </div>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <i class="fas fa-check-circle text-theme"></i>
+                                            <span style="color: #4A5568; font-weight: 500;">Animal and character sculptures</span>
+                                        </div>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <i class="fas fa-check-circle text-theme"></i>
+                                            <span style="color: #4A5568; font-weight: 500;">Beginner clay shape practice</span>
+                                        </div>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <i class="fas fa-check-circle text-theme"></i>
+                                            <span style="color: #4A5568; font-weight: 500;">Advanced clay sculptures</span>
+                                        </div>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <i class="fas fa-check-circle text-theme"></i>
+                                            <span style="color: #4A5568; font-weight: 500;">Decorative clay art items</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <style>
+
+                    
+                    .gallery-grid {
+                        margin: 0 -10px;
+                    }
+                    
+                    .gallery-grid > [class*='col-'] {
+                        padding: 0 10px;
+                        margin-bottom: 20px;
+                    }
+                    
+                    .gallery-card-elegant {
+                        position: relative;
+                        border-radius: 12px;
+                        overflow: hidden;
+                        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+                        background: #fff;
+                    }
+                    
+                    .gallery-card-elegant:hover {
+                        transform: translateY(-8px);
+                        box-shadow: 0 12px 35px rgba(156, 41, 178, 0.15);
+                    }
+                    
+                    .gallery-card-img {
+                        position: relative;
+                        width: 100%;
+                        overflow: hidden;
+                        background: #f5f5f5;
+                    }
+                    
+                    .gallery-card-img::before {
+                        content: '';
+                        display: block;
+                        padding-top: 75%;
+                    }
+                    
+                    .gallery-card-img img {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+                    }
+                    
+                    .gallery-card-elegant:hover .gallery-card-img img {
+                        transform: scale(1.08);
+                    }
+                    
+                    .gallery-card-overlay {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        background: linear-gradient(135deg, rgba(156, 41, 178, 0.88), rgba(184, 77, 209, 0.88));
+                        opacity: 0;
+                        transition: opacity 0.4s ease;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        z-index: 2;
+                    }
+                    
+                    .gallery-card-elegant:hover .gallery-card-overlay {
+                        opacity: 1;
+                    }
+                    
+                    .gallery-zoom-icon {
+                        width: 55px;
+                        height: 55px;
+                        border-radius: 50%;
+                        background: white;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        color: var(--theme-color);
+                        font-size: 22px;
+                        transform: scale(0) rotate(-180deg);
+                        transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+                        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+                    }
+                    
+                    .gallery-card-elegant:hover .gallery-zoom-icon {
+                        transform: scale(1) rotate(0deg);
+                    }
+                    
+                    @media (max-width: 1199px) {
+                        .gallery-grid > [class*='col-'] {
+                            margin-bottom: 15px;
+                        }
+                    }
+                    
+                    @media (max-width: 767px) {
+                        .gallery-grid {
+                            margin: 0 -8px;
+                        }
+                        
+                        .gallery-grid > [class*='col-'] {
+                            padding: 0 8px;
+                            margin-bottom: 16px;
+                        }
+                    }
+                </style>
+
+                <div class="row gallery-grid">
+                    <!-- Gallery Item 1 -->
+                    <div class="col-xl-3 col-lg-4 col-sm-6">
+                        <div class="gallery-card-elegant wow fadeInUp" data-wow-delay="0.1s">
+                            <div class="gallery-card-img">
+                                <img src="assets/img/gallery/gallery1.webp" alt="beginner clay modelling practice for kids">
+                                <div class="gallery-card-overlay">
+                                    <a href="assets/img/gallery/gallery1.webp" class="gallery-zoom-icon popup-image">
+                                        <i class="fal fa-search-plus"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Item 2 -->
+                    <div class="col-xl-3 col-lg-4 col-sm-6">
+                        <div class="gallery-card-elegant wow fadeInUp" data-wow-delay="0.2s">
+                            <div class="gallery-card-img">
+                                <img src="assets/img/gallery/gallery2.webp" alt="clay sculpting student artwork photos">
+                                <div class="gallery-card-overlay">
+                                    <a href="assets/img/gallery/gallery2.webp" class="gallery-zoom-icon popup-image">
+                                        <i class="fal fa-search-plus"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Item 3 -->
+                    <div class="col-xl-3 col-lg-4 col-sm-6">
+                        <div class="gallery-card-elegant wow fadeInUp" data-wow-delay="0.3s">
+                            <div class="gallery-card-img">
+                                <img src="assets/img/gallery/gallery3.webp" alt="miniature clay food models by children">
+                                <div class="gallery-card-overlay">
+                                    <a href="assets/img/gallery/gallery3.webp" class="gallery-zoom-icon popup-image">
+                                        <i class="fal fa-search-plus"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Item 4 -->
+                    <div class="col-xl-3 col-lg-4 col-sm-6">
+                        <div class="gallery-card-elegant wow fadeInUp" data-wow-delay="0.4s">
+                            <div class="gallery-card-img">
+                                <img src="assets/img/gallery/gallery4.webp" alt="kids clay modelling artwork at Lil Sculpr">
+                                <div class="gallery-card-overlay">
+                                    <a href="assets/img/gallery/gallery4.webp" class="gallery-zoom-icon popup-image">
+                                        <i class="fal fa-search-plus"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Item 5 -->
+                    <div class="col-xl-3 col-lg-4 col-sm-6">
+                        <div class="gallery-card-elegant wow fadeInUp" data-wow-delay="0.5s">
+                            <div class="gallery-card-img">
+                                <img src="assets/img/gallery/gallery5.webp" alt="creative clay models by children - animals">
+                                <div class="gallery-card-overlay">
+                                    <a href="assets/img/gallery/gallery5.webp" class="gallery-zoom-icon popup-image">
+                                        <i class="fal fa-search-plus"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Item 6 -->
+                    <div class="col-xl-3 col-lg-4 col-sm-6">
+                        <div class="gallery-card-elegant wow fadeInUp" data-wow-delay="0.6s">
+                            <div class="gallery-card-img">
+                                <img src="assets/img/gallery/gallery6.webp" alt="clay art made by kids in Chennai">
+                                <div class="gallery-card-overlay">
+                                    <a href="assets/img/gallery/gallery6.webp" class="gallery-zoom-icon popup-image">
+                                        <i class="fal fa-search-plus"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Item 7 -->
+                    <div class="col-xl-3 col-lg-4 col-sm-6">
+                        <div class="gallery-card-elegant wow fadeInUp" data-wow-delay="0.7s">
+                            <div class="gallery-card-img">
+                                <img src="assets/img/gallery/gallery7.webp" alt="advanced clay sculpture by student">
+                                <div class="gallery-card-overlay">
+                                    <a href="assets/img/gallery/gallery7.webp" class="gallery-zoom-icon popup-image">
+                                        <i class="fal fa-search-plus"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Item 8 -->
+                    <div class="col-xl-3 col-lg-4 col-sm-6">
+                        <div class="gallery-card-elegant wow fadeInUp" data-wow-delay="0.8s">
+                            <div class="gallery-card-img">
+                                <img src="assets/img/gallery/gallery8.webp" alt="photo gallery kids clay modelling projects">
+                                <div class="gallery-card-overlay">
+                                    <a href="assets/img/gallery/gallery8.webp" class="gallery-zoom-icon popup-image">
+                                        <i class="fal fa-search-plus"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Item 9 -->
+                    <div class="col-xl-3 col-lg-4 col-sm-6">
+                        <div class="gallery-card-elegant wow fadeInUp" data-wow-delay="0.9s">
+                            <div class="gallery-card-img">
+                                <img src="assets/img/gallery/gallery9.webp" alt="kids clay workshop creations">
+                                <div class="gallery-card-overlay">
+                                    <a href="assets/img/gallery/gallery9.webp" class="gallery-zoom-icon popup-image">
+                                        <i class="fal fa-search-plus"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--======== / Gallery Section ========-->
+
+        <!--======== Why Student Artwork Matters ========-->
+        <section style="background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%); position: relative; overflow: hidden; padding: 60px 0;">
+            <!-- Decorative Background Elements -->
+            <div style="position: absolute; top: -50px; right: -50px; width: 300px; height: 300px; background: linear-gradient(135deg, rgba(156, 41, 178, 0.05) 0%, rgba(255,255,255,0) 100%); border-radius: 50%; z-index: 0;"></div>
+            <div style="position: absolute; bottom: -80px; left: -80px; width: 400px; height: 400px; background: linear-gradient(135deg, rgba(184, 77, 209, 0.04) 0%, rgba(255,255,255,0) 100%); border-radius: 50%; z-index: 0;"></div>
+            
+            <div class="container" style="position: relative; z-index: 2;">
+                <!-- Elegant Title Area -->
+                <div class="row justify-content-center text-center mb-60 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="col-xl-8 col-lg-9">
+                        <div class="title-area">
+                            <span class="sub-title" style="color: var(--theme-color); letter-spacing: 2px; text-transform: uppercase; font-size: 0.9rem; font-weight: 700; margin-bottom: 15px; display: block;">Building Creative Confidence</span>
+                            <h2 class="sec-title" style="font-size: 2.8rem; line-height: 1.2; margin-bottom: 25px;">Why Student <span style="color: var(--theme-color);">Artwork</span> Matters</h2>
+                            <div style="width: 80px; height: 4px; background: linear-gradient(90deg, #9C29B2, #D171E8); border-radius: 3px; margin: 0 auto 30px;"></div>
+                            <p class="fs-md" style="font-size: 1.1rem; color: #4A5568; line-height: 1.8; max-width: 700px; margin: 0 auto;">We believe every child’s work deserves appreciation. Sharing student artwork helps build confidence and motivates kids to explore creativity.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Elegant Feature Cards -->
+                <div class="row g-4">
+                    <!-- Card 1 -->
+                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
+                        <div class="confidence-card" style="background: white; border-radius: 20px; padding: 40px 35px; box-shadow: 0 10px 30px rgba(0,0,0,0.06); transition: all 0.4s ease; height: 100%; border: 1px solid rgba(156, 41, 178, 0.08); position: relative; overflow: hidden;" onmouseover="this.style.transform='translateY(-10px)'; this.style.boxShadow='0 20px 50px rgba(156, 41, 178, 0.12)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.06)';">
+                            <!-- Gradient Background -->
+                            <div style="position: absolute; top: -50%; right: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(156, 41, 178, 0.03) 0%, transparent 70%); z-index: 0;"></div>
+                            
+                            <div style="position: relative; z-index: 1;">
+                                <!-- Icon Box -->
+                                <div style="width: 70px; height: 70px; background: linear-gradient(135deg, #9C29B2 0%, #B84DD1 100%); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin-bottom: 25px; box-shadow: 0 8px 25px rgba(156, 41, 178, 0.25);">
+                                    <i class="fas fa-graduation-cap" style="font-size: 32px; color: white;"></i>
+                                </div>
+                                
+                                <h4 style="font-size: 1.4rem; font-weight: 700; color: #2D3748; margin-bottom: 15px;">What Their Child Will Learn</h4>
+                                <p style="color: #4A5568; line-height: 1.8; margin: 0; font-size: 1.05rem;">Parents can see the progression from basic shapes to advanced sculptures, understanding the complete learning journey.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                        <div class="confidence-card" style="background: white; border-radius: 20px; padding: 40px 35px; box-shadow: 0 10px 30px rgba(0,0,0,0.06); transition: all 0.4s ease; height: 100%; border: 1px solid rgba(156, 41, 178, 0.08); position: relative; overflow: hidden;" onmouseover="this.style.transform='translateY(-10px)'; this.style.boxShadow='0 20px 50px rgba(156, 41, 178, 0.12)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.06)';">
+                            <!-- Gradient Background -->
+                            <div style="position: absolute; top: -50%; right: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(184, 77, 209, 0.03) 0%, transparent 70%); z-index: 0;"></div>
+                            
+                            <div style="position: relative; z-index: 1;">
+                                <!-- Icon Box -->
+                                <div style="width: 70px; height: 70px; background: linear-gradient(135deg, #B84DD1 0%, #D171E8 100%); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin-bottom: 25px; box-shadow: 0 8px 25px rgba(184, 77, 209, 0.25);">
+                                    <i class="fas fa-award" style="font-size: 32px; color: white;"></i>
+                                </div>
+                                
+                                <h4 style="font-size: 1.4rem; font-weight: 700; color: #2D3748; margin-bottom: 15px;">The Quality of Teaching</h4>
+                                <p style="color: #4A5568; line-height: 1.8; margin: 0; font-size: 1.05rem;">Real student work showcases our structured syllabus and teaching methodology, demonstrating the quality and care we provide.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.4s">
+                        <div class="confidence-card" style="background: white; border-radius: 20px; padding: 40px 35px; box-shadow: 0 10px 30px rgba(0,0,0,0.06); transition: all 0.4s ease; height: 100%; border: 1px solid rgba(156, 41, 178, 0.08); position: relative; overflow: hidden;" onmouseover="this.style.transform='translateY(-10px)'; this.style.boxShadow='0 20px 50px rgba(156, 41, 178, 0.12)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.06)';">
+                            <!-- Gradient Background -->
+                            <div style="position: absolute; top: -50%; right: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(209, 113, 232, 0.03) 0%, transparent 70%); z-index: 0;"></div>
+                            
+                            <div style="position: relative; z-index: 1;">
+                                <!-- Icon Box -->
+                                <div style="width: 70px; height: 70px; background: linear-gradient(135deg, #D171E8 0%, #E8A5F5 100%); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin-bottom: 25px; box-shadow: 0 8px 25px rgba(209, 113, 232, 0.25);">
+                                    <i class="fas fa-chart-line" style="font-size: 32px; color: white;"></i>
+                                </div>
+                                
+                                <h4 style="font-size: 1.4rem; font-weight: 700; color: #2D3748; margin-bottom: 15px;">Skill Growth at Different Levels</h4>
+                                <p style="color: #4A5568; line-height: 1.8; margin: 0; font-size: 1.05rem;">Track progress through our 10-level system, seeing how skills develop from beginner to advanced mastery.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--======== / Why Student Artwork Matters ========-->
+
+        <!--======== Learning Through Practice ========-->
+        <section style="background: linear-gradient(180deg, #fafafa 0%, #ffffff 100%); position: relative; overflow: hidden; padding: 60px 0;">
+            <!-- Decorative Elements -->
+            <div style="position: absolute; top: 50%; left: -100px; width: 300px; height: 300px; background: radial-gradient(circle, rgba(156, 41, 178, 0.04) 0%, transparent 70%); border-radius: 50%; z-index: 0;"></div>
+            <div style="position: absolute; bottom: 20%; right: -80px; width: 250px; height: 250px; background: radial-gradient(circle, rgba(184, 77, 209, 0.04) 0%, transparent 70%); border-radius: 50%; z-index: 0;"></div>
+            
+            <div class="container py-5" style="position: relative; z-index: 2;">
+                <!-- Elegant Title Area -->
+                <div class="row justify-content-center text-center mb-60 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="col-xl-8 col-lg-9">
+                        <div class="title-area">
+                            <span class="sub-title" style="color: var(--theme-color); letter-spacing: 2px; text-transform: uppercase; font-size: 0.9rem; font-weight: 700; margin-bottom: 15px; display: block;">Structured Syllabus</span>
+                            <h2 class="sec-title" style="font-size: 2.8rem; line-height: 1.2; margin-bottom: 25px;">Hands-On Clay <span style="color: var(--theme-color);">Modelling</span> Learning</h2>
+                            <div style="width: 80px; height: 4px; background: linear-gradient(90deg, #9C29B2, #D171E8); border-radius: 3px; margin: 0 auto 30px;"></div>
+                            <p class="fs-md" style="font-size: 1.1rem; color: #4A5568; line-height: 1.8; max-width: 700px; margin: 0 auto;">Clay modelling is a hands-on art form. Kids learn best when they practice regularly. Our gallery reflects how children improve step by step through our structured clay modelling syllabus. From simple shapes to detailed models, each image tells a learning story.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Learning Journey Timeline -->
+                <div class="row g-4">
+                    <!-- Step 1 -->
+                    <div class="col-lg-6 wow fadeInLeft" data-wow-delay="0.2s">
+                        <div class="learning-step-card" style="background: white; border-radius: 20px; padding: 35px; box-shadow: 0 10px 30px rgba(0,0,0,0.06); transition: all 0.4s ease; border-left: 5px solid #9C29B2; position: relative; overflow: hidden;" onmouseover="this.style.transform='translateX(10px)'; this.style.boxShadow='0 15px 40px rgba(156, 41, 178, 0.12)';" onmouseout="this.style.transform='translateX(0)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.06)';">
+                            <!-- Gradient Background -->
+                            <div style="position: absolute; top: 0; right: -50%; width: 150%; height: 100%; background: linear-gradient(135deg, rgba(156, 41, 178, 0.02) 0%, transparent 60%); z-index: 0;"></div>
+                            
+                            <div style="position: relative; z-index: 1; display: flex; align-items: start; gap: 20px;">
+                                <!-- Step Number -->
+                                <div style="min-width: 60px; height: 60px; background: linear-gradient(135deg, #9C29B2 0%, #B84DD1 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(156, 41, 178, 0.25); flex-shrink: 0;">
+                                    <span style="font-size: 24px; font-weight: 800; color: white;">1</span>
+                                </div>
+                                
+                                <div style="flex: 1;">
+                                    <h4 style="font-size: 1.35rem; font-weight: 700; color: #2D3748; margin-bottom: 12px;">Simple Shapes to Foundation</h4>
+                                    <p style="color: #4A5568; line-height: 1.8; margin: 0; font-size: 1.05rem;">Students begin with basic shapes like balls, cylinders, and cones. These foundational skills build confidence and hand coordination.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="col-lg-6 wow fadeInRight" data-wow-delay="0.3s">
+                        <div class="learning-step-card" style="background: white; border-radius: 20px; padding: 35px; box-shadow: 0 10px 30px rgba(0,0,0,0.06); transition: all 0.4s ease; border-left: 5px solid #B84DD1; position: relative; overflow: hidden;" onmouseover="this.style.transform='translateX(10px)'; this.style.boxShadow='0 15px 40px rgba(184, 77, 209, 0.12)';" onmouseout="this.style.transform='translateX(0)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.06)';">
+                            <!-- Gradient Background -->
+                            <div style="position: absolute; top: 0; right: -50%; width: 150%; height: 100%; background: linear-gradient(135deg, rgba(184, 77, 209, 0.02) 0%, transparent 60%); z-index: 0;"></div>
+                            
+                            <div style="position: relative; z-index: 1; display: flex; align-items: start; gap: 20px;">
+                                <!-- Step Number -->
+                                <div style="min-width: 60px; height: 60px; background: linear-gradient(135deg, #B84DD1 0%, #D171E8 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(184, 77, 209, 0.25); flex-shrink: 0;">
+                                    <span style="font-size: 24px; font-weight: 800; color: white;">2</span>
+                                </div>
+                                
+                                <div style="flex: 1;">
+                                    <h4 style="font-size: 1.35rem; font-weight: 700; color: #2D3748; margin-bottom: 12px;">Combining Shapes & Creativity</h4>
+                                    <p style="color: #4A5568; line-height: 1.8; margin: 0; font-size: 1.05rem;">Children learn to combine basic shapes into recognizable objects like fruits, animals, and miniature food items.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="col-lg-6 wow fadeInLeft" data-wow-delay="0.4s">
+                        <div class="learning-step-card" style="background: white; border-radius: 20px; padding: 35px; box-shadow: 0 10px 30px rgba(0,0,0,0.06); transition: all 0.4s ease; border-left: 5px solid #D171E8; position: relative; overflow: hidden;" onmouseover="this.style.transform='translateX(10px)'; this.style.boxShadow='0 15px 40px rgba(209, 113, 232, 0.12)';" onmouseout="this.style.transform='translateX(0)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.06)';">
+                            <!-- Gradient Background -->
+                            <div style="position: absolute; top: 0; right: -50%; width: 150%; height: 100%; background: linear-gradient(135deg, rgba(209, 113, 232, 0.02) 0%, transparent 60%); z-index: 0;"></div>
+                            
+                            <div style="position: relative; z-index: 1; display: flex; align-items: start; gap: 20px;">
+                                <!-- Step Number -->
+                                <div style="min-width: 60px; height: 60px; background: linear-gradient(135deg, #D171E8 0%, #E8A5F5 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(209, 113, 232, 0.25); flex-shrink: 0;">
+                                    <span style="font-size: 24px; font-weight: 800; color: white;">3</span>
+                                </div>
+                                
+                                <div style="flex: 1;">
+                                    <h4 style="font-size: 1.35rem; font-weight: 700; color: #2D3748; margin-bottom: 12px;">Adding Details & Refinement</h4>
+                                    <p style="color: #4A5568; line-height: 1.8; margin: 0; font-size: 1.05rem;">Students develop fine motor skills by adding textures, patterns, and intricate details to their creations.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="col-lg-6 wow fadeInRight" data-wow-delay="0.5s">
+                        <div class="learning-step-card" style="background: white; border-radius: 20px; padding: 35px; box-shadow: 0 10px 30px rgba(0,0,0,0.06); transition: all 0.4s ease; border-left: 5px solid #E8A5F5; position: relative; overflow: hidden;" onmouseover="this.style.transform='translateX(10px)'; this.style.boxShadow='0 15px 40px rgba(232, 165, 245, 0.12)';" onmouseout="this.style.transform='translateX(0)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.06)';">
+                            <!-- Gradient Background -->
+                            <div style="position: absolute; top: 0; right: -50%; width: 150%; height: 100%; background: linear-gradient(135deg, rgba(232, 165, 245, 0.02) 0%, transparent 60%); z-index: 0;"></div>
+                            
+                            <div style="position: relative; z-index: 1; display: flex; align-items: start; gap: 20px;">
+                                <!-- Step Number -->
+                                <div style="min-width: 60px; height: 60px; background: linear-gradient(135deg, #E8A5F5 0%, #F5C9FF 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(232, 165, 245, 0.25); flex-shrink: 0;">
+                                    <span style="font-size: 24px; font-weight: 800; color: white;">4</span>
+                                </div>
+                                
+                                <div style="flex: 1;">
+                                    <h4 style="font-size: 1.35rem; font-weight: 700; color: #2D3748; margin-bottom: 12px;">Advanced Mastery & Expression</h4>
+                                    <p style="color: #4A5568; line-height: 1.8; margin: 0; font-size: 1.05rem;">Advanced students create complex sculptures, realistic figurines, and express their unique artistic vision with confidence.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bottom Text -->
+                <div class="row justify-content-center mt-50 wow fadeInUp" data-wow-delay="0.6s">
+                    <div class="col-xl-8 col-lg-9 text-center">
+                        <div style="background: linear-gradient(135deg, rgba(156, 41, 178, 0.05) 0%, rgba(184, 77, 209, 0.05) 100%); border-radius: 16px; padding: 30px; border: 1px solid rgba(156, 41, 178, 0.1);">
+                            <p style="color: #2D3748; font-size: 1.1rem; line-height: 1.8; margin: 0; font-weight: 500;">
+                                <i class="fas fa-quote-left" style="color: var(--theme-color); margin-right: 10px;"></i>
+                                From simple shapes to detailed models, each image tells a learning story of growth and achievement.
+                                <i class="fas fa-quote-right" style="color: var(--theme-color); margin-left: 10px;"></i>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--======== / Learning Through Practice ========-->
+
+        <!--======== Local SEO + Trust Signal ========-->
+        <section style="background: white; position: relative; overflow: hidden; padding: 60px 0;">
+            <!-- Decorative Background -->
+            <div style="position: absolute; top: -100px; right: -100px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(156, 41, 178, 0.04) 0%, transparent 70%); border-radius: 50%; z-index: 0;"></div>
+            <div style="position: absolute; bottom: -80px; left: -80px; width: 350px; height: 350px; background: radial-gradient(circle, rgba(184, 77, 209, 0.04) 0%, transparent 70%); border-radius: 50%; z-index: 0;"></div>
+            
+            <div class="container" style="position: relative; z-index: 2;">
+                <div class="row justify-content-center">
+                    <div class="col-xl-10 col-lg-11">
+                        <!-- Main Trust Card -->
+                        <div class="wow fadeInUp" data-wow-delay="0.1s" style="background: linear-gradient(135deg, rgba(156, 41, 178, 0.03) 0%, rgba(255,255,255,1) 50%, rgba(184, 77, 209, 0.03) 100%); border-radius: 24px; padding: 60px 50px; box-shadow: 0 15px 50px rgba(0,0,0,0.08); border: 1px solid rgba(156, 41, 178, 0.1); position: relative; overflow: hidden;">
+                            <!-- Decorative Corner Elements -->
+                            <div style="position: absolute; top: 0; left: 0; width: 150px; height: 150px; background: linear-gradient(135deg, rgba(156, 41, 178, 0.08) 0%, transparent 100%); border-radius: 0 0 100% 0;"></div>
+                            <div style="position: absolute; bottom: 0; right: 0; width: 150px; height: 150px; background: linear-gradient(135deg, rgba(184, 77, 209, 0.08) 0%, transparent 100%); border-radius: 100% 0 0 0;"></div>
+                            
+                            <div style="position: relative; z-index: 1; text-align: center;">
+                                <!-- Icon Badge -->
+                                <div style="display: inline-flex; align-items: center; justify-content: center; width: 80px; height: 80px; background: linear-gradient(135deg, #9C29B2 0%, #B84DD1 100%); border-radius: 20px; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(156, 41, 178, 0.3);">
+                                    <i class="fas fa-map-marker-alt" style="font-size: 36px; color: white;"></i>
+                                </div>
+                                
+                                <h2 class="sec-title" style="font-size: 2.5rem; line-height: 1.3; margin-bottom: 25px; color: #2D3748;">Clay Modelling Classes for <span style="color: var(--theme-color);">Kids in Chennai</span></h2>
+                                
+                                <div style="width: 80px; height: 4px; background: linear-gradient(90deg, #9C29B2, #D171E8); border-radius: 3px; margin: 0 auto 35px;"></div>
+                                
+                                <p class="fs-md" style="font-size: 1.15rem; color: #4A5568; line-height: 1.9; max-width: 800px; margin: 0 auto 40px;">All the artworks in this gallery are created by students attending Lil Sculpr’s clay modelling classes in Chennai or through our live online sessions. Parents across Chennai trust Lil Sculpr for creative and skill-based clay art learning for kids.</p>
+                                
+                                <!-- Trust Badges -->
+                                <div class="row g-3 justify-content-center">
+                                    <div class="col-md-4 col-sm-6">
+                                        <div style="background: white; border-radius: 16px; padding: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); border: 1px solid rgba(156, 41, 178, 0.08);">
+                                            <div style="color: var(--theme-color); font-size: 32px; margin-bottom: 10px;">
+                                                <i class="fas fa-users"></i>
+                                            </div>
+                                            <h5 style="font-size: 1.1rem; font-weight: 700; color: #2D3748; margin-bottom: 5px;">200+ Students</h5>
+                                            <p style="font-size: 0.9rem; color: #718096; margin: 0;">Across Chennai</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-6">
+                                        <div style="background: white; border-radius: 16px; padding: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); border: 1px solid rgba(156, 41, 178, 0.08);">
+                                            <div style="color: var(--theme-color); font-size: 32px; margin-bottom: 10px;">
+                                                <i class="fas fa-star"></i>
+                                            </div>
+                                            <h5 style="font-size: 1.1rem; font-weight: 700; color: #2D3748; margin-bottom: 5px;">Expert Teachers</h5>
+                                            <p style="font-size: 0.9rem; color: #718096; margin: 0;">Certified & Experienced</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-6">
+                                        <div style="background: white; border-radius: 16px; padding: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); border: 1px solid rgba(156, 41, 178, 0.08);">
+                                            <div style="color: var(--theme-color); font-size: 32px; margin-bottom: 10px;">
+                                                <i class="fas fa-laptop-house"></i>
+                                            </div>
+                                            <h5 style="font-size: 1.1rem; font-weight: 700; color: #2D3748; margin-bottom: 5px;">Online & Offline</h5>
+                                            <p style="font-size: 0.9rem; color: #718096; margin: 0;">Flexible Learning</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--======== / Local SEO + Trust Signal ========-->
+
+        <!--======== CTA Section ========-->
+        <section style="position: relative; overflow: hidden; padding: 60px 0 80px 0;">
+            <!-- Animated Background Gradient -->
+            <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%); z-index: 0;"></div>
+            
+            <div class="container" style="position: relative; z-index: 2;">
+                <div class="row justify-content-center">
+                    <div class="col-xl-11">
+                        <!-- Main CTA Card -->
+                        <div class="wow fadeInUp" data-wow-delay="0.1s" style="background: linear-gradient(135deg, #9C29B2 0%, #B84DD1 50%, #D171E8 100%); border-radius: 30px; padding: 70px 50px; box-shadow: 0 20px 60px rgba(156, 41, 178, 0.3); position: relative; overflow: hidden;">
+                            <!-- Decorative Patterns -->
+                            <div style="position: absolute; top: -50px; right: -50px; width: 300px; height: 300px; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); border-radius: 50%;"></div>
+                            <div style="position: absolute; bottom: -80px; left: -80px; width: 350px; height: 350px; background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%); border-radius: 50%;"></div>
+                            
+                            <!-- Floating Shapes -->
+                            <div style="position: absolute; top: 20%; left: 10%; width: 60px; height: 60px; background: rgba(255,255,255,0.1); border-radius: 50%; animation: float 6s ease-in-out infinite;"></div>
+                            <div style="position: absolute; bottom: 30%; right: 15%; width: 40px; height: 40px; background: rgba(255,255,255,0.1); border-radius: 50%; animation: float 8s ease-in-out infinite;"></div>
+                            
+                            <style>
+                                @keyframes float {
+                                    0%, 100% { transform: translateY(0px); }
+                                    50% { transform: translateY(-20px); }
+                                }
+                            </style>
+                            
+                            <div style="position: relative; z-index: 1; text-align: center;">
+                                <!-- Icon -->
+                                <div style="display: inline-flex; align-items: center; justify-content: center; width: 90px; height: 90px; background: white; border-radius: 50%; margin-bottom: 30px; box-shadow: 0 15px 40px rgba(0,0,0,0.2);">
+                                    <i class="fas fa-palette" style="font-size: 42px; color: var(--theme-color);"></i>
+                                </div>
+                                
+                                <h2 class="text-white mb-20" style="font-size: 2.8rem; line-height: 1.3; font-weight: 800; text-shadow: 0 2px 10px rgba(0,0,0,0.1);">Want Your Child’s Artwork <br>Featured Here?</h2>
+                                
+                                <p class="mb-50" style="font-size: 1.2rem; color: rgba(255,255,255,0.95); max-width: 700px; margin: 0 auto 50px; line-height: 1.8;">Join Lil Sculpr and let your child create beautiful clay models with confidence and joy.</p>
+                                
+                                <!-- CTA Buttons -->
+                                <div class="d-flex flex-wrap justify-content-center gap-3">
+                                    <a href="contact.html" class="cta-btn-elegant" style="display: inline-flex; align-items: center; gap: 10px; background: white; color: var(--theme-color); padding: 18px 40px; border-radius: 50px; font-weight: 700; font-size: 1.05rem; text-decoration: none; box-shadow: 0 10px 30px rgba(0,0,0,0.2); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 15px 40px rgba(0,0,0,0.25)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.2)';">
+                                        <i class="fas fa-user-plus"></i>
+                                        <span>Enroll Your Child</span>
+                                    </a>
+                                    
+                                    <a href="contact.html" class="cta-btn-elegant" style="display: inline-flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.2); color: white; padding: 18px 40px; border-radius: 50px; font-weight: 700; font-size: 1.05rem; text-decoration: none; border: 2px solid white; backdrop-filter: blur(10px); transition: all 0.3s ease;" onmouseover="this.style.background='white'; this.style.color='var(--theme-color)';" onmouseout="this.style.background='rgba(255,255,255,0.2)'; this.style.color='white';">
+                                        <i class="fas fa-calendar-check"></i>
+                                        <span>Book Free Trial Class</span>
+                                    </a>
+                                    
+                                    <a href="contact.html" class="cta-btn-elegant" style="display: inline-flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.2); color: white; padding: 18px 40px; border-radius: 50px; font-weight: 700; font-size: 1.05rem; text-decoration: none; border: 2px solid white; backdrop-filter: blur(10px); transition: all 0.3s ease;" onmouseover="this.style.background='white'; this.style.color='var(--theme-color)';" onmouseout="this.style.background='rgba(255,255,255,0.2)'; this.style.color='white';">
+                                        <i class="fas fa-phone-alt"></i>
+                                        <span>Contact Us Today</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--======== / CTA Section ========-->
 
     <!--==============================
 	Footer Area
@@ -475,7 +1064,7 @@ src="https://www.facebook.com/tr?id=886450287373984&ev=PageView&noscript=1"
                             <div class="vs-widget-about">
                                 <div class="about-logo">
                                     <a href="index.html">
-                                        <img src="./assets/img/logo.webp" alt="Knirpse">
+                                        <img src="./assets/img/logo.webp" alt="Knirpse" width="180" height="60" loading="lazy">
                                     </a>
                                 </div>
                                 <p class="about-text">Lil Sculpr is a creative academy that inspires kids to learn and express through art. We make learning fun and hands-on with classes that spark imagination, confidence, and creativity.</p>
@@ -489,7 +1078,7 @@ src="https://www.facebook.com/tr?id=886450287373984&ev=PageView&noscript=1"
                     </div>
                     <!-- Footer Widget-->
                     <div class="col-xl-auto col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                                          <div class="widget footer-widget widget_nav_menu">
+                        <div class="widget footer-widget widget_nav_menu">
                             <h4 class="widget_title">Details Info</h4>
                             <ul class="menu">
                                 <li><a href="classes.html">Classes</a></li>
@@ -504,7 +1093,7 @@ src="https://www.facebook.com/tr?id=886450287373984&ev=PageView&noscript=1"
                         </div>
                     </div>
                     <!-- Footer Widget -->
-                   <div class="col-xl-auto col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                 <div class="col-xl-auto col-md-6 wow fadeInUp" data-wow-delay="0.1s">
   <div class="widget footer-widget">
     <h4 class="widget_title">Our Blogs</h4>
     <div class="recent-post-wrap">
@@ -513,7 +1102,7 @@ src="https://www.facebook.com/tr?id=886450287373984&ev=PageView&noscript=1"
       <div class="recent-post">
         <div class="media-img">
           <a href="./best-clay-modelling-academies-in-india.html">
-            <img src="assets/img/claymodeling/blog2.webp" alt="Best clay modelling academies in India">
+            <img src="assets/img/claymodeling/blog2.webp" alt="Best clay modelling academies in India" width="80" height="80" loading="lazy">
           </a>
         </div>
         <div class="media-body">
@@ -530,7 +1119,7 @@ src="https://www.facebook.com/tr?id=886450287373984&ev=PageView&noscript=1"
       <div class="recent-post">
         <div class="media-img">
           <a href="./why-lil-sculptr-is-the-best-clay-modelling-academy-for-kids.html">
-            <img src="assets/img/claymodeling/blog3.webp" alt="Why Lil Sculpr is the best clay modelling academy for kids">
+            <img src="assets/img/claymodeling/blog3.webp" alt="Why Lil Sculpr is the best clay modelling academy for kids" width="80" height="80" loading="lazy">
           </a>
         </div>
         <div class="media-body">
@@ -546,6 +1135,7 @@ src="https://www.facebook.com/tr?id=886450287373984&ev=PageView&noscript=1"
     </div>
   </div>
 </div>
+
                     <!-- Footer Widget -->
                     <div class="col-xl-auto col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                         <div class="widget footer-widget">
@@ -567,27 +1157,32 @@ src="https://www.facebook.com/tr?id=886450287373984&ev=PageView&noscript=1"
 
             </div>
         </div>
-        <div class="shape-mockup movingX d-none d-hd-block" data-top="7%" data-left="5%"><img src="assets/img/icon/f-i-3-1.webp" alt="shapes"></div>
-        <div class="shape-mockup movingX-reverse d-none d-hd-block" data-top="62%" data-left="10%"><img src="assets/img/icon/f-i-3-2.webp" alt="shapes"></div>
-        <div class="shape-mockup rotate d-none d-hd-block" data-top="69%" data-left="32%"><img src="assets/img/icon/f-i-3-3.webp" alt="shapes"></div>
-        <div class="shape-mockup movingX d-none d-hd-block" data-top="3%" data-left="46%"><img src="assets/img/icon/f-i-3-4.webp" alt="shapes"></div>
-        <div class="shape-mockup movingX-reverse d-none d-hd-block" data-top="18%" data-right="3%"><img src="assets/img/icon/f-i-3-5.webp" alt="shapes"></div>
-        <div class="shape-mockup movingX d-none d-hd-block" data-top="62%" data-right="6%"><img src="assets/img/icon/f-i-3-6.webp" alt="shapes"></div>
+        <div class="shape-mockup movingX d-none d-hd-block" data-top="7%" data-left="5%"><img src="assets/img/icon/f-i-3-1.webp" alt="shapes" width="40" height="56" loading="lazy"></div>
+        <div class="shape-mockup movingX-reverse d-none d-hd-block" data-top="62%" data-left="10%"><img src="assets/img/icon/f-i-3-2.webp" alt="shapes" width="120" height="96" loading="lazy"></div>
+        <div class="shape-mockup rotate d-none d-hd-block" data-top="69%" data-left="32%"><img src="assets/img/icon/f-i-3-3.webp" alt="shapes" width="60" height="65" loading="lazy"></div>
+        <div class="shape-mockup movingX d-none d-hd-block" data-top="3%" data-left="46%"><img src="assets/img/icon/f-i-3-4.webp" alt="shapes" width="74" height="93" loading="lazy"></div>
+        <div class="shape-mockup movingX-reverse d-none d-hd-block" data-top="18%" data-right="3%"><img src="assets/img/icon/f-i-3-5.webp" alt="shapes" width="131" height="85" loading="lazy"></div>
+        <div class="shape-mockup movingX d-none d-hd-block" data-top="62%" data-right="6%"><img src="assets/img/icon/f-i-3-6.webp" alt="shapes" width="78" height="98" loading="lazy"></div>
     </footer>
+
+
+
 
     <!--********************************
 			Code End  Here 
 	******************************** -->
 
 
+
+
     <!-- Scroll To Top -->
-  <a href="#" class="scrollToTop scroll-btn"><i class="fas fa-chevron-up"></i></a>
-          <a href="https://wa.me/919600443185" class="whatsapp-float" target="_blank">
-        <i class="fab fa-whatsapp"></i>
+  <a href="#" class="scrollToTop scroll-btn" aria-label="Scroll to top"><i class="fas fa-chevron-up" aria-hidden="true"></i></a>
+
+          <a href="https://wa.me/919600443185" class="whatsapp-float" target="_blank" aria-label="Contact us on WhatsApp">
+        <i class="fab fa-whatsapp" aria-hidden="true"></i>
         <div class="whatsapp-tooltip">Tap to Book Free Assessment</div>
     </a>
-         
-
+        
 
 <div class="popup-container d-none">
     <div class="popup">
@@ -620,13 +1215,15 @@ src="https://www.facebook.com/tr?id=886450287373984&ev=PageView&noscript=1"
     </div>
 
 </div>
-    
+
+
+
         <!-- Spinner Popup -->
-      <div class="spinner-popup active d-none" id="spinner-popup">
+    <div class="spinner-popup active d-none" id="spinner-popup">
         <div class="popup-header">
             <h2 class="popup-title">Spin & Win Amazing Prizes!</h2>
-            <button class="close-popup" id="close-popup">
-                <i class="fas fa-times"></i>
+            <button class="close-popup" id="close-popup" aria-label="Close spinner popup">
+                <i class="fas fa-times" aria-hidden="true"></i>
             </button>
         </div>
 
@@ -638,8 +1235,8 @@ src="https://www.facebook.com/tr?id=886450287373984&ev=PageView&noscript=1"
         </div>
 
         <div class="controls">
-            <button id="spin-btn">
-                <i class="fas fa-play-circle"></i> Spin the Wheel
+            <button id="spin-btn" aria-label="Spin the wheel">
+                <i class="fas fa-play-circle" aria-hidden="true"></i> Spin the Wheel
             </button>
         </div>
     </div>
@@ -653,35 +1250,70 @@ src="https://www.facebook.com/tr?id=886450287373984&ev=PageView&noscript=1"
             <button class="winner-btn close-winner d-none" id="close-winner">Close</button>
         </div>
     </div>
+
+
+
+ 
+
+    
     <!--==============================
         All Js File
     ============================== -->
     <!-- Jquery -->
-    <script src="assets/js/jquery-3.5.0.min.js"></script>
+    <!-- Jquery -->
+    <script src="assets/js/jquery-3.5.0.min.js" defer></script>
     <!-- Slick Slider -->
-    <script src="assets/js/slick.min.js"></script>
+    <script src="assets/js/slick.min.js" defer></script>
     <!-- Bootstrap -->
-    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/bootstrap.min.js" defer></script>
     <!-- Magnific Popup -->
-    <script src="assets/js/jquery.magnific-popup.min.js"></script>
+    <script src="assets/js/jquery.magnific-popup.min.js" defer></script>
     <!-- Isotope Filter -->
-    <script src="assets/js/imagesloaded.pkgd.min.js"></script>
-    <script src="assets/js/isotope.pkgd.min.js"></script>
+    <script src="assets/js/imagesloaded.pkgd.min.js" defer></script>
+    <script src="assets/js/isotope.pkgd.min.js" defer></script>
     <!-- Counter up  -->
-    <script src="assets/js/jquery.counterup.min.js"></script>
+    <script src="assets/js/jquery.counterup.min.js" defer></script>
     <!-- Parallax  -->
-    <script src="assets/js/parallax.min.js"></script>
+    <script src="assets/js/parallax.min.js" defer></script>
     <!-- Custom Carousel -->
-    <script src="assets/js/vscustom-carousel.min.js"></script>
+    <script src="assets/js/vscustom-carousel.min.js" defer></script>
     <!-- Range Slider -->
-    <script src="assets/js/jquery-ui.min.js"></script>
+    <script src="assets/js/jquery-ui.min.js" defer></script>
     <!-- WOW JS (Animation JS) -->
-    <script src="assets/js/wow.min.js"></script>
+    <script src="assets/js/wow.min.js" defer></script>
     <!-- Form Js -->
-    <script src="assets/js/ajax-mail.js"></script>
+    <!-- EmailJS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script src="assets/js/courseForm.js" defer></script>
     <!-- Main Js File -->
-        <script src="assets/js/main.min.js"></script>
-                <script src="./assets/js/spinner.js"></script>
+        <script src="assets/js/main.min.js" defer></script>
+        <script src="./assets/js/spinner.js" defer></script>
+
+    <!-- Tracking Scripts (Throttled for Performance) -->
+    <script>
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                // GTM
+                (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                })(window,document,'script','dataLayer','GTM-KK89945D');
+                
+                // Facebook Pixel
+                !function(f,b,e,v,n,t,s)
+                {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+                n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+                if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+                n.queue=[];t=b.createElement(e);t.async=!0;
+                t.src=v;s=b.getElementsByTagName(e)[0];
+                s.parentNode.insertBefore(t,s)}(window, document,'script',
+                'https://connect.facebook.net/en_US/fbevents.js');
+                fbq('init', '886450287373984');
+                fbq('track', 'PageView');
+            }, 3000);
+        });
+    </script>
 
 </body>
 
