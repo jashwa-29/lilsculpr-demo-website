@@ -4,17 +4,25 @@
     "use strict";
 
     // ==================== CONFIGURATION ====================
-    const RAZORPAY_KEY = "rzp_live_RrosCeY3cSnO6e";
-    const WORKSHOP_FEE = 499;
-    const BACKEND_API = 'http://localhost:5000/api/special-course'; // Change for production
-    const CARNIVAL_NAME = "Winter Carnival Workshop 🎄";
-    const AVAILABLE_DATES = ["2025-12-21", "2025-12-22"];
+const RAZORPAY_KEY = "rzp_test_1DP5mmOlF5G5ag";
+
+    const MATERIAL_PRICE_WITH = 499;
+    const MATERIAL_PRICE_WITHOUT = 299;
+    let currentWorkshopFee = MATERIAL_PRICE_WITH; // Default
+    const BACKEND_API = 'http://127.0.0.1:5000/api/special-course'; // Localhost IP
+    const CARNIVAL_NAME = "Republic Day Special Workshop �🇳";
+    const AVAILABLE_DATES = ["2026-01-25", "2026-01-26"];
     
-    // Default batch templates - FIXED FORMAT
-    const DEFAULT_BATCHES = [
-        "Winter Carnival Workshop 🎄 ⏰ 10:00 AM – 12:00 PM",
-        "Winter Carnival Workshop 🎄 ⏰ 2:00 PM – 4:00 PM",
-        "Winter Carnival Workshop 🎄 ⏰ 4:00 PM – 6:00 PM"
+    // Default batch templates - UPDATED
+    const BATCHES_JAN_25 = [
+        "Special Offer Workshop 🎨 ⏰ 10:30 AM – 12:00 PM (Online Unlimited)"
+    ];
+    
+    const BATCHES_JAN_26 = [
+        "Special Offer Workshop 🎨 ⏰ 10:00 AM – 11:30 AM",
+        "Special Offer Workshop 🎨 ⏰ 12:00 PM – 1:30 PM",
+        "Special Offer Workshop 🎨 ⏰ 2:30 PM – 4:00 PM",
+        "Special Offer Workshop 🎨 ⏰ 4:30 PM – 6:00 PM"
     ];
 
     // ==================== SELECTORS ====================
@@ -27,8 +35,8 @@
     const $parentName = '[name="parent_name"]';
     const $childName = '[name="child_name"]';
     const $childAge = '[name="child_age"]';
-    const $message = '[name="message"]';
     const $selectedDate = '[name="selectedDate"]';
+    const $materialType = '#materialTypeHidden';
     const $carnivalName = '[name="carnivalName"]';
     const $paymentConfirm = '#payment-confirm';
     const $validation = '[name="parent_name"],[name="number"],[name="email"],[name="child_name"],[name="child_age"],[name="selectedDate"],[name="batch"]';
@@ -42,515 +50,376 @@
         if (!$('#custom-styles').length) {
             $('head').append(`
                 <style id="custom-styles">
-                    /* Date Selection Styles */
-                    .date-selection {
+                    :root {
+                        --saffron: #FF9933;
+                        --white: #FFFFFF;
+                        --green: #138808;
+                        --navy: #000080;
+                        --kid-purple: #9C29B2;
+                        --kid-orange: #ff6b00;
+                        --playful-font: "Baloo 2", cursive;
+                    }
+
+                    .appointment-form {
+                        background: #ffffff;
+                        padding: 25px 30px !important;
+                        border-radius: 30px !important;
+                        box-shadow: 0 20px 60px rgba(0,0,0,0.1) !important;
+                        position: relative;
+                    }
+
+                    .appointment-form::after {
+                        content: '🎨';
+                        position: absolute;
+                        bottom: -15px;
+                        right: -15px;
+                        font-size: 40px;
+                        transform: rotate(15deg);
+                    }
+
+                    .form-title, .sec-title, h3, h5, .breadcumb-title, .expect-title {
+                        font-family: var(--playful-font) !important;
+                        font-weight: 800 !important;
+                    }
+
+                    .form-group label {
+                        font-family: var(--playful-font);
+                        font-weight: 700;
+                        color: #333;
+                        margin-bottom: 5px;
+                        display: block;
+                        font-size: 16px;
+                    }
+
+                    .form-group .form-control, .form-group .form-select {
+                        border: 3px solid #f1f5f9 !important;
+                        border-radius: 15px !important;
+                        padding-left: 15px !important;
+                        height: 50px !important;
+                        font-size: 15px !important;
+                        transition: all 0.3s ease;
+                        font-family: var(--playful-font);
+                    }
+
+                    .form-group .form-control:focus {
+                        border-color: var(--kid-purple) !important;
+                        box-shadow: 0 0 0 6px rgba(156, 41, 178, 0.1) !important;
+                        transform: scale(1.02);
+                    }
+
+                    /* Date & Material Selection Playful Cards */
+                    .date-selection, .material-selection {
                         display: flex;
                         gap: 12px;
                         margin-bottom: 15px;
                     }
-                    
-                    .date-option {
+
+                    .date-option, .material-option {
                         flex: 1;
-                        min-width: 120px;
+                        min-width: 100px;
                     }
-                    
-                    .date-radio {
+
+                    .date-radio, .material-radio {
                         display: none;
                     }
-                    
-                    .date-label {
+
+                    .date-label, .material-label {
+                        border: 3px solid #f1f5f9;
+                        border-radius: 20px;
+                        padding: 12px 10px;
+                        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                        background: #fff;
                         display: flex;
                         flex-direction: column;
                         align-items: center;
-                        padding: 15px;
-                        border: 2px solid #dee2e6;
-                        border-radius: 12px;
-                        cursor: pointer;
-                        transition: all 0.3s ease;
-                        background: white;
-                        text-align: center;
-                        min-height: 100px;
                         justify-content: center;
+                        text-align: center;
+                        cursor: pointer;
+                        box-shadow: 0 4px 0 #f1f5f9;
                     }
-                    
-                    .date-label:hover {
-                        border-color: #3498db;
-                        background: #f8f9fa;
-                        transform: translateY(-2px);
-                        box-shadow: 0 5px 15px rgba(52, 152, 219, 0.1);
+
+                    .date-label:hover, .material-label:hover {
+                        border-color: var(--kid-orange);
+                        transform: translateY(-5px);
+                        box-shadow: 0 10px 0 rgba(255, 107, 0, 0.1);
                     }
-                    
+
                     .date-radio:checked + .date-label {
-                        border-color: #28a745;
-                        background: linear-gradient(135deg, #f8fff9 0%, #e8f7ec 100%);
-                        box-shadow: 0 8px 20px rgba(40, 167, 69, 0.15);
+                        border-color: var(--green) !important;
+                        background: #f0fff4 !important;
+                        box-shadow: 0 8px 0 rgba(19, 136, 8, 0.2) !important;
+                        transform: scale(1.05);
                     }
-                    
-                    .date-day {
-                        font-size: 12px;
-                        color: #6c757d;
-                        text-transform: uppercase;
-                        font-weight: 600;
-                        margin-bottom: 5px;
+
+                    .material-radio:checked + .material-label {
+                        border-color: var(--saffron) !important;
+                        background: #fffaf0 !important;
+                        box-shadow: 0 8px 0 rgba(255, 153, 51, 0.2) !important;
+                        transform: scale(1.05);
                     }
-                    
-                    .date-number {
-                        font-size: 28px;
-                        font-weight: bold;
-                        color: #2c3e50;
-                        line-height: 1;
-                        margin: 5px 0;
+
+                    .date-number { font-size: 24px; font-weight: 800; color: #1e293b; line-height: 1.2; font-family: var(--playful-font); }
+                    .date-day, .date-month { font-size: 12px; font-weight: 700; color: #64748b; font-family: var(--playful-font); }
+
+                    .material-name { font-size: 12px; font-weight: 700; color: #64748b; font-family: var(--playful-font); }
+                    .material-price { font-size: 22px; font-weight: 800; color: #1e293b; line-height: 1.2; font-family: var(--playful-font); }
+
+
+                    /* Right Side Redesign Styles - Kid Friendly */
+                    .workshop-highlights-card {
+                        background: #fff;
+                        border-radius: 40px;
+                        padding: 35px;
+                        border: 4px dashed #e2e8f0;
+                        position: relative;
+                        overflow: visible; /* To allow floating icons to pop out */
                     }
-                    
-                    .date-month {
-                        font-size: 14px;
-                        color: #495057;
-                        font-weight: 500;
+
+                    .workshop-highlights-card::before {
+                        content: '✨';
+                        position: absolute;
+                        top: -20px;
+                        left: -20px;
+                        font-size: 40px;
                     }
-                    
-                    /* Workshop dates info */
-                    .workshop-dates-info {
-                        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-                        padding: 20px;
-                        border-radius: 12px;
-                        border-left: 4px solid #3498db;
+
+                    .feature-list {
+                        list-style: none;
+                        padding: 0;
+                        margin: 25px 0 0;
                     }
-                    
-                    .date-list {
-                        margin-top: 15px;
-                    }
-                    
-                    .date-item {
+
+                    .feature-item {
                         display: flex;
                         align-items: center;
-                        gap: 10px;
-                        padding: 10px 15px;
-                        background: white;
-                        border-radius: 8px;
-                        margin-bottom: 8px;
-                        border: 1px solid #dee2e6;
+                        gap: 15px;
+                        margin-bottom: 20px;
+                        transition: transform 0.3s ease;
                     }
-                    
-                    .date-badge {
-                        background: #e9ecef;
-                        color: #495057;
-                        padding: 4px 10px;
-                        border-radius: 20px;
-                        font-size: 12px;
-                        font-weight: 600;
-                        min-width: 70px;
-                        text-align: center;
+
+                    .feature-item:hover {
+                        transform: translateX(10px);
                     }
-                    
-                    /* Form validation styles */
-                    .is-invalid {
-                        border-color: #dc3545 !important;
-                        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
-                        background-repeat: no-repeat;
-                        background-position: right calc(.375em + .1875rem) center;
-                        background-size: calc(.75em + .375rem) calc(.75em + .375rem);
+
+                    .feature-icon-box {
+                        width: 55px; height: 55px;
+                        background: #fff;
+                        border-radius: 18px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        box-shadow: 0 6px 0 #f1f5f9;
+                        flex-shrink: 0;
+                        font-size: 22px;
+                        border: 3px solid #f1f5f9;
                     }
-                    
-                    .is-valid {
-                        border-color: #198754 !important;
+
+                    .feature-text h5 {
+                        font-family: var(--playful-font);
+                        font-size: 18px;
+                        font-weight: 800;
+                        margin-bottom: 2px;
+                        color: #1e293b;
                     }
-                    
-                    /* Batch availability styles - ENHANCED */
-                    select[name="batch"] {
+
+                    .feature-text p {
                         font-size: 14px;
-                        font-weight: 500;
+                        color: #64748b;
+                        margin-bottom: 0;
+                        line-height: 1.3;
                     }
-                    
-                    select[name="batch"]:disabled {
-                        opacity: 0.6;
-                        cursor: not-allowed;
-                    }
-                    
-                    .batch-option {
-                        padding: 12px 15px;
-                        display: block !important;
-                        margin: 2px 0;
-                        border-radius: 6px;
-                        border-left: 3px solid transparent;
-                    }
-                    
-                    .batch-option.available {
-                        color: #155724;
-                        background-color: #f8fff9;
-                        border-left-color: #28a745;
-                    }
-                    
-                    .batch-option.available:hover {
-                        background-color: #e8f7ec;
-                    }
-                    
-                    .batch-option.limited {
-                        color: #856404;
-                        background-color: #fff9e6;
-                        border-left-color: #ffc107;
-                    }
-                    
-                    .batch-option.limited:hover {
-                        background-color: #fff3cc;
-                    }
-                    
-                    .batch-option.full {
-                        color: #721c24;
-                        background-color: #fff5f5;
-                        opacity: 0.7;
-                        text-decoration: line-through;
-                        border-left-color: #dc3545;
-                    }
-                    
-                    .batch-option.full:hover {
-                        background-color: #ffeaea;
-                    }
-                    
-                    /* Slot count badge inside options - FIXED: Show full text */
-                    .slot-badge {
+
+                    .info-tag {
                         display: inline-flex;
                         align-items: center;
-                        padding: 4px 10px;
-                        border-radius: 15px;
-                        font-size: 11px;
-                        font-weight: bold;
-                        min-width: 110px;
-                        text-align: center;
-                        justify-content: center;
-                        margin-left: 10px;
-                        float: right;
-                    }
-                    
-                    .slot-available {
-                        background-color: #d4edda;
-                        color: #155724;
-                        border: 1px solid #c3e6cb;
-                    }
-                    
-                    .slot-limited {
-                        background-color: #fff3cd;
-                        color: #856404;
-                        border: 1px solid #ffeaa7;
-                    }
-                    
-                    .slot-full {
-                        background-color: #f8d7da;
-                        color: #721c24;
-                        border: 1px solid #f5c6cb;
-                    }
-                    
-                    .slot-count {
-                        font-weight: 900;
-                        margin-right: 3px;
-                        font-size: 12px;
-                    }
-                    
-                    .batch-time {
-                        font-weight: 500;
-                    }
-                    
-                    .batch-status {
-                        font-size: 11px;
-                        opacity: 0.8;
-                        margin-left: 8px;
-                    }
-                    
-                    /* Batch selection summary */
-                    .batch-summary {
-                        display: flex;
-                        align-items: center;
-                        gap: 8px;
-                        margin-top: 8px;
+                        padding: 8px 16px;
+                        background: #fff;
+                        border-radius: 50px;
                         font-size: 13px;
-                        padding: 10px 15px;
-                        background: #f8f9fa;
-                        border-radius: 8px;
-                        border-left: 4px solid #6c757d;
+                        font-weight: 800;
+                        border: 2px solid #f1f5f9;
+                        color: #475569;
+                        margin-right: 8px;
+                        margin-bottom: 8px;
+                        font-family: var(--playful-font);
+                        box-shadow: 0 4px 0 #f1f5f9;
                     }
-                    
-                    .batch-selected {
-                        font-weight: 600;
-                        color: #2c3e50;
+
+                    .info-tag i { color: var(--kid-purple); margin-right: 8px; }
+
+                    .what-to-expect {
+                        background: #fef5ff;
+                        border-radius: 25px;
+                        padding: 22px;
+                        margin-top: 25px;
+                        border: 3px solid #fce7ff;
                     }
-                    
-                    .batch-slots-info {
+
+                    .expect-title {
+                        font-size: 15px;
+                        font-weight: 900;
+                        text-transform: uppercase;
+                        letter-spacing: 0.5px;
+                        color: var(--kid-purple);
+                        margin-bottom: 12px;
+                        display: block;
+                        font-family: var(--playful-font);
+                    }
+
+                    .expect-list {
+                        list-style: none;
+                        padding: 0;
+                        margin: 0;
+                    }
+
+                    .expect-item {
+                        font-size: 14px;
+                        color: #475569;
+                        margin-bottom: 10px;
                         display: flex;
                         align-items: center;
-                        gap: 5px;
-                        font-size: 12px;
+                        font-family: var(--playful-font);
+                        font-weight: 700;
                     }
-                    
-                    .slots-icon {
+
+                    .expect-item::before {
+                        content: '⭐';
+                        margin-right: 12px;
                         font-size: 14px;
                     }
-                    
-                    .slots-count {
-                        font-weight: bold;
+
+                    /* Bouncy Animations for Kids Flow */
+                    @keyframes bounce {
+                        0%, 100% { transform: translateY(0); }
+                        50% { transform: translateY(-15px); }
                     }
-                    
-                    .slots-available {
-                        color: #28a745;
+
+                    @keyframes wiggle {
+                        0%, 100% { transform: rotate(0deg); }
+                        25% { transform: rotate(5deg); }
+                        75% { transform: rotate(-5deg); }
                     }
+
+                    .bouncy { animation: bounce 3s ease-in-out infinite; }
+                    .wiggle { animation: wiggle 2s ease-in-out infinite; }
                     
-                    .slots-limited {
-                        color: #ffc107;
+                    .shapePulse { animation: shapePulse 4s ease-in-out infinite; }
+                    
+                    @keyframes shapePulse {
+                        0%, 100% { transform: scale(1) rotate(0deg); }
+                        50% { transform: scale(1.1) rotate(10deg); }
                     }
-                    
-                    .slots-full {
-                        color: #dc3545;
-                    }
-                    
-                    /* Button loader */
-                    .button-loader {
-                        display: inline-block;
-                        width: 16px;
-                        height: 16px;
-                        border: 2px solid #ffffff;
+
+                    /* Decorative Design Flow Elements */
+                    .design-blob {
+                        position: absolute;
+                        z-index: -1;
+                        filter: blur(60px);
+                        opacity: 0.15;
                         border-radius: 50%;
-                        border-top-color: transparent;
-                        animation: buttonSpin 1s ease-in-out infinite;
-                        margin-right: 8px;
-                        vertical-align: middle;
+                        pointer-events: none;
                     }
-                    
-                    @keyframes buttonSpin {
+
+                    .blob-saffron { width: 300px; height: 300px; background: var(--saffron); top: -50px; left: -100px; }
+                    .blob-green { width: 250px; height: 250px; background: var(--green); bottom: -50px; right: -50px; }
+
+                    .glass-card {
+                        backdrop-filter: blur(10px);
+                        background: rgba(255, 255, 255, 0.8) !important;
+                    }
+
+                    .shape-mockup {
+                        position: absolute;
+                        pointer-events: none;
+                        display: block;
+                    }
+
+                    .shapePulse {
+                        animation: shapePulse 4s ease-in-out infinite;
+                    }
+
+                    @keyframes shapePulse {
+                        0%, 100% { transform: scale(1); }
+                        50% { transform: scale(1.1); }
+                    }
+
+                    .rotate {
+                        animation: rotate 20s linear infinite;
+                    }
+
+                    @keyframes rotate {
+                        from { transform: rotate(0deg); }
                         to { transform: rotate(360deg); }
                     }
-                    
-                    .vs-btn[disabled] {
-                        opacity: 0.7;
-                        cursor: not-allowed;
+
+                    .slidetopleft {
+                        animation: slidetopleft 10s ease-in-out infinite;
                     }
-                    
-                    /* Form messages */
-                    .form-messages {
-                        margin: 15px 0;
-                        padding: 20px;
-                        border-radius: 12px;
-                        border: 1px solid transparent;
-                        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+
+                    @keyframes slidetopleft {
+                        0%, 100% { transform: translate(0, 0); }
+                        50% { transform: translate(-20px, -20px); }
                     }
-                    
-                    .form-messages.success {
-                        background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
-                        color: #155724;
-                        border-color: #b1d8b8;
-                    }
-                    
-                    .form-messages.error {
-                        background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
-                        color: #721c24;
-                        border-color: #f1b0b7;
-                    }
-                    
-                    .form-messages.processing {
-                        background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
-                        color: #856404;
-                        border-color: #ffe694;
-                    }
-                    
-                    /* Payment status */
-                    #payment-status {
-                        display: none;
-                        padding: 16px 20px;
-                        border-radius: 12px;
-                        margin: 20px 0;
-                        font-weight: 500;
-                        border: 1px solid transparent;
-                        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-                        animation: slideIn 0.3s ease-out;
-                    }
-                    
-                    @keyframes slideIn {
-                        from { opacity: 0; transform: translateY(-10px); }
-                        to { opacity: 1; transform: translateY(0); }
-                    }
-                    
-                    .payment-success {
-                        background: linear-gradient(135deg, #d4edda 0%, #b8e0c1 100%);
-                        color: #155724;
-                        border-color: #9cd3a7;
-                        border-left: 5px solid #28a745;
-                    }
-                    
-                    .payment-error {
-                        background: linear-gradient(135deg, #f8d7da 0%, #f2b9c0 100%);
-                        color: #721c24;
-                        border-color: #ec9ca6;
-                        border-left: 5px solid #dc3545;
-                    }
-                    
-                    .payment-processing {
-                        background: linear-gradient(135deg, #fff3cd 0%, #ffdf7e 100%);
-                        color: #856404;
-                        border-color: #ffd351;
-                        border-left: 5px solid #ffc107;
-                    }
-                    
-                    /* Simple message styles */
-                    .success-message {
-                        background: #f8fff9;
-                        border-radius: 10px;
-                        border: 2px solid #d4edda;
-                        text-align: center;
-                        padding: 30px 20px;
-                    }
-                    
-                    .error-message {
-                        background: #fff5f5;
-                        border-radius: 10px;
-                        border: 2px solid #f8d7da;
-                        text-align: center;
-                        padding: 30px 20px;
-                    }
-                    
-                    .btn-primary {
-                        background: #3498db;
-                        border: none;
-                        padding: 10px 25px;
-                        border-radius: 5px;
-                        font-weight: 500;
-                        color: white;
-                        transition: all 0.3s ease;
-                    }
-                    
-                    .btn-primary:hover {
-                        background: #2980b9;
-                        color: white;
-                    }
-                    
-                    .btn-outline-primary {
-                        background: transparent;
-                        border: 2px solid #3498db;
-                        color: #3498db;
-                        padding: 10px 25px;
-                        border-radius: 5px;
-                        font-weight: 500;
-                        transition: all 0.3s ease;
-                    }
-                    
-                    .btn-outline-primary:hover {
-                        background: #3498db;
-                        color: white;
-                    }
-                    
-                    /* Payment loading overlay */
-                    #payment-loading {
-                        display: none;
-                        position: fixed;
-                        top: 0;
+
+                    .section-divider {
+                        position: absolute;
                         left: 0;
                         width: 100%;
-                        height: 100%;
-                        background: rgba(0,0,0,0.92);
+                        line-height: 0;
+                        z-index: 1;
+                    }
+
+                    .divider-top { top: 0; height: 25px; transform: rotate(180deg); }
+                    .divider-bottom { bottom: 0; height: 40px; }
+                    
+                    /* Patriotic Accent Border */
+                    .patriotic-border {
+                        height: 4px;
+                        width: 100%;
+                        background: linear-gradient(to right, var(--saffron) 33.33%, #fff 33.33%, #fff 66.66%, var(--green) 66.66%);
+                        border-radius: 2px;
+                        margin-bottom: 20px;
+                    }
+
+                    @media (max-width: 768px) {
+                        .design-blob { opacity: 0.08; }
+                        .workshop-highlights-card { padding: 25px; }
+                        .feature-item { margin-bottom: 15px; }
+                    }
+
+                    #payment-loading {
+                        background: rgba(15, 23, 42, 0.8);
+                        backdrop-filter: blur(8px);
+                        display: none;
+                        position: fixed;
+                        top: 0; left: 0; width: 100%; height: 100%;
                         z-index: 99999;
                         justify-content: center;
                         align-items: center;
-                        backdrop-filter: blur(8px);
                     }
-                    
+
                     .payment-loading-content {
-                        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                        padding: 50px 40px;
                         border-radius: 24px;
+                        padding: 50px 40px;
+                        background: #fff;
+                        color: #1e293b;
                         text-align: center;
-                        box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-                        max-width: 450px;
-                        width: 90%;
-                        color: white;
-                        animation: scaleIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
                     }
-                    
-                    @keyframes scaleIn {
-                        from { opacity: 0; transform: scale(0.9); }
-                        to { opacity: 1; transform: scale(1); }
-                    }
-                    
+
                     .payment-spinner {
-                        width: 70px;
-                        height: 70px;
-                        border: 5px solid rgba(255,255,255,0.2);
-                        border-top: 5px solid #ffffff;
+                        width: 60px; height: 60px;
+                        border: 6px solid #f1f5f9;
+                        border-top: 6px solid var(--saffron);
                         border-radius: 50%;
                         animation: spin 1s linear infinite;
-                        margin: 0 auto 30px;
-                        box-shadow: 0 0 20px rgba(255,255,255,0.3);
+                        margin: 0 auto 20px;
                     }
-                    
-                    @keyframes spin {
-                        0% { transform: rotate(0deg); }
-                        100% { transform: rotate(360deg); }
-                    }
-                    
-                    /* Loading animation for batches */
-                    .batches-loading {
-                        text-align: center;
-                        padding: 15px;
-                        color: #6c757d;
-                    }
-                    
-                    .batches-loading .spinner {
-                        width: 40px;
-                        height: 40px;
-                        border: 3px solid #f3f3f3;
-                        border-top: 3px solid #3498db;
-                        border-radius: 50%;
-                        animation: spin 1s linear infinite;
-                        margin: 0 auto 10px;
-                    }
-                    
-                    /* Date validation */
-                    .date-option.invalid .date-label {
-                        border-color: #dc3545;
-                        background: #fff5f5;
-                        opacity: 0.6;
-                    }
-                    
-                    .date-option.invalid .date-label:hover {
-                        border-color: #dc3545;
-                        background: #ffeaea;
-                    }
-                    
-                    .date-option.valid .date-label {
-                        border-color: #28a745;
-                        background: #f8fff9;
-                    }
-                    
-                    /* Mobile responsiveness */
+
+                    @keyframes spin { to { transform: rotate(360deg); } }
+
                     @media (max-width: 768px) {
-                        .date-selection {
-                            flex-direction: column;
-                            gap: 10px;
-                        }
-                        
-                        .date-label {
-                            min-height: 80px;
-                            padding: 12px;
-                        }
-                        
-                        .date-number {
-                            font-size: 24px;
-                        }
-                        
-                        .batch-option {
-                            padding: 10px 12px;
-                            font-size: 13px;
-                        }
-                        
-                        .slot-badge {
-                            font-size: 10px;
-                            min-width: 90px;
-                            padding: 3px 6px;
-                        }
-                        
-                        .payment-loading-content {
-                            padding: 30px 20px;
-                            margin: 15px;
-                        }
-                        
-                        .success-message, .error-message {
-                            padding: 20px 15px;
-                        }
+                        .date-selection { flex-wrap: wrap; }
+                        .material-selection { flex-direction: column; }
                     }
                 </style>
             `);
@@ -583,7 +452,7 @@
             $btnText.show();
             $btnLoader.hide();
         } else {
-            $submitBtn.text('Pay ₹199 & Confirm Registration');
+            $submitBtn.text(`Pay ₹${currentWorkshopFee} & Confirm Registration`);
         }
     }
 
@@ -614,10 +483,6 @@
                 }, duration);
             }
         }
-        
-        // Also log to console
-        const icon = type === 'success' ? '✅' : type === 'error' ? '❌' : '⏳';
-        console.log(`${icon} ${message}`);
     }
 
     // Format phone number
@@ -639,21 +504,16 @@
 
     // Extract time from batch string
     function extractBatchTime(batchString) {
-        // Extract time from batch string like "Winter Carnival Workshop 🎄 ⏰ 10:00 AM – 11:30 AM"
         const match = batchString.match(/⏰\s*(.+)/);
         return match ? match[1] : batchString;
     }
 
     // ==================== API FUNCTIONS ====================
 
-    // Get slot availability for specific date and batch - FIXED VERSION
+    // Get slot availability for specific date and batch
     async function getSlotAvailability(carnivalName, batchName, selectedDate) {
         try {
-            console.log(`🔍 Checking slots for ${batchName} on ${selectedDate}`);
-            
-            // FIX: Trim URL and parameters to remove newlines
             const apiUrl = `${BACKEND_API}/check-slots`.trim();
-            
             const response = await axios.get(apiUrl, {
                 params: { 
                     carnivalName: carnivalName.trim(),
@@ -662,78 +522,35 @@
                     _t: Date.now()
                 }
             });
-            
-            if (response.data.success) {
-                console.log(`✅ Slot info for ${batchName}:`, response.data.data);
-                return response.data.data;
-            } else {
-                throw new Error(response.data.message || 'Failed to check slots');
-            }
+            if (response.data.success) return response.data.data;
+            throw new Error(response.data.message || 'Failed to check slots');
         } catch (error) {
             console.error('❌ Slot availability error:', error);
-            // Return default availability
-            return {
-                carnivalName: carnivalName,
-                batch: batchName,
-                date: selectedDate,
-                availableSlots: 15,
-                isFull: false,
-                capacity: 15,
-                status: 'available'
-            };
+            return { availableSlots: 15, isFull: false, capacity: 15, status: 'available' };
         }
     }
 
-    // Get all batches for a specific date with slot counts - FIXED VERSION
+    // Get all batches for a specific date
     async function getBatchesForDate(selectedDate) {
         try {
-            console.log(`📅 Fetching batches for date: ${selectedDate}`);
-            
-            // First, check all default batches availability
+            const batchesToLoad = selectedDate === "2026-01-25" ? BATCHES_JAN_25 : BATCHES_JAN_26;
             const batchResults = [];
-            
-            for (const batch of DEFAULT_BATCHES) {
-                try {
-                    const slotInfo = await getSlotAvailability(CARNIVAL_NAME, batch, selectedDate);
-                    batchResults.push({
-                        name: batch,
-                        displayName: extractBatchTime(batch),
-                        time: extractBatchTime(batch),
-                        availableSlots: slotInfo.availableSlots || 15,
-                        isFull: slotInfo.isFull || false,
-                        capacity: slotInfo.capacity || 15,
-                        status: slotInfo.status || 'available'
-                    });
-                } catch (error) {
-                    console.warn(`⚠️ Could not check availability for ${batch}:`, error.message);
-                    // Add default data if check fails
-                    batchResults.push({
-                        name: batch,
-                        displayName: extractBatchTime(batch),
-                        time: extractBatchTime(batch),
-                        availableSlots: 15,
-                        isFull: false,
-                        capacity: 15,
-                        status: 'available'
-                    });
-                }
+            for (const batch of batchesToLoad) {
+                const isOnline = batch.includes('Online Unlimited');
+                const slotInfo = await getSlotAvailability(CARNIVAL_NAME, batch, selectedDate);
+                batchResults.push({
+                    name: batch,
+                    displayName: extractBatchTime(batch) + (isOnline ? ' (Online)' : ''),
+                    availableSlots: isOnline ? 999 : (slotInfo.availableSlots || 15),
+                    isFull: isOnline ? false : (slotInfo.isFull || false),
+                });
             }
-            
-            console.log(`✅ Loaded ${batchResults.length} batches for ${selectedDate}`);
             return batchResults;
-            
         } catch (error) {
             console.error('❌ Batch fetch error:', error.message);
-            console.log('🔄 Using default batches as fallback');
-            // Return default batches as fallback
-            return DEFAULT_BATCHES.map(batch => ({
-                name: batch,
-                displayName: extractBatchTime(batch),
-                time: extractBatchTime(batch),
-                availableSlots: 15,
-                isFull: false,
-                capacity: 15,
-                status: 'available'
+            const batchesToLoad = selectedDate === "2026-01-25" ? BATCHES_JAN_25 : BATCHES_JAN_26;
+            return batchesToLoad.map(batch => ({
+                name: batch, displayName: extractBatchTime(batch), availableSlots: 15, isFull: false
             }));
         }
     }
@@ -782,13 +599,17 @@
                 selectedBatch: formData.batch,
                 selectedDate: formData.selectedDate,
                 availableDates: AVAILABLE_DATES,
-                message: formData.message || ''
+                materialType: formData.materialType
             });
 
-            console.log('✅ Registration saved:', response.data);
+            console.log('✅ Registration saved successfully:', response.data);
             return response.data;
         } catch (error) {
-            console.error('❌ Registration save error:', error);
+            console.error('❌ Registration save error details:', {
+                message: error.message,
+                status: error.response?.status,
+                data: error.response?.data
+            });
             throw error;
         }
     }
@@ -812,10 +633,14 @@
                 }
             });
 
-            console.log('✅ Payment verified:', response.data);
+            console.log('✅ Payment verified by backend:', response.data);
             return response.data;
         } catch (error) {
-            console.error('❌ Payment verification error:', error);
+            console.error('❌ Payment verification error details:', {
+                message: error.message,
+                status: error.response?.status,
+                data: error.response?.data
+            });
             throw error;
         }
     }
@@ -1014,6 +839,19 @@
                 console.log('⚠️ No date selected');
                 return;
             }
+
+            // Update price based on date: Jan 25 is Online (299), Jan 26 is Offline (499)
+            const isOnlineDate = selectedDate === "2026-01-25";
+            currentWorkshopFee = isOnlineDate ? MATERIAL_PRICE_WITHOUT : MATERIAL_PRICE_WITH;
+            const hasMaterial = !isOnlineDate;
+            
+            // Update hidden material type
+            $($materialType).val(hasMaterial.toString());
+            
+            console.log(`💰 Date-based pricing: ${selectedDate} -> ₹${currentWorkshopFee} (${hasMaterial ? 'With' : 'Without'} Material)`);
+
+            // Update UI elements with new price
+            updatePriceDisplay();
             
             // Show loading for batches
             await loadBatchesForDate(selectedDate);
@@ -1032,6 +870,32 @@
         });
         
         console.log('✅ Date selection initialized');
+    }
+
+    // Update all price-related UI elements
+    function updatePriceDisplay() {
+        // Update button text
+        const $submitBtn = $(submitBtn);
+        const $btnText = $submitBtn.find('.btn-text');
+        const priceText = `Pay ₹${currentWorkshopFee} & Confirm Registration`;
+        
+        if ($btnText.length) {
+            $btnText.text(priceText);
+        } else {
+            $submitBtn.text(priceText);
+        }
+        
+        // Update payment confirmation description
+        const $confirmLabel = $('label[for="payment-confirm"]');
+        if ($confirmLabel.length) {
+            $confirmLabel.text(`I understand that ₹${currentWorkshopFee} payment is required to confirm my registration.`);
+        }
+    }
+
+    // Material selection is now automated based on date
+    function initializeMaterialSelection() {
+        console.log('🎨 Material selection is now automated based on date.');
+        updatePriceDisplay();
     }
 
     // ==================== VALIDATION FUNCTIONS ====================
@@ -1057,15 +921,20 @@
                     $element.removeClass(invalidCls).addClass('is-valid');
                 }
             } else if ($element.is('input[type="radio"]')) {
-                const isChecked = $($selectedDate + ':checked').length > 0;
+                const name = $element.attr('name');
+                const isChecked = $(`input[name="${name}"]:checked`).length > 0;
                 if (!isChecked) {
-                    $('#date-error').text('Please select a workshop date').show();
-                    $('.date-selection').addClass('is-invalid');
+                    if (name === 'selectedDate') {
+                        $('#date-error').text('Please select a workshop date').show();
+                    }
+                    $element.closest('.date-selection, .material-selection').addClass('is-invalid');
                     valid = false;
-                    console.log('❌ No date selected');
+                    console.log(`❌ No radio selected for ${name}`);
                 } else {
-                    $('#date-error').hide();
-                    $('.date-selection').removeClass('is-invalid');
+                    if (name === 'selectedDate') {
+                        $('#date-error').hide();
+                    }
+                    $element.closest('.date-selection, .material-selection').removeClass('is-invalid');
                 }
             } else if (!value) {
                 $element.addClass(invalidCls);
@@ -1237,7 +1106,7 @@
 
             const options = {
                 "key": RAZORPAY_KEY,
-                "amount": WORKSHOP_FEE * 100,
+                "amount": currentWorkshopFee * 100,
                 "currency": "INR",
                 "name": "Lil Sculpr Clay Academy",
                 "description": `Winter Carnival Workshop - ${formattedDate}`,
@@ -1444,7 +1313,7 @@
             childAge: $($childAge).val().trim(),
             selectedDate: $($selectedDate + ':checked').val(),
             batch: $($batch).val().trim(),
-            message: $($message).val() ? $($message).val().trim() : ''
+            materialType: $($materialType).val() === 'true'
         };
 
         console.log('📋 Form data collected:', formData);
@@ -1561,7 +1430,7 @@
     function initialize() {
         console.log('🎨 Initializing Lil Sculpr Registration Form...');
         console.log('🔗 Backend API:', BACKEND_API.trim()); // FIX: Trim the URL
-        console.log('💰 Workshop Fee: ₹' + WORKSHOP_FEE);
+        console.log('💰 Workshop Fee: ₹' + currentWorkshopFee);
         console.log('📅 Available Dates:', AVAILABLE_DATES.join(', '));
 
         // Add styles
@@ -1592,8 +1461,9 @@
         // Setup real-time validation
         setupRealTimeValidation();
         
-        // Initialize date selection
+        // Initialize selections
         initializeDateSelection();
+        initializeMaterialSelection();
         
         // Also initialize FontAwesome if needed
         if (typeof FontAwesome === 'undefined' && !$('link[href*="font-awesome"]').length) {
@@ -1608,19 +1478,19 @@
             if ($(form).length) {
                 formMessages.html(`
                     <div class="processing p-3 rounded">
-                        <p style="color: #856404; font-size: 16px; font-weight: 500;"><i class="fas fa-palette mr-2"></i> Winter Carnival Workshop Registration</p>
-                        <p><strong>📅 Workshop Dates:</strong> December 21-22, 2025</p>
-                        <p>Fill in the details below to register your child for an exciting clay workshop experience!</p>
-                        <div class="mt-3 p-3 bg-warning text-dark rounded">
-                            <i class="fas fa-exclamation-triangle mr-2"></i>
-                            <strong>Limited Slots:</strong> Only 15 seats per batch. Secure your spot now!
+                        <p style="color: #FF9933; font-size: 16px; font-weight: 500;"><i class="fas fa-flag mr-2"></i> Republic Day Special Workshop Registration</p>
+                        <p><strong>📅 Workshop Dates:</strong> January 25-26, 2026</p>
+                        <p>Fill in the details below to register your child for an exciting patriotic clay workshop experience!</p>
+                        <div class="mt-3 p-3 bg-white border rounded" style="border-left: 5px solid #138808 !important;">
+                            <i class="fas fa-landmark mr-2" style="color: #000080;"></i>
+                            <strong>Republic Day Special:</strong> Guided Patriotic Themed Clay Modelling
                         </div>
                         <p class="mt-3 mb-0"><strong>Instructions:</strong></p>
                         <ol class="text-start small">
                             <li>Select your preferred workshop date</li>
                             <li>Choose an available time slot</li>
                             <li>Fill in child and parent details</li>
-                            <li>Complete the ₹199 registration fee payment</li>
+                            <li>Complete the registration fee payment (₹299 for Online / ₹499 for Offline)</li>
                         </ol>
                     </div>
                 `).removeClass('error success').addClass('processing');
