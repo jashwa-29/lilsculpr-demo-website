@@ -2,7 +2,6 @@ User-agent: *
 Allow: /
 
 Disallow: /register.html
-Disallow: /special-offer-register.html
 Disallow: /blog-details.html
 Disallow: /class-details.html
 

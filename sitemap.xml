@@ -24,7 +24,7 @@
   </url>
 
   <url>
-    <loc>https://lilsculpr.com/workshops.html</loc>
+    <loc>https://lilsculpr.com/work-shops.html</loc>
     <lastmod>2026-01-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -72,10 +72,24 @@
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
   </url>
+  
+  <url>
+    <loc>https://lilsculpr.com/clay-modelling-activities-for-kids.html</loc>
+    <lastmod>2025-11-29</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
 
   <!-- Courses & Programs -->
   <url>
     <loc>https://lilsculpr.com/kids-clay-modelling-course-levels-1-to-12.html</loc>
+    <lastmod>2026-01-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://lilsculpr.com/miniature-food-sculpting-class.html</loc>
     <lastmod>2026-01-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -89,7 +103,56 @@
   </url>
 
   <url>
+    <loc>https://lilsculpr.com/terracotta-wheel-throwing-class.html</loc>
+    <lastmod>2025-12-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
     <loc>https://lilsculpr.com/ceramic-sculpting-course.html</loc>
+    <lastmod>2025-12-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://lilsculpr.com/mural-making-workshop.html</loc>
+    <lastmod>2025-12-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://lilsculpr.com/polymer-clay-jewellery-class.html</loc>
+    <lastmod>2025-12-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://lilsculpr.com/resin-art-and-clay-fusion.html</loc>
+    <lastmod>2025-12-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://lilsculpr.com/home-decor-clay-crafts.html</loc>
+    <lastmod>2025-12-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://lilsculpr.com/mixed-media-sculpting.html</loc>
+    <lastmod>2025-12-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://lilsculpr.com/clay-business-masterclass.html</loc>
     <lastmod>2025-12-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -117,6 +180,13 @@
     <priority>0.6</priority>
   </url>
 
+  <url>
+    <loc>https://lilsculpr.com/special-offer-register.html</loc>
+    <lastmod>2026-01-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
   <!-- Legal Pages -->
   <url>
     <loc>https://lilsculpr.com/privacy-policy.html</loc>
@@ -140,3 +210,4 @@
   </url>
 
 </urlset>
+
