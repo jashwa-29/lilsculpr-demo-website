@@ -4,7 +4,6 @@
     "use strict";
 
     // ==================== CONFIGURATION ====================
-const RAZORPAY_KEY = "rzp_test_1DP5mmOlF5G5ag";
 
     const MATERIAL_PRICE_WITH = 499;
     const MATERIAL_PRICE_WITHOUT = 299;
@@ -15,7 +14,7 @@ const RAZORPAY_KEY = "rzp_test_1DP5mmOlF5G5ag";
     
     // Default batch templates - UPDATED
     const BATCHES_JAN_25 = [
-        "Special Offer Workshop 🎨 ⏰ 10:30 AM – 12:00 PM (Online Unlimited)"
+        "Special Offer Workshop 🎨 ⏰ 10:30 AM – 12:00 PM (Online)"
     ];
     
     const BATCHES_JAN_26 = [
@@ -163,6 +162,23 @@ const RAZORPAY_KEY = "rzp_test_1DP5mmOlF5G5ag";
 
                     .material-name { font-size: 12px; font-weight: 700; color: #64748b; font-family: var(--playful-font); }
                     .material-price { font-size: 22px; font-weight: 800; color: #1e293b; line-height: 1.2; font-family: var(--playful-font); }
+
+                    .online-badge {
+                        position: absolute;
+                        top: -10px;
+                        right: -5px;
+                        background: var(--navy);
+                        color: white;
+                        font-size: 10px;
+                        font-weight: 800;
+                        padding: 2px 8px;
+                        border-radius: 10px;
+                        text-transform: uppercase;
+                        letter-spacing: 0.5px;
+                        box-shadow: 0 4px 10px rgba(0,0,128,0.3);
+                        z-index: 2;
+                        font-family: var(--playful-font);
+                    }
 
 
                     /* Right Side Redesign Styles - Kid Friendly */
@@ -526,7 +542,7 @@ const RAZORPAY_KEY = "rzp_test_1DP5mmOlF5G5ag";
             throw new Error(response.data.message || 'Failed to check slots');
         } catch (error) {
             console.error('❌ Slot availability error:', error);
-            return { availableSlots: 15, isFull: false, capacity: 15, status: 'available' };
+            return { availableSlots: 20, isFull: false, capacity: 20, status: 'available' };
         }
     }
 
@@ -536,13 +552,14 @@ const RAZORPAY_KEY = "rzp_test_1DP5mmOlF5G5ag";
             const batchesToLoad = selectedDate === "2026-01-25" ? BATCHES_JAN_25 : BATCHES_JAN_26;
             const batchResults = [];
             for (const batch of batchesToLoad) {
-                const isOnline = batch.includes('Online Unlimited');
+                const isOnline = batch.includes('(Online)');
                 const slotInfo = await getSlotAvailability(CARNIVAL_NAME, batch, selectedDate);
                 batchResults.push({
                     name: batch,
                     displayName: extractBatchTime(batch) + (isOnline ? ' (Online)' : ''),
-                    availableSlots: isOnline ? 999 : (slotInfo.availableSlots || 15),
+                    availableSlots: isOnline ? 999 : (slotInfo.availableSlots || 20),
                     isFull: isOnline ? false : (slotInfo.isFull || false),
+                    isOnline: isOnline // Pass this flag
                 });
             }
             return batchResults;
@@ -550,7 +567,7 @@ const RAZORPAY_KEY = "rzp_test_1DP5mmOlF5G5ag";
             console.error('❌ Batch fetch error:', error.message);
             const batchesToLoad = selectedDate === "2026-01-25" ? BATCHES_JAN_25 : BATCHES_JAN_26;
             return batchesToLoad.map(batch => ({
-                name: batch, displayName: extractBatchTime(batch), availableSlots: 15, isFull: false
+                name: batch, displayName: extractBatchTime(batch), availableSlots: 20, isFull: false
             }));
         }
     }
@@ -611,6 +628,27 @@ const RAZORPAY_KEY = "rzp_test_1DP5mmOlF5G5ag";
                 data: error.response?.data
             });
             throw error;
+        }
+    }
+
+    // Create payment order on backend
+    async function createOrderOnBackend(registrationId) {
+        try {
+            console.log(`📦 Creating order for: ${registrationId}`);
+            const response = await axios.post(`${BACKEND_API}/create-order`.trim(), {
+                registrationId: registrationId
+            });
+            
+            if (response.data.success) {
+                console.log('✅ Order created successfully:', response.data.data.orderId);
+                return response.data.data;
+            } else {
+                throw new Error(response.data.message || 'Failed to create order');
+            }
+        } catch (error) {
+            console.error('❌ Order creation error:', error);
+            const errorMessage = error.response?.data?.message || error.message || 'Failed to create payment order';
+            throw new Error(errorMessage);
         }
     }
 
@@ -731,17 +769,20 @@ const RAZORPAY_KEY = "rzp_test_1DP5mmOlF5G5ag";
         let statusClass = '';
         let slotBadge = '';
         
+        // FIXED: Show "only X slots available" for offline, or just "Available" for online
         if (isFull) {
             optionText += ' (Full)';
             statusClass = 'full';
             slotBadge = `<span class="slot-badge slot-full">Full</span>`;
+        } else if (batchInfo.isOnline) {
+            optionText += ' (Available)';
+            statusClass = 'available';
+            slotBadge = `<span class="slot-badge slot-available">Available</span>`;
         } else if (availableSlots <= 3) {
-            // FIXED: Show "only X left" 
             optionText += ` (only ${availableSlots} left)`;
             statusClass = 'limited';
             slotBadge = `<span class="slot-badge slot-limited">only ${availableSlots} left</span>`;
         } else {
-            // FIXED: Show "only X slots available"
             optionText += ` (${availableSlots} available)`;
             statusClass = 'available';
             slotBadge = `<span class="slot-badge slot-available">only ${availableSlots} available</span>`;
@@ -753,8 +794,9 @@ const RAZORPAY_KEY = "rzp_test_1DP5mmOlF5G5ag";
         option.addClass(`batch-option ${statusClass}`);
         option.data('slots', availableSlots);
         option.data('isFull', isFull);
+        option.data('isOnline', batchInfo.isOnline);
         option.data('batchTime', displayTime);
-        option.data('capacity', batchInfo.capacity || 15);
+        option.data('capacity', batchInfo.capacity || 20);
         
         if (isFull) {
             option.prop('disabled', true);
@@ -797,6 +839,10 @@ const RAZORPAY_KEY = "rzp_test_1DP5mmOlF5G5ag";
             slotsClass = 'slots-full';
             slotsIcon = '❌';
             slotsText = 'No slots available';
+        } else if (selectedOption.data('isOnline')) {
+            slotsClass = 'slots-available';
+            slotsIcon = '✅';
+            slotsText = `Session available online`;
         } else if (slots <= 3) {
             slotsClass = 'slots-limited';
             slotsIcon = '⚠️';
@@ -885,10 +931,20 @@ const RAZORPAY_KEY = "rzp_test_1DP5mmOlF5G5ag";
             $submitBtn.text(priceText);
         }
         
-        // Update payment confirmation description
-        const $confirmLabel = $('label[for="payment-confirm"]');
-        if ($confirmLabel.length) {
-            $confirmLabel.text(`I understand that ₹${currentWorkshopFee} payment is required to confirm my registration.`);
+        // Update Highlights Card for Online session
+        const isOnline = currentWorkshopFee === MATERIAL_PRICE_WITHOUT;
+        const $highlightsText = $('.feature-item:nth-child(2) p');
+        const $highlightsTitle = $('.feature-item:nth-child(2) h5');
+        const $highlightsIcon = $('.feature-item:nth-child(2) .feature-icon-box');
+        
+        if (isOnline) {
+            $highlightsTitle.text('Virtual Session');
+            $highlightsText.text('Join from anywhere! We teach you step-by-step online. No material kit included.');
+            $highlightsIcon.text('💻');
+        } else {
+            $highlightsTitle.text('Everything Included');
+            $highlightsText.text('We provide all the clay and tools you need. Just bring your creativity!');
+            $highlightsIcon.text('🎁');
         }
     }
 
@@ -1083,8 +1139,8 @@ const RAZORPAY_KEY = "rzp_test_1DP5mmOlF5G5ag";
     // ==================== PAYMENT FUNCTIONS ====================
 
     // Initialize Razorpay payment
-    function initializeRazorpayPayment(registrationData) {
-        console.log('💰 Initializing Razorpay payment...');
+    function initializeRazorpayPayment(registrationData, orderData) {
+        console.log('💰 Initializing Razorpay payment with Order ID:', orderData.orderId);
         
         showPaymentLoading(true, 'Opening payment gateway...');
         showPaymentStatus('Redirecting to secure payment...', 'processing');
@@ -1105,9 +1161,10 @@ const RAZORPAY_KEY = "rzp_test_1DP5mmOlF5G5ag";
             });
 
             const options = {
-                "key": RAZORPAY_KEY,
-                "amount": currentWorkshopFee * 100,
-                "currency": "INR",
+                "key": orderData.key_id,
+                "amount": orderData.amount * 100,
+                "currency": orderData.currency || "INR",
+                "order_id": orderData.orderId,
                 "name": "Lil Sculpr Clay Academy",
                 "description": `Winter Carnival Workshop - ${formattedDate}`,
                 "image": "https://lilsculpr.com/assets/img/Final%20Logo.png",
@@ -1355,24 +1412,28 @@ const RAZORPAY_KEY = "rzp_test_1DP5mmOlF5G5ag";
 
             const registrationId = registrationResult.data.registrationId;
             
+            // Step 4: Create Razorpay Order
+            formMessages.text('Generating secure payment order...');
+            const orderData = await createOrderOnBackend(registrationId);
+
             // Success - ready for payment
             formMessages.removeClass('processing error').addClass('success')
                 .html(`
                     <div style="text-align: center;">
                         <div style="font-size: 40px; color: #28a745; margin-bottom: 15px;">✅</div>
                         <p style="font-size: 16px; color: #155724; font-weight: 500;">Registration Saved Successfully!</p>
-                        <p>Opening payment gateway...</p>
+                        <p>Opening secure payment gateway (Order: ${orderData.orderId})</p>
                     </div>
                 `);
             
             hideButtonLoader();
             
-            // Step 4: Initialize payment
+            // Step 5: Initialize payment
             setTimeout(() => {
                 initializeRazorpayPayment({
                     ...formData,
                     registrationId: registrationId
-                });
+                }, orderData);
             }, 1000);
             
         } catch (error) {
