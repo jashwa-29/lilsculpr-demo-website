@@ -1277,6 +1277,11 @@ textarea.form-control.is-invalid {
   transform: translateZ(0) scale(1.7) !important;
 }
 
+
+.text-dark{
+  color: black !important;
+}
+
 /* Extra small devices */
 @media (max-width: 416px) {
   .vs-btn {
@@ -14633,3 +14638,5 @@ select[name="batch"] option.full-slot:disabled {
 .shape-mockup {
     pointer-events: none;
 }
+
+
