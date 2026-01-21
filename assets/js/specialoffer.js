@@ -8,7 +8,7 @@
     const MATERIAL_PRICE_WITH = 499;
     const MATERIAL_PRICE_WITHOUT = 299;
     let currentWorkshopFee = MATERIAL_PRICE_WITH; // Default
-    const BACKEND_API = 'https://backend.lilsculpr.com/api/special-course'; // Localhost IP
+    const BACKEND_API = 'http://127.0.0.1:5000/api/special-course'; // Localhost IP
     const CARNIVAL_NAME = "Republic Day Special Workshop �🇳";
     const AVAILABLE_DATES = ["2026-01-25", "2026-01-26"];
     
