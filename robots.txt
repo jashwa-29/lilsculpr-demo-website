@@ -5,4 +5,4 @@ Disallow: /register.html
 Disallow: /blog-details.html
 Disallow: /class-details.html
 
-Sitemap: https://lilsculpr.com/sitemap.xml
+Sitemap: https://www.lilsculpr.com/sitemap.xml
