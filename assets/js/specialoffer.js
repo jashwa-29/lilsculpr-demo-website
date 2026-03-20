@@ -5,23 +5,20 @@
 
     // ==================== CONFIGURATION ====================
 
-    const MATERIAL_PRICE_WITH = 499;
-    const MATERIAL_PRICE_WITHOUT = 299;
+    const MATERIAL_PRICE_WITH = 2999;
+    const MATERIAL_PRICE_WITHOUT = 2999;
     let currentWorkshopFee = MATERIAL_PRICE_WITH; // Default
-    const BACKEND_API = 'https://backend.lilsculpr.com/api/special-course'; // Localhost IP
-    const CARNIVAL_NAME = "Republic Day Special Workshop �🇳";
-    const AVAILABLE_DATES = ["2026-01-25", "2026-01-26"];
-    
-    // Default batch templates - UPDATED
-    const BATCHES_JAN_25 = [
-        "Special Offer Workshop 🎨 ⏰ 10:30 AM – 12:00 PM (Online)"
+        // const BACKEND_API = 'https://backend.lilsculpr.com/api/special-course';
+    const BACKEND_API = 'http://localhost:5000/api/special-course'; 
+    const CARNIVAL_NAME = "10 Days Summer Clay Camp for Kids";
+    const AVAILABLE_DATES = [
+        "2026-04-01", "2026-04-11", "2026-04-21",
+        "2026-05-01", "2026-05-11", "2026-05-21"
     ];
     
-    const BATCHES_JAN_26 = [
-        "Special Offer Workshop 🎨 ⏰ 10:00 AM – 11:30 AM",
-        "Special Offer Workshop 🎨 ⏰ 12:00 PM – 1:30 PM",
-        "Special Offer Workshop 🎨 ⏰ 2:30 PM – 4:00 PM",
-        "Special Offer Workshop 🎨 ⏰ 4:30 PM – 6:00 PM"
+    // Default batch templates - UPDATED FOR SUMMER CAMP
+    const SUMMER_BATCHES = [
+        "Summer Clay Camp 🎨 ⏰ 4:00 PM – 6:00 PM (Daily Fun Learning)"
     ];
 
     // ==================== SELECTORS ====================
@@ -42,370 +39,369 @@
     let formMessages = $('.form-messages');
     let paymentStatus = $('#payment-status');
 
-    // ==================== HELPER FUNCTIONS ====================
-
-    // Add all custom styles with date and batch support
+    // ==================== HELPER FUNCTIONS ====================    // Add all custom styles with date and batch support
     function addCustomStyles() {
         if (!$('#custom-styles').length) {
             $('head').append(`
                 <style id="custom-styles">
+                    @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&display=swap');
                     :root {
-                        --saffron: #FF9933;
-                        --white: #FFFFFF;
-                        --green: #138808;
-                        --navy: #000080;
-                        --kid-purple: #9C29B2;
-                        --kid-orange: #ff6b00;
+                        --summer-orange: #FF6B00;
+                        --summer-yellow: #FFD700;
+                        --summer-blue: #00BFFF;
+                        --kid-purple: #9C27B0;
+                        --kid-mint: #00D2D3;
+                        --kid-pink: #FF9FF3;
                         --playful-font: "Baloo 2", cursive;
+                        --elegant-shadow: 0 20px 40px rgba(0,0,0,0.06);
+                        --bouncy-transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
                     }
 
+                    body {
+                        overflow-x: hidden;
+                        background-color: #fcfdff;
+                    }
+
+                    /* Appointment Form Styling - Leaner & Sleek */
                     .appointment-form {
-                        background: #ffffff;
-                        padding: 25px 30px !important;
-                        border-radius: 30px !important;
-                        box-shadow: 0 20px 60px rgba(0,0,0,0.1) !important;
+                        background: rgba(255, 255, 255, 0.95);
+                        backdrop-filter: blur(10px);
+                        padding: 30px !important; /* Reduced padding */
+                        border-radius: 35px !important;
+                        box-shadow: 0 30px 60px rgba(156, 39, 176, 0.08) !important;
+                        border: 4px solid #fff !important; /* Reduced border */
                         position: relative;
+                        overflow: visible;
+                        margin-top: 15px;
                     }
 
-                    .appointment-form::after {
-                        content: '🎨';
+                    .appointment-form::before {
+                        content: '';
                         position: absolute;
-                        bottom: -15px;
-                        right: -15px;
-                        font-size: 40px;
-                        transform: rotate(15deg);
+                        top: -12px;
+                        left: -12px;
+                        right: -12px;
+                        bottom: -12px;
+                        border: 2px dashed rgba(156, 39, 176, 0.15);
+                        border-radius: 40px;
+                        z-index: -1;
                     }
 
-                    .form-title, .sec-title, h3, h5, .breadcumb-title, .expect-title {
+                    .form-title, .sec-title, .expect-title {
                         font-family: var(--playful-font) !important;
                         font-weight: 800 !important;
+                        letter-spacing: -0.5px;
+                        color: #1e293b;
                     }
 
                     .form-group label {
                         font-family: var(--playful-font);
                         font-weight: 700;
-                        color: #333;
-                        margin-bottom: 5px;
+                        color: #475569;
+                        margin-bottom: 8px;
                         display: block;
-                        font-size: 16px;
+                        font-size: 17px;
                     }
 
                     .form-group .form-control, .form-group .form-select {
                         border: 3px solid #f1f5f9 !important;
-                        border-radius: 15px !important;
-                        padding-left: 15px !important;
-                        height: 50px !important;
-                        font-size: 15px !important;
-                        transition: all 0.3s ease;
+                        background: #f8fafc !important;
+                        border-radius: 18px !important;
+                        padding: 0 20px !important;
+                        height: 58px !important;
+                        font-size: 16px !important;
+                        transition: var(--bouncy-transition);
                         font-family: var(--playful-font);
+                        color: #334155 !important;
                     }
 
                     .form-group .form-control:focus {
+                        background: #fff !important;
                         border-color: var(--kid-purple) !important;
-                        box-shadow: 0 0 0 6px rgba(156, 41, 178, 0.1) !important;
-                        transform: scale(1.02);
+                        box-shadow: 0 10px 25px rgba(156, 39, 176, 0.1) !important;
+                        transform: translateY(-2px);
                     }
 
-                    /* Date & Material Selection Playful Cards */
-                    .date-selection, .material-selection {
-                        display: flex;
+                    /* Ultra-Attractive Centered Date Cards */
+                    .date-selection {
+                        display: grid;
+                        grid-template-columns: repeat(3, 1fr);
                         gap: 12px;
-                        margin-bottom: 15px;
+                        margin-top: 15px;
+                        margin-bottom: 25px;
                     }
 
-                    .date-option, .material-option {
-                        flex: 1;
-                        min-width: 100px;
+                    /* Forcefully hide the radio buttons */
+                    .date-radio {
+                        position: absolute !important;
+                        opacity: 0 !important;
+                        width: 1px !important;
+                        height: 1px !important;
+                        overflow: hidden !important;
+                        clip: rect(0, 0, 0, 0) !important;
                     }
 
-                    .date-radio, .material-radio {
-                        display: none;
-                    }
-
-                    .date-label, .material-label {
-                        border: 3px solid #f1f5f9;
+                    .date-label {
+                        border: 2px solid #f1f5f9;
                         border-radius: 20px;
-                        padding: 12px 10px;
-                        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                        padding: 10px 5px !important;
+                        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
                         background: #fff;
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
-                        justify-content: center;
-                        text-align: center;
+                        display: flex !important;
+                        flex-direction: column !important;
+                        align-items: center !important;
+                        justify-content: center !important;
                         cursor: pointer;
-                        box-shadow: 0 4px 0 #f1f5f9;
+                        box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+                        position: relative;
+                        overflow: visible;
+                        height: 70px !important;
+                        width: 100% !important;
+                        text-align: center !important;
+                        margin: 0 !important;
                     }
 
-                    .date-label:hover, .material-label:hover {
-                        border-color: var(--kid-orange);
+                    .date-label:hover {
                         transform: translateY(-5px);
-                        box-shadow: 0 10px 0 rgba(255, 107, 0, 0.1);
+                        border-color: var(--summer-yellow);
+                        box-shadow: 0 8px 25px rgba(255, 215, 0, 0.1);
                     }
 
                     .date-radio:checked + .date-label {
-                        border-color: var(--green) !important;
-                        background: #f0fff4 !important;
-                        box-shadow: 0 8px 0 rgba(19, 136, 8, 0.2) !important;
+                        border-color: var(--summer-orange) !important;
+                        background: #fff9f5 !important;
+                        box-shadow: 0 12px 30px rgba(255, 107, 0, 0.15) !important;
                         transform: scale(1.05);
+                        z-index: 2;
                     }
 
-                    .material-radio:checked + .material-label {
-                        border-color: var(--saffron) !important;
-                        background: #fffaf0 !important;
-                        box-shadow: 0 8px 0 rgba(255, 153, 51, 0.2) !important;
-                        transform: scale(1.05);
+                    /* Different personality for each month */
+                    .date-option[data-date*="-04-"] .date-day { background: #fff0f6 !important; color: #d63384 !important; }
+                    .date-option[data-date*="-05-"] .date-day { background: #fff9db !important; color: #f59f00 !important; }
+
+                    .date-number { 
+                        font-size: 18px !important; 
+                        font-weight: 800 !important; 
+                        color: #1e293b !important; 
+                        font-family: var(--playful-font) !important; 
+                        line-height: 1 !important; 
+                        margin: 0 !important;
                     }
 
-                    .date-number { font-size: 24px; font-weight: 800; color: #1e293b; line-height: 1.2; font-family: var(--playful-font); }
-                    .date-day, .date-month { font-size: 12px; font-weight: 700; color: #64748b; font-family: var(--playful-font); }
+                    .date-day { 
+                        font-size: 9px !important; 
+                        font-weight: 800 !important; 
+                        color: #64748b !important; 
+                        text-transform: uppercase !important; 
+                        background: #f1f5f9 !important;
+                        padding: 3px 12px !important;
+                        border-radius: 30px !important;
+                        margin-bottom: 6px !important;
+                        letter-spacing: 0.5px;
+                        transition: all 0.3s ease;
+                    }
 
-                    .material-name { font-size: 12px; font-weight: 700; color: #64748b; font-family: var(--playful-font); }
-                    .material-price { font-size: 22px; font-weight: 800; color: #1e293b; line-height: 1.2; font-family: var(--playful-font); }
+                    .date-radio:checked + .date-label .date-day {
+                        background: var(--summer-orange) !important;
+                        color: #fff !important;
+                        transform: translateY(-2px);
+                    }
 
-                    .online-badge {
-                        position: absolute;
-                        top: -10px;
-                        right: -5px;
-                        background: var(--navy);
-                        color: white;
-                        font-size: 10px;
+                    .date-month { font-size: 11px; font-weight: 800; color: var(--kid-purple); }
+
+                    /* Slot Badges */
+                    .slot-badge {
+                        background: #e2e8f0;
+                        color: #475569;
+                        font-size: 11px;
                         font-weight: 800;
-                        padding: 2px 8px;
+                        padding: 3px 10px;
                         border-radius: 10px;
                         text-transform: uppercase;
-                        letter-spacing: 0.5px;
-                        box-shadow: 0 4px 10px rgba(0,0,128,0.3);
-                        z-index: 2;
+                        margin-left: 10px;
+                        font-family: var(--playful-font);
+                        display: inline-block;
+                    }
+
+                    .slot-available { background: rgba(0, 210, 211, 0.1); color: var(--kid-mint); }
+                    .slot-limited { background: rgba(255, 107, 0, 0.1); color: var(--summer-orange); }
+                    .slot-full { background: rgba(244, 67, 54, 0.1); color: #f44336; }
+
+                    /* Workshop Highlights Area */
+                    .highlights-container {
+                        perspective: 1000px;
+                    }
+
+                    .workshop-highlights {
+                        background: linear-gradient(135deg, #FF6B00 0%, #FF9F00 100%);
+                        border-radius: 40px;
+                        padding: 40px;
+                        color: white !important;
+                        position: relative;
+                        overflow: hidden;
+                        box-shadow: 0 25px 50px rgba(255, 107, 0, 0.2);
+                        transform: rotateY(-2deg);
+                    }
+
+                    .workshop-highlights::after {
+                        content: '';
+                        position: absolute;
+                        top: -20px;
+                        right: -20px;
+                        width: 150px;
+                        height: 150px;
+                        background: rgba(255,255,255,0.1);
+                        border-radius: 50%;
+                    }
+
+                    .highlight-price {
+                        background: #fff;
+                        color: var(--summer-orange);
+                        padding: 12px 30px;
+                        border-radius: 50px;
+                        display: inline-block;
+                        font-weight: 900;
+                        font-size: 26px;
+                        box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+                        margin-top: 20px;
                         font-family: var(--playful-font);
                     }
 
-
-                    /* Right Side Redesign Styles - Kid Friendly */
-                    .workshop-highlights-card {
-                        background: #fff;
-                        border-radius: 40px;
-                        padding: 35px;
-                        border: 4px dashed #e2e8f0;
-                        position: relative;
-                        overflow: visible; /* To allow floating icons to pop out */
-                    }
-
-                    .workshop-highlights-card::before {
-                        content: '✨';
-                        position: absolute;
-                        top: -20px;
-                        left: -20px;
-                        font-size: 40px;
-                    }
-
-                    .feature-list {
-                        list-style: none;
-                        padding: 0;
-                        margin: 25px 0 0;
+                    /* Feature Items - More Elegant */
+                    .feature-list-box {
+                        margin-top: 40px;
                     }
 
                     .feature-item {
+                        background: #fff;
+                        padding: 25px !important;
+                        border-radius: 35px !important;
+                        border: 1px solid rgba(0,0,0,0.03) !important;
+                        transition: var(--bouncy-transition);
+                        margin-bottom: 25px !important;
                         display: flex;
                         align-items: center;
-                        gap: 15px;
-                        margin-bottom: 20px;
-                        transition: transform 0.3s ease;
+                        gap: 20px;
+                        box-shadow: 0 15px 35px rgba(30, 41, 59, 0.04);
                     }
 
                     .feature-item:hover {
-                        transform: translateX(10px);
+                        transform: translateX(12px) scale(1.02);
+                        background: #fff;
+                        border-color: var(--kid-mint) !important;
+                        box-shadow: 0 25px 50px rgba(0, 210, 211, 0.1);
                     }
 
                     .feature-icon-box {
-                        width: 55px; height: 55px;
-                        background: #fff;
-                        border-radius: 18px;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        box-shadow: 0 6px 0 #f1f5f9;
+                        width: 75px !important;
+                        height: 75px !important;
+                        background: #f8fafc !important;
+                        border-radius: 25px !important;
+                        font-size: 35px !important;
+                        display: flex !important;
+                        align-items: center !important;
+                        justify-content: center !important;
+                        transition: var(--bouncy-transition);
                         flex-shrink: 0;
-                        font-size: 22px;
-                        border: 3px solid #f1f5f9;
+                        box-shadow: inset 0 -4px 0 rgba(0,0,0,0.05);
+                    }
+
+                    .feature-item:hover .feature-icon-box {
+                        background: var(--kid-mint) !important;
+                        color: #fff !important;
+                        transform: rotate(8deg);
+                        box-shadow: inset 0 -4px 0 rgba(255,255,255,0.2);
                     }
 
                     .feature-text h5 {
-                        font-family: var(--playful-font);
-                        font-size: 18px;
-                        font-weight: 800;
-                        margin-bottom: 2px;
+                        margin-bottom: 4px;
+                        font-size: 20px;
                         color: #1e293b;
+                        font-weight: 800;
                     }
 
                     .feature-text p {
-                        font-size: 14px;
-                        color: #64748b;
-                        margin-bottom: 0;
-                        line-height: 1.3;
-                    }
-
-                    .info-tag {
-                        display: inline-flex;
-                        align-items: center;
-                        padding: 8px 16px;
-                        background: #fff;
-                        border-radius: 50px;
-                        font-size: 13px;
-                        font-weight: 800;
-                        border: 2px solid #f1f5f9;
-                        color: #475569;
-                        margin-right: 8px;
-                        margin-bottom: 8px;
-                        font-family: var(--playful-font);
-                        box-shadow: 0 4px 0 #f1f5f9;
-                    }
-
-                    .info-tag i { color: var(--kid-purple); margin-right: 8px; }
-
-                    .what-to-expect {
-                        background: #fef5ff;
-                        border-radius: 25px;
-                        padding: 22px;
-                        margin-top: 25px;
-                        border: 3px solid #fce7ff;
-                    }
-
-                    .expect-title {
-                        font-size: 15px;
-                        font-weight: 900;
-                        text-transform: uppercase;
-                        letter-spacing: 0.5px;
-                        color: var(--kid-purple);
-                        margin-bottom: 12px;
-                        display: block;
-                        font-family: var(--playful-font);
-                    }
-
-                    .expect-list {
-                        list-style: none;
-                        padding: 0;
                         margin: 0;
+                        font-size: 15px;
+                        color: #475569;
+                        line-height: 1.5;
+                        font-weight: 500;
                     }
 
-                    .expect-item {
+                    /* Take Home Products Tags */
+                    .what-to-expect {
+                        background: #fff;
+                        border: 3px dashed #cbd5e1;
+                        border-radius: 35px;
+                        padding: 35px;
+                        margin-top: 35px;
+                        position: relative;
+                    }
+
+                    .what-to-expect::before {
+                        content: '🎁';
+                        position: absolute;
+                        top: -25px;
+                        right: 30px;
+                        font-size: 40px;
+                    }
+
+                    .products-grid {
+                        display: flex;
+                        flex-wrap: wrap;
+                        gap: 12px;
+                        margin-top: 20px;
+                    }
+
+                    .product-tag {
+                        background: #f8fafc;
+                        padding: 10px 20px;
+                        border-radius: 15px;
                         font-size: 14px;
+                        font-weight: 700;
                         color: #475569;
-                        margin-bottom: 10px;
+                        font-family: var(--playful-font);
                         display: flex;
                         align-items: center;
+                        gap: 8px;
+                        transition: var(--bouncy-transition);
+                        border: 1px solid #e2e8f0;
+                        box-shadow: 0 4px 0 #e2e8f0;
+                    }
+
+                    .product-tag:hover {
+                        background: var(--kid-purple);
+                        color: #fff !important;
+                        transform: scale(1.1) rotate(-2deg);
+                        border-color: var(--kid-purple);
+                        box-shadow: 0 4px 0 rgba(156, 39, 176, 0.2);
+                    }
+
+                    .product-tag i { color: inherit; }
+
+                    /* Button - Inherit from Main Theme */
+                    .vs-btn {
+                        font-family: var(--playful-font) !important;
+                    }
+
+                    /* Payment Status Messages */
+                    #payment-status {
+                        border-radius: 20px;
+                        padding: 15px 25px;
                         font-family: var(--playful-font);
                         font-weight: 700;
-                    }
-
-                    .expect-item::before {
-                        content: '⭐';
-                        margin-right: 12px;
-                        font-size: 14px;
-                    }
-
-                    /* Bouncy Animations for Kids Flow */
-                    @keyframes bounce {
-                        0%, 100% { transform: translateY(0); }
-                        50% { transform: translateY(-15px); }
-                    }
-
-                    @keyframes wiggle {
-                        0%, 100% { transform: rotate(0deg); }
-                        25% { transform: rotate(5deg); }
-                        75% { transform: rotate(-5deg); }
-                    }
-
-                    .bouncy { animation: bounce 3s ease-in-out infinite; }
-                    .wiggle { animation: wiggle 2s ease-in-out infinite; }
-                    
-                    .shapePulse { animation: shapePulse 4s ease-in-out infinite; }
-                    
-                    @keyframes shapePulse {
-                        0%, 100% { transform: scale(1) rotate(0deg); }
-                        50% { transform: scale(1.1) rotate(10deg); }
-                    }
-
-                    /* Decorative Design Flow Elements */
-                    .design-blob {
-                        position: absolute;
-                        z-index: -1;
-                        filter: blur(60px);
-                        opacity: 0.15;
-                        border-radius: 50%;
-                        pointer-events: none;
-                    }
-
-                    .blob-saffron { width: 300px; height: 300px; background: var(--saffron); top: -50px; left: -100px; }
-                    .blob-green { width: 250px; height: 250px; background: var(--green); bottom: -50px; right: -50px; }
-
-                    .glass-card {
-                        backdrop-filter: blur(10px);
-                        background: rgba(255, 255, 255, 0.8) !important;
-                    }
-
-                    .shape-mockup {
-                        position: absolute;
-                        pointer-events: none;
-                        display: block;
-                    }
-
-                    .shapePulse {
-                        animation: shapePulse 4s ease-in-out infinite;
-                    }
-
-                    @keyframes shapePulse {
-                        0%, 100% { transform: scale(1); }
-                        50% { transform: scale(1.1); }
-                    }
-
-                    .rotate {
-                        animation: rotate 20s linear infinite;
-                    }
-
-                    @keyframes rotate {
-                        from { transform: rotate(0deg); }
-                        to { transform: rotate(360deg); }
-                    }
-
-                    .slidetopleft {
-                        animation: slidetopleft 10s ease-in-out infinite;
-                    }
-
-                    @keyframes slidetopleft {
-                        0%, 100% { transform: translate(0, 0); }
-                        50% { transform: translate(-20px, -20px); }
-                    }
-
-                    .section-divider {
-                        position: absolute;
-                        left: 0;
-                        width: 100%;
-                        line-height: 0;
-                        z-index: 1;
-                    }
-
-                    .divider-top { top: 0; height: 25px; transform: rotate(180deg); }
-                    .divider-bottom { bottom: 0; height: 40px; }
-                    
-                    /* Patriotic Accent Border */
-                    .patriotic-border {
-                        height: 4px;
-                        width: 100%;
-                        background: linear-gradient(to right, var(--saffron) 33.33%, #fff 33.33%, #fff 66.66%, var(--green) 66.66%);
-                        border-radius: 2px;
                         margin-bottom: 20px;
+                        border: none;
                     }
 
-                    @media (max-width: 768px) {
-                        .design-blob { opacity: 0.08; }
-                        .workshop-highlights-card { padding: 25px; }
-                        .feature-item { margin-bottom: 15px; }
-                    }
+                    .payment-success { background: rgba(76, 175, 80, 0.1); color: #2e7d32; }
+                    .payment-error { background: rgba(244, 67, 54, 0.1); color: #d32f2f; }
+                    .payment-processing { background: rgba(0, 191, 255, 0.1); color: #0288d1; }
 
+                    /* Loader Overlay */
                     #payment-loading {
-                        background: rgba(15, 23, 42, 0.8);
-                        backdrop-filter: blur(8px);
+                        background: rgba(15, 23, 42, 0.9);
+                        backdrop-filter: blur(10px);
                         display: none;
                         position: fixed;
                         top: 0; left: 0; width: 100%; height: 100%;
@@ -415,27 +411,33 @@
                     }
 
                     .payment-loading-content {
-                        border-radius: 24px;
-                        padding: 50px 40px;
+                        border-radius: 35px;
+                        padding: 50px;
                         background: #fff;
                         color: #1e293b;
                         text-align: center;
+                        box-shadow: 0 40px 100px rgba(0,0,0,0.3);
+                        max-width: 400px;
+                        width: 90%;
                     }
 
                     .payment-spinner {
-                        width: 60px; height: 60px;
-                        border: 6px solid #f1f5f9;
-                        border-top: 6px solid var(--saffron);
+                        width: 70px; height: 70px;
+                        border: 8px solid #f1f5f9;
+                        border-top: 8px solid var(--summer-orange);
                         border-radius: 50%;
-                        animation: spin 1s linear infinite;
-                        margin: 0 auto 20px;
+                        animation: spin 1s cubic-bezier(0.5, 0.1, 0.5, 0.9) infinite;
+                        margin: 0 auto 25px;
                     }
 
                     @keyframes spin { to { transform: rotate(360deg); } }
 
                     @media (max-width: 768px) {
-                        .date-selection { flex-wrap: wrap; }
-                        .material-selection { flex-direction: column; }
+                        .appointment-form { padding: 30px 20px !important; border-radius: 35px !important; }
+                        .date-selection { grid-template-columns: 1fr 1fr; }
+                        .workshop-highlights { padding: 30px 20px; border-radius: 35px; }
+                        .feature-item { padding: 20px 15px !important; border-radius: 25px !important; }
+                        .feature-icon-box { width: 60px !important; height: 60px !important; font-size: 28px !important; }
                     }
                 </style>
             `);
@@ -549,7 +551,7 @@
     // Get all batches for a specific date
     async function getBatchesForDate(selectedDate) {
         try {
-            const batchesToLoad = selectedDate === "2026-01-25" ? BATCHES_JAN_25 : BATCHES_JAN_26;
+            const batchesToLoad = SUMMER_BATCHES;
             const batchResults = [];
             for (const batch of batchesToLoad) {
                 const isOnline = batch.includes('(Online)');
@@ -559,13 +561,13 @@
                     displayName: extractBatchTime(batch) + (isOnline ? ' (Online)' : ''),
                     availableSlots: isOnline ? 999 : (slotInfo.availableSlots || 20),
                     isFull: isOnline ? false : (slotInfo.isFull || false),
-                    isOnline: isOnline // Pass this flag
+                    isOnline: isOnline 
                 });
             }
             return batchResults;
         } catch (error) {
             console.error('❌ Batch fetch error:', error.message);
-            const batchesToLoad = selectedDate === "2026-01-25" ? BATCHES_JAN_25 : BATCHES_JAN_26;
+            const batchesToLoad = SUMMER_BATCHES;
             return batchesToLoad.map(batch => ({
                 name: batch, displayName: extractBatchTime(batch), availableSlots: 20, isFull: false
             }));
@@ -886,15 +888,14 @@
                 return;
             }
 
-            // Update price based on date: Jan 25 is Online (299), Jan 26 is Offline (499)
-            const isOnlineDate = selectedDate === "2026-01-25";
-            currentWorkshopFee = isOnlineDate ? MATERIAL_PRICE_WITHOUT : MATERIAL_PRICE_WITH;
-            const hasMaterial = !isOnlineDate;
+            // For Summer Camp, price is fixed at 2999
+            currentWorkshopFee = MATERIAL_PRICE_WITH;
+            const hasMaterial = true;
             
             // Update hidden material type
             $($materialType).val(hasMaterial.toString());
             
-            console.log(`💰 Date-based pricing: ${selectedDate} -> ₹${currentWorkshopFee} (${hasMaterial ? 'With' : 'Without'} Material)`);
+            console.log(`💰 Summer Camp pricing: ${selectedDate} -> ₹${currentWorkshopFee}`);
 
             // Update UI elements with new price
             updatePriceDisplay();
@@ -1166,7 +1167,7 @@
                 "currency": orderData.currency || "INR",
                 "order_id": orderData.orderId,
                 "name": "Lil Sculpr Clay Academy",
-                "description": `Winter Carnival Workshop - ${formattedDate}`,
+                "description": `Summer Clay Camp - ${formattedDate}`,
                 "image": "https://lilsculpr.com/assets/img/Final%20Logo.png",
                 "handler": async function (response) {
                     console.log('✅ Payment successful, response:', response);
@@ -1539,19 +1540,19 @@
             if ($(form).length) {
                 formMessages.html(`
                     <div class="processing p-3 rounded">
-                        <p style="color: #FF9933; font-size: 16px; font-weight: 500;"><i class="fas fa-flag mr-2"></i> Republic Day Special Workshop Registration</p>
-                        <p><strong>📅 Workshop Dates:</strong> January 25-26, 2026</p>
-                        <p>Fill in the details below to register your child for an exciting patriotic clay workshop experience!</p>
-                        <div class="mt-3 p-3 bg-white border rounded" style="border-left: 5px solid #138808 !important;">
-                            <i class="fas fa-landmark mr-2" style="color: #000080;"></i>
-                            <strong>Republic Day Special:</strong> Guided Patriotic Themed Clay Modelling
+                        <p style="color: #FF6B00; font-size: 16px; font-weight: 500;"><i class="fas fa-sun mr-2"></i> 10 Days Summer Clay Camp for Kids</p>
+                        <p><strong>📅 Next Available Batches:</strong> April & May 2026</p>
+                        <p>Give your child a creative and unforgettable summer experience! 🎨</p>
+                        <div class="mt-3 p-3 bg-white border rounded" style="border-left: 5px solid #FF6B00 !important;">
+                            <i class="fas fa-palette mr-2" style="color: #9C29B2;"></i>
+                            <strong>Creative Learning:</strong> 10+ amazing products to take home!
                         </div>
-                        <p class="mt-3 mb-0"><strong>Instructions:</strong></p>
+                        <p class="mt-3 mb-0"><strong>How to Join:</strong></p>
                         <ol class="text-start small">
-                            <li>Select your preferred workshop date</li>
-                            <li>Choose an available time slot</li>
+                            <li>Select your preferred batch start date</li>
+                            <li>Confirm the 4 PM – 6 PM time slot</li>
                             <li>Fill in child and parent details</li>
-                            <li>Complete the registration fee payment (₹299 for Online / ₹499 for Offline)</li>
+                            <li>Complete the registration fee (₹2999 - All materials included)</li>
                         </ol>
                     </div>
                 `).removeClass('error success').addClass('processing');
