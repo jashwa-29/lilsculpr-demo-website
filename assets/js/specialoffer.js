@@ -8,8 +8,8 @@
     const MATERIAL_PRICE_WITH = 2999;
     const MATERIAL_PRICE_WITHOUT = 2999;
     let currentWorkshopFee = MATERIAL_PRICE_WITH; // Default
-        // const BACKEND_API = 'https://backend.lilsculpr.com/api/special-course';
-    const BACKEND_API = 'http://localhost:5000/api/special-course'; 
+        const BACKEND_API = 'https://backend.lilsculpr.com/api/special-course';
+    // const BACKEND_API = 'http://localhost:5000/api/special-course'; 
     const CARNIVAL_NAME = "10 Days Summer Clay Camp for Kids";
     const AVAILABLE_DATES = [
         "2026-04-01", "2026-04-11", "2026-04-21",
