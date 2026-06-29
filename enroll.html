@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Admission Form | Lil Sculpr Clay Modelling Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --primary:#f97316;--primary-dk:#ea580c;--secondary:#6366f1;
+  --bg:#fff9f5;--card:#fff;--text:#1e1b18;--muted:#6b7280;
+  --border:#f0e4d7;--green:#22c55e;--red:#ef4444;--yellow:#f59e0b;
+  --radius:14px;--shadow:0 4px 24px rgba(249,115,22,.10);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+/* HEADER */
+.page-header{background:linear-gradient(135deg,#fff4ed 0%,#fde8d8 60%,#f0e8ff 100%);border-bottom:3px solid var(--border);padding:28px 20px 22px;text-align:center;position:relative;overflow:hidden}
+.page-header::before{content:'🎨';position:absolute;font-size:90px;opacity:.07;top:-10px;left:-10px;transform:rotate(-15deg)}
+.page-header::after{content:'🏺';position:absolute;font-size:80px;opacity:.07;bottom:-12px;right:10px;transform:rotate(12deg)}
+.page-header img{height:64px;margin-bottom:10px}
+.page-header h1{font-family:'Nunito',sans-serif;font-size:clamp(1.4rem,4vw,2.1rem);font-weight:900;color:var(--primary-dk)}
+.page-header p{color:var(--muted);font-size:.9rem;margin-top:5px}
+.admin-link{display:inline-block;margin-top:10px;font-size:.78rem;color:var(--secondary);text-decoration:none;border:1px solid #c7d2fe;border-radius:6px;padding:3px 10px;background:#f0f0ff}
+
+/* WRAP */
+.form-wrap{max-width:820px;margin:32px auto 60px;padding:0 16px}
+
+/* CARD */
+.card{background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:26px 28px;margin-bottom:20px}
+.card-title{font-family:'Nunito',sans-serif;font-size:1.05rem;font-weight:800;color:var(--primary-dk);display:flex;align-items:center;gap:8px;margin-bottom:18px;padding-bottom:10px;border-bottom:2px dashed var(--border)}
+.badge{background:var(--primary);color:#fff;border-radius:50%;width:26px;height:26px;font-size:.75rem;display:inline-flex;align-items:center;justify-content:center;font-weight:900;flex-shrink:0}
+
+/* GRID */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.span-2{grid-column:span 2}
+@media(max-width:580px){.grid-2{grid-template-columns:1fr}.span-2{grid-column:span 1}.card{padding:18px 14px}}
+
+/* FIELDS */
+.field{display:flex;flex-direction:column;gap:5px}
+.field label{font-size:.82rem;font-weight:600}
+.field label .req{color:var(--primary)}
+.field input,.field select,.field textarea{width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:9px;font-family:'Poppins',sans-serif;font-size:.88rem;color:var(--text);background:#fff;outline:none;transition:border-color .2s,box-shadow .2s}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(249,115,22,.12)}
+.field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23f97316' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;padding-right:34px}
+.hint{font-size:.72rem;color:var(--muted)}
+.err{font-size:.72rem;color:var(--red);display:none}
+
+/* PHOTO */
+.photo-box{border:2px dashed var(--primary);border-radius:var(--radius);padding:20px 16px;text-align:center;background:#fff8f3;cursor:pointer;transition:background .2s}
+.photo-box:hover{background:#fff0e6}
+.photo-box input[type="file"]{display:none}
+.photo-box .icon{font-size:2rem;margin-bottom:5px}
+.photo-box p{font-size:.82rem;color:var(--muted)}
+.photo-box strong{color:var(--primary)}
+#photoPreview{display:none;width:90px;height:90px;border-radius:50%;object-fit:cover;border:3px solid var(--primary);margin:10px auto 0}
+
+/* TABS */
+.type-tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.type-tab{flex:1;min-width:130px;padding:14px 10px;border:2px solid var(--border);border-radius:11px;text-align:center;cursor:pointer;font-weight:700;font-size:.86rem;transition:all .2s;background:#fff;color:var(--muted)}
+.type-tab.active{border-color:var(--primary);background:#fff4ed;color:var(--primary-dk)}
+.type-tab .tab-icon{font-size:1.4rem;display:block;margin-bottom:3px}
+
+/* BATCH PANEL */
+.batch-panel{display:none}
+.batch-panel.visible{display:block}
+.batch-group{background:#fafafa;border:1.5px solid var(--border);border-radius:10px;padding:13px 15px;margin-bottom:11px}
+.batch-group h4{font-size:.84rem;font-weight:700;color:var(--secondary);margin-bottom:10px}
+.batch-slots{display:flex;flex-wrap:wrap;gap:8px}
+
+/* SLOT BUTTON */
+.slot-btn{position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;background:#fff;border:1.5px solid var(--border);border-radius:9px;padding:8px 14px;font-size:.78rem;font-weight:600;cursor:pointer;transition:all .18s;color:var(--text);min-width:120px}
+.slot-btn .time{font-size:.8rem;font-weight:700}
+.slot-btn .seats{font-size:.68rem;font-weight:600;border-radius:20px;padding:1px 7px;margin-top:2px}
+.seats-ok{background:#dcfce7;color:#15803d}
+.seats-few{background:#fef9c3;color:#854d0e}
+.seats-full{background:#fee2e2;color:#991b1b}
+.slot-btn:hover:not(.full){border-color:var(--primary);color:var(--primary-dk)}
+.slot-btn.selected{border-color:var(--primary);background:#fff4ed;color:var(--primary-dk);box-shadow:0 0 0 3px rgba(249,115,22,.15)}
+.slot-btn.full{opacity:.5;cursor:not-allowed;pointer-events:none}
+
+/* FEE BOX */
+.fee-box{display:flex;flex-wrap:wrap;gap:12px;margin-top:4px}
+.fee-item{flex:1;min-width:160px;background:linear-gradient(135deg,#fff4ed,#fde8d8);border:1.5px solid #fbd0b0;border-radius:11px;padding:13px 15px;text-align:center}
+.fee-item .flabel{font-size:.7rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.fee-item .amount{font-family:'Nunito',sans-serif;font-size:1.65rem;font-weight:900;color:var(--primary-dk);line-height:1.2;margin:3px 0 2px}
+.fee-item .fsub{font-size:.7rem;color:var(--muted)}
+.kit-box{background:linear-gradient(135deg,#f0e8ff,#e0d5ff);border-color:#c4b5fd}
+.kit-box .amount{color:var(--secondary)}
+.kit-includes{font-size:.72rem;color:#5b21b6;margin-top:5px;line-height:1.5}
+
+/* DECLARATION */
+.decl-box{background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:10px;padding:15px;font-size:.82rem;line-height:1.7;color:#15803d;margin-bottom:13px}
+.check-row{display:flex;align-items:flex-start;gap:9px;margin-bottom:9px}
+.check-row input[type="checkbox"]{width:17px;height:17px;flex-shrink:0;accent-color:var(--primary);margin-top:2px}
+.check-row label{font-size:.83rem;line-height:1.5}
+.check-row label a{color:var(--primary);font-weight:700}
+
+/* SUBMIT */
+.submit-btn{display:block;width:100%;padding:15px;background:linear-gradient(135deg,var(--primary),var(--primary-dk));color:#fff;border:none;border-radius:var(--radius);font-family:'Nunito',sans-serif;font-size:1.1rem;font-weight:900;cursor:pointer;letter-spacing:.3px;transition:transform .15s,box-shadow .15s;box-shadow:0 6px 20px rgba(249,115,22,.35)}
+.submit-btn:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(249,115,22,.45)}
+.submit-note{text-align:center;font-size:.76rem;color:var(--muted);margin-top:8px}
+
+/* SUCCESS */
+#successMsg{display:none;background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:2px solid #86efac;border-radius:var(--radius);padding:36px 24px;text-align:center;margin-top:20px}
+#successMsg .big{font-size:3rem}
+#successMsg h2{font-family:'Nunito',sans-serif;font-size:1.5rem;font-weight:900;color:#15803d;margin:8px 0 5px}
+#successMsg p{color:#166534;font-size:.88rem}
+#successMsg .enroll-id{display:inline-block;background:#15803d;color:#fff;border-radius:8px;padding:6px 18px;font-family:'Nunito',sans-serif;font-weight:800;font-size:1rem;margin:10px 0}
+
+/* FOOTER */
+.form-footer{text-align:center;font-size:.78rem;color:var(--muted);padding:20px 16px;border-top:1px solid var(--border)}
+.form-footer a{color:var(--primary);text-decoration:none}
+</style>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+
+<div class="page-header">
+  <img src="https://www.lilsculpr.com/assets/img/logo.webp" alt="Lil Sculpr"/>
+  <h1>🎨 Student Admission Form</h1>
+  <p>Enroll your child at Lil Sculpr Clay Modelling Academy, Chennai</p>
+  <a class="admin-link" href="admin.html">🔐 Admin Dashboard →</a>
+</div>
+
+<div class="form-wrap">
+<form id="admissionForm" novalidate>
+
+  <!-- SECTION 1: CHILD -->
+  <div class="card">
+    <div class="card-title"><span class="badge">1</span> Child's Details</div>
+    <div class="field" style="margin-bottom:16px">
+      <label>Child Photograph <span class="req">*</span></label>
+      <label class="photo-box" for="photoInput">
+        <div class="icon">📷</div>
+        <p><strong>Click to upload</strong> a recent passport-size photo</p>
+        <p style="font-size:.7rem;margin-top:3px">JPG / PNG · Max 2 MB</p>
+        <input type="file" id="photoInput" accept="image/*" onchange="previewPhoto(this)"/>
+        <img id="photoPreview" alt="Preview"/>
+      </label>
+    </div>
+    <div class="grid-2">
+      <div class="field span-2">
+        <label>Child's Full Name <span class="req">*</span></label>
+        <input type="text" id="childName" placeholder="e.g. Aanya Sharma"/>
+        <span class="err" id="e-childName">Please enter child's name</span>
+      </div>
+      <div class="field">
+        <label>Age <span class="req">*</span></label>
+        <select id="childAge">
+          <option value="">Select age</option>
+          <option>4 years</option><option>5 years</option><option>6 years</option>
+          <option>7 years</option><option>8 years</option><option>9 years</option>
+          <option>10 years</option><option>11 years</option><option>12 years</option>
+          <option>13 years</option><option>14 years</option><option>15 years</option>
+        </select>
+        <span class="err" id="e-childAge">Please select age</span>
+      </div>
+      <div class="field">
+        <label>Class / Grade <span class="req">*</span></label>
+        <select id="childClass">
+          <option value="">Select class</option>
+          <option>LKG</option><option>UKG</option>
+          <option>Class 1</option><option>Class 2</option><option>Class 3</option>
+          <option>Class 4</option><option>Class 5</option><option>Class 6</option>
+          <option>Class 7</option><option>Class 8</option><option>Class 9</option>
+          <option>Class 10</option>
+        </select>
+        <span class="err" id="e-childClass">Please select class</span>
+      </div>
+      <div class="field span-2">
+        <label>School Name <span class="req">*</span></label>
+        <input type="text" id="schoolName" placeholder="e.g. Chennai Public School"/>
+        <span class="err" id="e-schoolName">Please enter school name</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: PARENT -->
+  <div class="card">
+    <div class="card-title"><span class="badge">2</span> Parent / Guardian Details</div>
+    <div class="grid-2">
+      <div class="field span-2">
+        <label>Parent / Guardian Name <span class="req">*</span></label>
+        <input type="text" id="parentName" placeholder="e.g. Priya Sharma"/>
+        <span class="err" id="e-parentName">Please enter parent name</span>
+      </div>
+      <div class="field">
+        <label>Primary Contact <span class="req">*</span></label>
+        <input type="tel" id="contact1" placeholder="+91 XXXXX XXXXX"/>
+        <span class="hint">WhatsApp preferred</span>
+        <span class="err" id="e-contact1">Please enter contact number</span>
+      </div>
+      <div class="field">
+        <label>Emergency Contact 2 <span class="req">*</span></label>
+        <input type="tel" id="contact2" placeholder="+91 XXXXX XXXXX"/>
+        <span class="hint">Guardian / other parent</span>
+        <span class="err" id="e-contact2">Please enter emergency contact</span>
+      </div>
+      <div class="field span-2">
+        <label>Email Address</label>
+        <input type="email" id="email" placeholder="parent@email.com"/>
+        <span class="hint">Optional · for updates &amp; receipts</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: BATCH -->
+  <div class="card">
+    <div class="card-title"><span class="badge">3</span> Class Type &amp; Batch Selection</div>
+    <div class="type-tabs">
+      <div class="type-tab active" onclick="switchType('offline',this)">
+        <span class="tab-icon">🏫</span>Offline (Chennai)
+      </div>
+      <div class="type-tab" onclick="switchType('online',this)">
+        <span class="tab-icon">💻</span>Online (Live)
+      </div>
+    </div>
+
+    <div class="batch-panel visible" id="panel-offline">
+      <p style="font-size:.78rem;color:var(--muted);margin-bottom:12px">📍 Anna Nagar West Ext., Chennai · Wednesday holiday</p>
+      <div id="slots-offline"></div>
+    </div>
+    <div class="batch-panel" id="panel-online">
+      <p style="font-size:.78rem;color:var(--muted);margin-bottom:12px">💻 Live sessions from home · All India</p>
+      <div id="slots-online"></div>
+    </div>
+    <span class="err" id="e-batch" style="display:none;margin-top:6px">Please select a batch slot</span>
+  </div>
+
+  <!-- SECTION 4: FEES -->
+  <div class="card">
+    <div class="card-title"><span class="badge">4</span> Fee Structure</div>
+    <div class="fee-box">
+      <div class="fee-item">
+        <div class="flabel">Offline Monthly Fee</div>
+        <div class="amount">₹2,500</div>
+        <div class="fsub">Per month · Chennai centre</div>
+      </div>
+      <div class="fee-item">
+        <div class="flabel">Online Monthly Fee</div>
+        <div class="amount">₹2,200</div>
+        <div class="fsub">Per month · live sessions</div>
+      </div>
+      <div class="fee-item kit-box">
+        <div class="flabel">Enrollment Kit (One-time)</div>
+        <div class="amount">₹2,000</div>
+        <div class="kit-includes">🎒 Bag · 🧱 Clay · 🔧 Tools<br/>👕 Apron · 📒 Passport · 🏷️ Batch Card</div>
+      </div>
+    </div>
+    <div class="check-row" style="margin-top:14px">
+      <input type="checkbox" id="kitOptIn"/>
+      <label for="kitOptIn">Yes, I'd like the <strong>Enrollment Kit (₹2,000)</strong> — Bag, Clay, Tools, Apron, Passport &amp; Batch Card</label>
+    </div>
+  </div>
+
+  <!-- SECTION 5: DECLARATION -->
+  <div class="card">
+    <div class="card-title"><span class="badge">5</span> Declaration</div>
+    <div class="decl-box">
+      I / We, the parent(s) / guardian(s) of the above-named child, confirm that all information is accurate. I / We agree to the fee structure, batch timings, and the academy's terms and conditions. I / We consent to photographs of the child being used for Lil Sculpr's records and promotional materials. Monthly fee is due by the 5th of each month; enrollment kit fee is non-refundable.
+    </div>
+    <div class="check-row">
+      <input type="checkbox" id="decl1"/>
+      <label for="decl1">All information provided is true and correct. <span class="req">*</span></label>
+    </div>
+    <div class="check-row">
+      <input type="checkbox" id="decl2"/>
+      <label for="decl2">I agree to Lil Sculpr's <a href="https://www.lilsculpr.com/terms-and-conditions.html" target="_blank">Terms &amp; Conditions</a> and <a href="https://www.lilsculpr.com/return-refund-policy.html" target="_blank">Refund Policy</a>. <span class="req">*</span></label>
+    </div>
+    <div class="check-row">
+      <input type="checkbox" id="decl3"/>
+      <label for="decl3">I consent to my child's photos / artwork being used for Lil Sculpr's social media and promotions.</label>
+    </div>
+    <span class="err" id="e-decl">Please accept the required declarations</span>
+  </div>
+
+  <button type="submit" class="submit-btn">🎨 Pay First Month Fee & Submit Admission</button>
+  <p class="submit-note">Our team will contact you on WhatsApp within 24 hours to confirm your slot.</p>
+</form>
+
+<div id="successMsg" style="display:none; text-align: center; padding: 40px 20px; background: white; border-radius: 12px; box-shadow: 0 4px 25px rgba(0,0,0,0.05); margin-top: 20px; border: 2px solid #f3f4f6;">
+  <div style="font-size: 60px; color: #28a745; margin-bottom: 15px; animation: bounce 1s ease;">✅</div>
+  <h2 style="color: #28a745; font-weight: 700; margin-bottom: 10px; font-size: 28px;">Payment Successful!</h2>
+  <p style="color: #4b5563; font-size: 1.1rem; margin-bottom: 15px;">Your Enrollment ID:</p>
+  <div class="enroll-id" id="enrollId" style="display: inline-block; background: #f3f4f6; padding: 12px 24px; border-radius: 8px; font-weight: bold; font-size: 1.4rem; color: #111827; letter-spacing: 2px; margin-bottom: 25px;">—</div>
+  <p style="color: #6c757d; margin-bottom: 10px; font-size: 1rem;">Registration details have been sent to your email.</p>
+  <p style="color: #6c757d; margin-bottom: 30px; font-size: 1rem;">📞 Need help? <strong>+91 96 00 44 31 85</strong></p>
+  <button type="button" onclick="location.reload()" style="background: var(--lil-blue, #3498db); color: white; border: none; padding: 14px 35px; border-radius: 30px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);">📝 Register Another Student</button>
+</div>
+<style>
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-20px); }
+    60% { transform: translateY(-10px); }
+  }
+  #successMsg button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+  }
+</style>
+</div>
+
+<div class="form-footer">
+  © Lil Sculpr Clay Modelling Academy · Anna Nagar West Ext., Chennai – 600101<br/>
+  <a href="tel:+919600443185">+91 96 00 44 31 85</a> · <a href="mailto:lilsculpr@gmail.com">lilsculpr@gmail.com</a> · <a href="https://www.lilsculpr.com">www.lilsculpr.com</a>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="assets/js/enrollment.js"></script>
+</body>
+</html>

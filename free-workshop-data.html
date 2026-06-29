@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Free Workshop Registrations | Lil Sculpr Admin</title>
+    <meta name="robots" content="noindex, nofollow" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap"
+    />
+
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.ico" sizes="any" />
+
+    <!-- Axios (same as free-workshop-register.html) -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <!-- SheetJS for Excel Export -->
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+
+    <style>
+      :root {
+        --primary: #7c3aed;
+        --primary-light: #a78bfa;
+        --primary-dark: #5b21b6;
+        --accent: #f59e0b;
+        --accent-light: #fcd34d;
+        --success: #10b981;
+        --danger: #ef4444;
+        --warning: #f59e0b;
+        --bg-dark: #0f0a1e;
+        --bg-card: #1a1030;
+        --bg-card2: #221540;
+        --bg-surface: #2d1f55;
+        --text-primary: #f1f0f7;
+        --text-secondary: #c4b5fd;
+        --text-muted: #8b7ec8;
+        --border: rgba(124, 58, 237, 0.25);
+        --border-light: rgba(167, 139, 250, 0.15);
+        --glow: 0 0 40px rgba(124, 58, 237, 0.3);
+        --radius: 16px;
+        --radius-sm: 8px;
+        --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background: var(--bg-dark);
+        color: var(--text-primary);
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      /* ─── Background ─── */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background:
+          radial-gradient(ellipse 80% 60% at 20% 10%, rgba(124, 58, 237, 0.18) 0%, transparent 60%),
+          radial-gradient(ellipse 60% 50% at 80% 80%, rgba(245, 158, 11, 0.08) 0%, transparent 60%),
+          radial-gradient(ellipse 50% 40% at 60% 30%, rgba(16, 185, 129, 0.06) 0%, transparent 60%);
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      /* ─── Header ─── */
+      .admin-header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(15, 10, 30, 0.85);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--border);
+        padding: 0 24px;
+      }
+
+      .header-inner {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 70px;
+        gap: 16px;
+      }
+
+      .header-brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+      }
+
+      .header-brand-icon {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, var(--primary), var(--primary-light));
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        box-shadow: 0 4px 16px rgba(124, 58, 237, 0.4);
+      }
+
+      .header-brand-text {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.2;
+      }
+
+      .brand-name {
+        font-family: "Outfit", sans-serif;
+        font-weight: 700;
+        font-size: 16px;
+        color: var(--text-primary);
+      }
+
+      .brand-sub {
+        font-size: 11px;
+        color: var(--text-muted);
+        font-weight: 500;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+
+      .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 20px;
+        border-radius: var(--radius-sm);
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        border: none;
+        transition: all 0.2s ease;
+        text-decoration: none;
+        white-space: nowrap;
+        font-family: "Inter", sans-serif;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: #fff;
+        box-shadow: 0 4px 16px rgba(124, 58, 237, 0.35);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(124, 58, 237, 0.5);
+      }
+
+      .btn-success {
+        background: linear-gradient(135deg, var(--success), #059669);
+        color: #fff;
+        box-shadow: 0 4px 16px rgba(16, 185, 129, 0.35);
+      }
+
+      .btn-success:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(16, 185, 129, 0.5);
+      }
+
+      .btn-ghost {
+        background: rgba(167, 139, 250, 0.1);
+        color: var(--text-secondary);
+        border: 1px solid var(--border);
+      }
+
+      .btn-ghost:hover {
+        background: rgba(167, 139, 250, 0.2);
+        color: var(--text-primary);
+      }
+
+      .btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none !important;
+      }
+
+      /* ─── Main layout ─── */
+      .main {
+        position: relative;
+        z-index: 1;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 32px 24px 60px;
+      }
+
+      /* ─── Page Title ─── */
+      .page-title-block {
+        margin-bottom: 32px;
+      }
+
+      .page-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(124, 58, 237, 0.15);
+        border: 1px solid rgba(124, 58, 237, 0.4);
+        border-radius: 50px;
+        padding: 6px 14px;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--primary-light);
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+      }
+
+      .page-title {
+        font-family: "Outfit", sans-serif;
+        font-size: clamp(24px, 4vw, 38px);
+        font-weight: 800;
+        background: linear-gradient(135deg, #fff 30%, var(--primary-light));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1.2;
+        margin-bottom: 8px;
+      }
+
+      .page-subtitle {
+        color: var(--text-muted);
+        font-size: 15px;
+      }
+
+      /* ─── Stats Row ─── */
+      .stats-row {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+        margin-bottom: 28px;
+      }
+
+      .stat-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 20px 24px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        transition: transform 0.2s, box-shadow 0.2s;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .stat-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(124, 58, 237, 0.05) 0%, transparent 60%);
+        pointer-events: none;
+      }
+
+      .stat-card:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow);
+      }
+
+      .stat-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        flex-shrink: 0;
+      }
+
+      .stat-icon.purple { background: rgba(124, 58, 237, 0.2); }
+      .stat-icon.amber  { background: rgba(245, 158, 11, 0.2); }
+      .stat-icon.green  { background: rgba(16, 185, 129, 0.2); }
+      .stat-icon.red    { background: rgba(239, 68, 68, 0.2); }
+
+      .stat-info {
+        min-width: 0;
+      }
+
+      .stat-value {
+        font-family: "Outfit", sans-serif;
+        font-size: 30px;
+        font-weight: 800;
+        color: var(--text-primary);
+        line-height: 1;
+        margin-bottom: 4px;
+      }
+
+      .stat-label {
+        font-size: 13px;
+        color: var(--text-muted);
+        font-weight: 500;
+      }
+
+      /* ─── Progress bar ─── */
+      .progress-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 20px 24px;
+        margin-bottom: 28px;
+      }
+
+      .progress-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+      }
+
+      .progress-label {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--text-secondary);
+      }
+
+      .progress-pct {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--primary-light);
+      }
+
+      .progress-track {
+        height: 10px;
+        background: rgba(124, 58, 237, 0.15);
+        border-radius: 999px;
+        overflow: hidden;
+      }
+
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--primary), var(--primary-light));
+        border-radius: 999px;
+        transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+        width: 0%;
+      }
+
+      /* ─── Controls ─── */
+      .controls-bar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 20px;
+      }
+
+      .search-wrap {
+        position: relative;
+        flex: 1;
+        min-width: 220px;
+        max-width: 420px;
+      }
+
+      .search-icon {
+        position: absolute;
+        left: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-muted);
+        font-size: 16px;
+        pointer-events: none;
+      }
+
+      .search-input {
+        width: 100%;
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        color: var(--text-primary);
+        font-family: "Inter", sans-serif;
+        font-size: 14px;
+        padding: 10px 14px 10px 40px;
+        transition: border-color 0.2s, box-shadow 0.2s;
+        outline: none;
+      }
+
+      .search-input:focus {
+        border-color: var(--primary-light);
+        box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
+      }
+
+      .search-input::placeholder {
+        color: var(--text-muted);
+      }
+
+      .controls-right {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-left: auto;
+      }
+
+      .result-count {
+        font-size: 13px;
+        color: var(--text-muted);
+        background: rgba(167, 139, 250, 0.08);
+        border: 1px solid var(--border-light);
+        padding: 6px 14px;
+        border-radius: 50px;
+        white-space: nowrap;
+      }
+
+      /* ─── Table Card ─── */
+      .table-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        overflow: hidden;
+        box-shadow: var(--shadow);
+      }
+
+      .table-scroll {
+        overflow-x: auto;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      thead {
+        background: var(--bg-card2);
+        position: sticky;
+        top: 0;
+        z-index: 5;
+      }
+
+      thead th {
+        padding: 14px 18px;
+        text-align: left;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--text-secondary);
+        border-bottom: 1px solid var(--border);
+        white-space: nowrap;
+        cursor: pointer;
+        user-select: none;
+        transition: color 0.2s;
+      }
+
+      thead th:hover {
+        color: var(--text-primary);
+      }
+
+      thead th .sort-icon {
+        display: inline-block;
+        margin-left: 6px;
+        opacity: 0.5;
+        transition: opacity 0.2s;
+        font-style: normal;
+      }
+
+      thead th.sorted .sort-icon {
+        opacity: 1;
+        color: var(--primary-light);
+      }
+
+      tbody tr {
+        border-bottom: 1px solid var(--border-light);
+        transition: background 0.15s;
+        animation: rowIn 0.3s ease both;
+      }
+
+      @keyframes rowIn {
+        from { opacity: 0; transform: translateY(4px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+
+      tbody tr:hover {
+        background: rgba(124, 58, 237, 0.06);
+      }
+
+      tbody tr:last-child {
+        border-bottom: none;
+      }
+
+      td {
+        padding: 14px 18px;
+        font-size: 14px;
+        color: var(--text-primary);
+        vertical-align: middle;
+        white-space: nowrap;
+      }
+
+      .td-sno {
+        color: var(--text-muted);
+        font-weight: 700;
+        font-size: 13px;
+        width: 50px;
+      }
+
+      .td-name {
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+
+      .td-email {
+        color: var(--text-secondary);
+      }
+
+      .td-phone a {
+        color: var(--primary-light);
+        text-decoration: none;
+      }
+
+      .td-phone a:hover {
+        text-decoration: underline;
+      }
+
+      .td-child {
+        font-weight: 500;
+      }
+
+      .age-badge {
+        display: inline-flex;
+        align-items: center;
+        background: rgba(245, 158, 11, 0.15);
+        color: var(--accent-light);
+        border: 1px solid rgba(245, 158, 11, 0.3);
+        border-radius: 50px;
+        padding: 3px 10px;
+        font-size: 12px;
+        font-weight: 600;
+      }
+
+      .batch-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        background: rgba(16, 185, 129, 0.12);
+        color: #6ee7b7;
+        border: 1px solid rgba(16, 185, 129, 0.25);
+        border-radius: 50px;
+        padding: 3px 10px;
+        font-size: 12px;
+        font-weight: 600;
+      }
+
+      .td-date {
+        color: var(--text-muted);
+        font-size: 13px;
+      }
+
+      /* ─── Empty / Loading states ─── */
+      .state-box {
+        padding: 80px 24px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .state-icon {
+        font-size: 56px;
+        line-height: 1;
+        opacity: 0.7;
+      }
+
+      .state-title {
+        font-family: "Outfit", sans-serif;
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--text-primary);
+      }
+
+      .state-msg {
+        font-size: 14px;
+        color: var(--text-muted);
+        max-width: 340px;
+      }
+
+      /* Spinner */
+      .spinner {
+        width: 44px;
+        height: 44px;
+        border: 3px solid rgba(124, 58, 237, 0.2);
+        border-top-color: var(--primary);
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+      }
+
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+
+      /* ─── Toast ─── */
+      #toast-container {
+        position: fixed;
+        bottom: 28px;
+        right: 28px;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        pointer-events: none;
+      }
+
+      .toast {
+        background: var(--bg-card2);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 14px 20px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 14px;
+        font-weight: 500;
+        box-shadow: var(--shadow);
+        animation: toastIn 0.3s ease;
+        pointer-events: auto;
+        min-width: 260px;
+        max-width: 380px;
+      }
+
+      @keyframes toastIn {
+        from { opacity: 0; transform: translateX(20px); }
+        to   { opacity: 1; transform: translateX(0); }
+      }
+
+      .toast.success { border-left: 4px solid var(--success); }
+      .toast.error   { border-left: 4px solid var(--danger); }
+      .toast.info    { border-left: 4px solid var(--primary); }
+
+      /* ─── Table Footer ─── */
+      .table-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 20px;
+        border-top: 1px solid var(--border-light);
+        font-size: 13px;
+        color: var(--text-muted);
+        background: var(--bg-card2);
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      /* ─── Refresh animation ─── */
+      .spin-once {
+        animation: spinOnce 0.6s ease;
+      }
+      @keyframes spinOnce {
+        from { transform: rotate(0deg); }
+        to   { transform: rotate(360deg); }
+      }
+
+      /* ─── Responsive ─── */
+      @media (max-width: 768px) {
+        .main { padding: 20px 14px 48px; }
+        .header-inner { height: 60px; }
+        .btn span { display: none; }
+        .controls-bar { flex-direction: column; align-items: stretch; }
+        .search-wrap { max-width: 100%; }
+        .controls-right { justify-content: flex-end; }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- ─── HEADER ─── -->
+    <header class="admin-header">
+      <div class="header-inner">
+        <a href="index.html" class="header-brand">
+          <div class="header-brand-icon">🎨</div>
+          <div class="header-brand-text">
+            <span class="brand-name">Lil Sculpr</span>
+            <span class="brand-sub">Admin Panel</span>
+          </div>
+        </a>
+
+        <div class="header-actions">
+          <button class="btn btn-ghost" id="refreshBtn" onclick="loadRegistrations()" title="Refresh data">
+            <span id="refreshIcon">🔄</span>
+            <span>Refresh</span>
+          </button>
+          <button class="btn btn-success" id="exportBtn" onclick="exportToExcel()" title="Export to Excel">
+            <span>📊</span>
+            <span>Export Excel</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- ─── MAIN ─── -->
+    <main class="main">
+      <!-- Page title -->
+      <div class="page-title-block">
+        <div class="page-badge">🎓 Free Workshop Admin</div>
+        <h1 class="page-title">Free Workshop Registrations</h1>
+        <p class="page-subtitle">View, search, and export all registered participants for the free clay workshop.</p>
+      </div>
+
+      <!-- Stats row -->
+      <div class="stats-row" id="statsRow">
+        <div class="stat-card">
+          <div class="stat-icon purple">📋</div>
+          <div class="stat-info">
+            <div class="stat-value" id="statTotal">—</div>
+            <div class="stat-label">Total Registered</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon green">✅</div>
+          <div class="stat-info">
+            <div class="stat-value" id="statRemaining">—</div>
+            <div class="stat-label">Slots Remaining</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon amber">🎯</div>
+          <div class="stat-info">
+            <div class="stat-value">50</div>
+            <div class="stat-label">Total Capacity</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon red">🔥</div>
+          <div class="stat-info">
+            <div class="stat-value" id="statPct">—</div>
+            <div class="stat-label">Seats Filled</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Progress bar -->
+      <div class="progress-card">
+        <div class="progress-header">
+          <span class="progress-label">Workshop Capacity</span>
+          <span class="progress-pct" id="progressPct">—</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="controls-bar">
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input
+            type="search"
+            id="searchInput"
+            class="search-input"
+            placeholder="Search by name, email, phone, child…"
+            oninput="filterTable()"
+          />
+        </div>
+        <div class="controls-right">
+          <span class="result-count" id="resultCount">— results</span>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="table-card">
+        <div class="table-scroll">
+          <table id="dataTable">
+            <thead>
+              <tr>
+                <th class="td-sno" onclick="sortTable(0)">S.No <i class="sort-icon">↕</i></th>
+                <th onclick="sortTable(1)">Parent Name <i class="sort-icon">↕</i></th>
+                <th onclick="sortTable(2)">Email <i class="sort-icon">↕</i></th>
+                <th onclick="sortTable(3)">Phone <i class="sort-icon">↕</i></th>
+                <th onclick="sortTable(4)">Child Name <i class="sort-icon">↕</i></th>
+                <th onclick="sortTable(5)">Age <i class="sort-icon">↕</i></th>
+                <th onclick="sortTable(6)">Batch Time <i class="sort-icon">↕</i></th>
+                <th onclick="sortTable(7)">Registered On <i class="sort-icon">↕</i></th>
+              </tr>
+            </thead>
+            <tbody id="tableBody">
+              <!-- rows injected by JS -->
+            </tbody>
+          </table>
+
+          <div id="stateBox" class="state-box">
+            <div class="spinner"></div>
+            <div class="state-title">Loading Registrations…</div>
+            <div class="state-msg">Fetching the latest data from the server.</div>
+          </div>
+        </div>
+
+        <div class="table-footer" id="tableFooter" style="display:none;">
+          <span id="footerInfo">Showing all records</span>
+          <span id="footerTime">Last updated: —</span>
+        </div>
+      </div>
+    </main>
+
+    <!-- Toast container -->
+    <div id="toast-container"></div>
+
+    <script>
+      // ── Config (mirrors free-workshop-register.js) ────────────
+      const ALL_REGISTRATIONS_API = 'https://backend.lilsculpr.com/api/free-workshop/';
+      const SLOTS_API             = 'https://backend.lilsculpr.com/api/free-workshop/slots';
+      // const ALL_REGISTRATIONS_API = 'http://localhost:5000/api/free-workshop/';
+      // const SLOTS_API             = 'http://localhost:5000/api/free-workshop/slots';
+
+      const TOTAL_SLOTS = 50;
+      let allData = [];
+      let sortState = { col: 7, asc: false }; // default: newest first
+
+      // ── Fetch & Render (uses axios like free-workshop-register.js) ──
+      async function loadRegistrations() {
+        showState('loading');
+        animateRefresh();
+        try {
+          const res = await axios.get(ALL_REGISTRATIONS_API);
+
+          allData = res.data.data || [];
+          updateStats(allData.length);
+          renderTable(allData);
+          showToast(`✅ Loaded ${allData.length} registration${allData.length !== 1 ? 's' : ''}`, 'success');
+        } catch (err) {
+          console.error('Could not fetch registrations:', err);
+          let msg = 'Could not connect to the server.';
+          if (err.response && err.response.data && err.response.data.message) {
+            msg = err.response.data.message;
+          }
+          showState('error', 'Failed to Load Data', msg);
+          showToast('❌ Failed to fetch data — check your connection.', 'error');
+        }
+      }
+
+      function updateStats(total) {
+        const remaining = Math.max(0, TOTAL_SLOTS - total);
+        const pct = Math.round((total / TOTAL_SLOTS) * 100);
+
+        document.getElementById('statTotal').textContent = total;
+        document.getElementById('statRemaining').textContent = remaining;
+        document.getElementById('statPct').textContent = `${pct}%`;
+        document.getElementById('progressPct').textContent = `${pct}%`;
+
+        // animate fill
+        requestAnimationFrame(() => {
+          document.getElementById('progressFill').style.width = `${pct}%`;
+        });
+      }
+
+      function renderTable(data) {
+        const tbody = document.getElementById('tableBody');
+        const stateBox = document.getElementById('stateBox');
+        const footer = document.getElementById('tableFooter');
+        const footerInfo = document.getElementById('footerInfo');
+        const footerTime = document.getElementById('footerTime');
+        const resultCount = document.getElementById('resultCount');
+
+        if (data.length === 0 && allData.length === 0) {
+          showState('empty', 'No Registrations Yet', 'No one has signed up for the free workshop yet.');
+          resultCount.textContent = '0 results';
+          return;
+        }
+
+        stateBox.style.display = 'none';
+        footer.style.display = 'flex';
+
+        // Sort data
+        const sorted = [...data].sort((a, b) => {
+          const vals = [
+            ['_sno'],
+            [a.parentName, b.parentName],
+            [a.email, b.email],
+            [a.phone, b.phone],
+            [a.childName, b.childName],
+            [a.childAge, b.childAge],
+            [a.batchTime, b.batchTime],
+            [new Date(a.createdAt), new Date(b.createdAt)],
+          ];
+
+          let va, vb;
+          if (sortState.col === 0) {
+            return 0; // S.No just shows order
+          } else {
+            const pair = vals[sortState.col];
+            va = pair[0]; vb = pair[1];
+          }
+
+          if (typeof va === 'string') {
+            return sortState.asc
+              ? va.localeCompare(vb)
+              : vb.localeCompare(va);
+          }
+          return sortState.asc ? va - vb : vb - va;
+        });
+
+        tbody.innerHTML = sorted.map((reg, i) => `
+          <tr>
+            <td class="td-sno">${i + 1}</td>
+            <td class="td-name">${escHtml(reg.parentName)}</td>
+            <td class="td-email">${escHtml(reg.email)}</td>
+            <td class="td-phone"><a href="tel:${escHtml(reg.phone)}">${escHtml(reg.phone)}</a></td>
+            <td class="td-child">${escHtml(reg.childName)}</td>
+            <td><span class="age-badge">${escHtml(String(reg.childAge))} yrs</span></td>
+            <td><span class="batch-badge">🕐 ${escHtml(reg.batchTime || '11:00 AM - 12:00 PM')}</span></td>
+            <td class="td-date">${formatDate(reg.createdAt)}</td>
+          </tr>
+        `).join('');
+
+        resultCount.textContent = `${data.length} of ${allData.length} results`;
+        footerInfo.textContent = data.length === allData.length
+          ? `Showing all ${allData.length} records`
+          : `Showing ${data.length} of ${allData.length} records`;
+        footerTime.textContent = `Last updated: ${new Date().toLocaleString('en-IN')}`;
+      }
+
+      // ── Filter ───────────────────────────────────────────────
+      function filterTable() {
+        const q = document.getElementById('searchInput').value.trim().toLowerCase();
+        if (!q) {
+          renderTable(allData);
+          return;
+        }
+        const filtered = allData.filter(reg =>
+          [reg.parentName, reg.email, reg.phone, reg.childName, reg.childAge, reg.batchTime]
+            .some(v => String(v || '').toLowerCase().includes(q))
+        );
+        renderTable(filtered);
+      }
+
+      // ── Sort ─────────────────────────────────────────────────
+      function sortTable(colIndex) {
+        if (sortState.col === colIndex) {
+          sortState.asc = !sortState.asc;
+        } else {
+          sortState.col = colIndex;
+          sortState.asc = true;
+        }
+
+        // Update header UI
+        document.querySelectorAll('thead th').forEach((th, i) => {
+          th.classList.remove('sorted');
+          th.querySelector('.sort-icon').textContent = '↕';
+          if (i === colIndex) {
+            th.classList.add('sorted');
+            th.querySelector('.sort-icon').textContent = sortState.asc ? '↑' : '↓';
+          }
+        });
+
+        filterTable();
+      }
+
+      // ── Export to Excel ──────────────────────────────────────
+      function exportToExcel() {
+        if (allData.length === 0) {
+          showToast('⚠️ No data to export.', 'info');
+          return;
+        }
+
+        const btn = document.getElementById('exportBtn');
+        btn.disabled = true;
+        btn.innerHTML = '<span>⏳</span><span>Exporting…</span>';
+
+        try {
+          // Build worksheet data
+          const wsData = [
+            ['S.No', 'Parent Name', 'Email', 'Phone', 'Child Name', "Child's Age", 'Batch Time', 'Registered On']
+          ];
+
+          allData.forEach((reg, i) => {
+            wsData.push([
+              i + 1,
+              reg.parentName || '',
+              reg.email || '',
+              reg.phone || '',
+              reg.childName || '',
+              reg.childAge || '',
+              reg.batchTime || '11:00 AM - 12:00 PM',
+              reg.createdAt ? new Date(reg.createdAt).toLocaleString('en-IN') : ''
+            ]);
+          });
+
+          // Create workbook
+          const wb = XLSX.utils.book_new();
+          const ws = XLSX.utils.aoa_to_sheet(wsData);
+
+          // Column widths
+          ws['!cols'] = [
+            { wch: 6 },   // S.No
+            { wch: 22 },  // Parent Name
+            { wch: 28 },  // Email
+            { wch: 16 },  // Phone
+            { wch: 20 },  // Child Name
+            { wch: 12 },  // Age
+            { wch: 24 },  // Batch Time
+            { wch: 22 },  // Registered On
+          ];
+
+          // Style header row (bold)
+          const headerRange = XLSX.utils.decode_range(ws['!ref']);
+          for (let C = headerRange.s.c; C <= headerRange.e.c; C++) {
+            const cellAddr = XLSX.utils.encode_cell({ r: 0, c: C });
+            if (!ws[cellAddr]) ws[cellAddr] = { v: wsData[0][C], t: 's' };
+            ws[cellAddr].s = { font: { bold: true } };
+          }
+
+          XLSX.utils.book_append_sheet(wb, ws, 'Free Workshop Registrations');
+
+          // Add summary sheet
+          const summaryData = [
+            ['Free Workshop Registration Summary'],
+            [],
+            ['Total Registered', allData.length],
+            ['Total Slots', TOTAL_SLOTS],
+            ['Slots Remaining', Math.max(0, TOTAL_SLOTS - allData.length)],
+            ['Seats Filled (%)', `${Math.round((allData.length / TOTAL_SLOTS) * 100)}%`],
+            ['Exported On', new Date().toLocaleString('en-IN')],
+          ];
+          const ws2 = XLSX.utils.aoa_to_sheet(summaryData);
+          ws2['!cols'] = [{ wch: 24 }, { wch: 18 }];
+          XLSX.utils.book_append_sheet(wb, ws2, 'Summary');
+
+          // Download
+          const filename = `FreeWorkshop_Registrations_${new Date().toISOString().slice(0, 10)}.xlsx`;
+          XLSX.writeFile(wb, filename);
+
+          showToast(`📊 Exported ${allData.length} records to Excel!`, 'success');
+        } catch (err) {
+          console.error('Export failed:', err);
+          showToast('❌ Export failed. Please try again.', 'error');
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = '<span>📊</span><span>Export Excel</span>';
+        }
+      }
+
+      // ── Helpers ──────────────────────────────────────────────
+      function escHtml(str) {
+        return String(str || '')
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      }
+
+      function formatDate(iso) {
+        if (!iso) return '—';
+        try {
+          return new Date(iso).toLocaleString('en-IN', {
+            day: '2-digit', month: 'short', year: 'numeric',
+            hour: '2-digit', minute: '2-digit', hour12: true
+          });
+        } catch { return iso; }
+      }
+
+      function showState(type, title = '', msg = '') {
+        const box = document.getElementById('stateBox');
+        const footer = document.getElementById('tableFooter');
+        document.getElementById('tableBody').innerHTML = '';
+        footer.style.display = 'none';
+        box.style.display = 'flex';
+
+        const icons = { loading: '', error: '❌', empty: '📭' };
+        box.innerHTML = type === 'loading'
+          ? `<div class="spinner"></div>
+             <div class="state-title">Loading Registrations…</div>
+             <div class="state-msg">Fetching the latest data from the server.</div>`
+          : `<div class="state-icon">${icons[type] || '📭'}</div>
+             <div class="state-title">${title}</div>
+             <div class="state-msg">${msg}</div>
+             ${type === 'error' ? `<button class="btn btn-primary" onclick="loadRegistrations()">🔄 Try Again</button>` : ''}`;
+      }
+
+      function animateRefresh() {
+        const icon = document.getElementById('refreshIcon');
+        icon.classList.remove('spin-once');
+        void icon.offsetWidth; // reflow
+        icon.classList.add('spin-once');
+      }
+
+      function showToast(message, type = 'info') {
+        const container = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        toast.textContent = message;
+        container.appendChild(toast);
+        setTimeout(() => {
+          toast.style.opacity = '0';
+          toast.style.transform = 'translateX(20px)';
+          toast.style.transition = 'all 0.3s ease';
+          setTimeout(() => toast.remove(), 320);
+        }, 3500);
+      }
+
+      // ── Init ─────────────────────────────────────────────────
+      document.addEventListener('DOMContentLoaded', loadRegistrations);
+    </script>
+  </body>
+</html>

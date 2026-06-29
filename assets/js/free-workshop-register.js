@@ -2,10 +2,10 @@
     "use strict";
 
     // ==================== CONFIGURATION ====================
-    // const BACKEND_API      = 'https://backend.lilsculpr.com/api/free-workshop/register';
-    // const SLOTS_API        = 'https://backend.lilsculpr.com/api/free-workshop/slots';
-    const BACKEND_API   = 'http://localhost:5000/api/free-workshop/register';
-    const SLOTS_API     = 'http://localhost:5000/api/free-workshop/slots';
+    const BACKEND_API      = 'https://backend.lilsculpr.com/api/free-workshop/register';
+    const SLOTS_API        = 'https://backend.lilsculpr.com/api/free-workshop/slots';
+    // const BACKEND_API   = 'http://localhost:5000/api/free-workshop/register';
+    // const SLOTS_API     = 'http://localhost:5000/api/free-workshop/slots';
 
     const TOTAL_SLOTS = 50;
 
