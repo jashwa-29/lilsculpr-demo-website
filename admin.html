@@ -189,6 +189,7 @@ tr:hover td{background:#fdfcff}
     <div class="topbar-right">
       <input class="search-input" id="globalSearch" placeholder="🔍 Search student…" oninput="onSearch(this.value)" style="display:none"/>
       <span class="badge-pill" id="todayBadge"></span>
+      <button class="btn btn-primary" onclick="openManualEntry()" style="background:var(--secondary);border-color:var(--secondary)">➕ Add Student</button>
       <button class="btn btn-outline" onclick="exportCSV()">⬇ Export CSV</button>
       <button class="btn btn-outline" onclick="loadDemoData()" title="Load sample data">🧪 Demo</button>
     </div>
@@ -256,6 +257,129 @@ tr:hover td{background:#fdfcff}
     <div class="modal-avatar-wrap" id="modalAvatarWrap"></div>
     <div class="modal-body" id="modalBody"></div>
     <div class="modal-actions" id="modalActions"></div>
+  </div>
+</div>
+
+<!-- ══ MANUAL ENTRY MODAL ══ -->
+<div class="modal-overlay" id="manualOverlay" onclick="closeManualEntry(event)" style="display:none">
+  <div class="modal" id="manualModal" style="max-width:640px;max-height:90vh;overflow-y:auto" onclick="event.stopPropagation()">
+    <div class="modal-header" style="background:linear-gradient(135deg,#4f46e5,#7c3aed)">
+      <button class="modal-close" onclick="closeManualEntry()">✕</button>
+      <h3>➕ Manual Student Entry</h3>
+      <p style="color:rgba(255,255,255,.75);font-size:.8rem;margin-top:4px">Offline / Cash Payment — No Razorpay required</p>
+    </div>
+    <div class="modal-body" style="padding:22px">
+      <form id="manualEntryForm" onsubmit="submitManualEntry(event)">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+
+          <!-- Child Details -->
+          <div style="grid-column:1/-1">
+            <h4 style="color:var(--secondary);font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;border-bottom:2px dashed #e8e4f0;padding-bottom:6px">👦 Child Details</h4>
+          </div>
+          <div class="field">
+            <label>Child Name <span style="color:red">*</span></label>
+            <input type="text" id="me_childName" placeholder="e.g. Riya Sharma" required style="padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;width:100%">
+          </div>
+          <div class="field">
+            <label>Age</label>
+            <input type="text" id="me_childAge" placeholder="e.g. 8" style="padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;width:100%">
+          </div>
+          <div class="field">
+            <label>Class / Grade</label>
+            <input type="text" id="me_childClass" placeholder="e.g. 3rd Grade" style="padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;width:100%">
+          </div>
+          <div class="field">
+            <label>School Name</label>
+            <input type="text" id="me_schoolName" placeholder="e.g. DAV School" style="padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;width:100%">
+          </div>
+
+          <!-- Parent Details -->
+          <div style="grid-column:1/-1;margin-top:8px">
+            <h4 style="color:var(--secondary);font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;border-bottom:2px dashed #e8e4f0;padding-bottom:6px">👤 Parent Details</h4>
+          </div>
+          <div class="field">
+            <label>Parent Name <span style="color:red">*</span></label>
+            <input type="text" id="me_parentName" placeholder="e.g. Priya Sharma" required style="padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;width:100%">
+          </div>
+          <div class="field">
+            <label>Email</label>
+            <input type="email" id="me_email" placeholder="parent@email.com" style="padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;width:100%">
+          </div>
+          <div class="field">
+            <label>Contact 1 <span style="color:red">*</span></label>
+            <input type="tel" id="me_contact1" placeholder="10-digit mobile" required style="padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;width:100%">
+          </div>
+          <div class="field">
+            <label>Contact 2</label>
+            <input type="tel" id="me_contact2" placeholder="Alternate number" style="padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;width:100%">
+          </div>
+
+          <!-- Batch / Slot -->
+          <div style="grid-column:1/-1;margin-top:8px">
+            <h4 style="color:var(--secondary);font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;border-bottom:2px dashed #e8e4f0;padding-bottom:6px">📅 Batch &amp; Slot</h4>
+          </div>
+          <div class="field">
+            <label>Class Type <span style="color:red">*</span></label>
+            <select id="me_classType" required onchange="meBuildDays()" style="padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;width:100%;background:#fff">
+              <option value="">Select type…</option>
+              <option value="offline">🏫 Offline</option>
+              <option value="online">💻 Online</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Day Group <span style="color:red">*</span></label>
+            <select id="me_dayId" required onchange="meBuildSlots()" style="padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;width:100%;background:#fff">
+              <option value="">Select class type first…</option>
+            </select>
+          </div>
+          <div class="field" style="grid-column:1/-1">
+            <label>Time Slot <span style="color:red">*</span></label>
+            <select id="me_time" required style="padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;width:100%;background:#fff">
+              <option value="">Select day group first…</option>
+            </select>
+          </div>
+
+          <!-- Payment -->
+          <div style="grid-column:1/-1;margin-top:8px">
+            <h4 style="color:var(--secondary);font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;border-bottom:2px dashed #e8e4f0;padding-bottom:6px">💵 Payment Details</h4>
+          </div>
+          <div class="field" style="grid-column:1/-1">
+            <label>Amount Paid (₹)</label>
+            <div style="display:flex;align-items:center;gap:0;border:1.5px solid var(--border);border-radius:8px;overflow:hidden;background:#f9fafb">
+              <span style="background:#e8e4f0;padding:9px 14px;font-size:.85rem;font-weight:700;color:var(--secondary);white-space:nowrap">₹</span>
+              <input type="number" id="me_amountPaid" readonly
+                style="padding:9px 12px;border:none;outline:none;font-family:'Poppins',sans-serif;font-size:1rem;font-weight:700;color:var(--text);width:100%;background:#f9fafb;cursor:default"
+                placeholder="Select class type first">
+              <span id="me_amountLabel" style="padding:9px 14px;font-size:.72rem;color:var(--muted);white-space:nowrap;background:#f9fafb">auto</span>
+            </div>
+            <p style="font-size:.72rem;color:var(--muted);margin-top:4px">Auto-calculated: Offline ₹2500 · Online ₹2200 · +₹2000 if Kit included</p>
+          </div>
+          <div class="field" style="grid-column:1/-1">
+            <label>Receipt / Ref No. <small style="color:var(--muted)">(optional)</small></label>
+            <input type="text" id="me_paymentRef" placeholder="e.g. RCPT-001 or Cash" style="padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;width:100%">
+          </div>
+          <div class="field" style="grid-column:1/-1">
+            <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
+              <input type="checkbox" id="me_kitOptIn" onchange="meCalcAmount()" style="width:16px;height:16px"> Include Enrollment Kit (₹2000 extra)
+            </label>
+          </div>
+
+          <!-- Photo (optional) -->
+          <div class="field" style="grid-column:1/-1">
+            <label>Child Photo <small style="color:var(--muted)">(optional for manual entry)</small></label>
+            <input type="file" id="me_photo" accept="image/*" style="padding:7px;border:1.5px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;width:100%">
+          </div>
+
+        </div>
+
+        <div id="me_error" style="display:none;background:#fff5f5;border:1px solid #fed7d7;color:#c53030;padding:10px 14px;border-radius:8px;font-size:.82rem;margin-top:14px"></div>
+
+        <div style="display:flex;gap:10px;margin-top:20px;justify-content:flex-end">
+          <button type="button" class="btn btn-outline" onclick="closeManualEntry()">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="me_submitBtn" style="background:var(--secondary);border-color:var(--secondary);min-width:160px">💾 Save Student</button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
 
@@ -789,7 +913,7 @@ async function viewStudent(sid){
         <td><strong>${m.month} ${m.year}</strong><div style="font-size:0.7rem;color:var(--muted)">Initial Enrollment</div></td>
         <td><span class="pill ${paymentOk?'pill-green':'pill-yellow'}">${paymentOk?'Paid':'Pending'}</span></td>
         <td>₹${Number(s.amountPaid||0).toLocaleString('en-IN')}</td>
-        <td>Razorpay</td>
+        <td>${s.razorpayPaymentId && s.razorpayPaymentId.startsWith('OFFLINE') ? 'Offline / Cash' : 'Razorpay'}</td>
         <td>
           <span style="font-size:0.7rem;color:var(--muted)">
             ${paymentOk ? `Paid on ${enrolledDate.toLocaleDateString('en-IN')}` : '—'}
@@ -854,8 +978,12 @@ async function viewStudent(sid){
       <div class="m-row"><span class="m-label">Amount Paid</span><span class="m-val" style="font-family:'Nunito',sans-serif;font-weight:900;color:var(--primary-dk);font-size:1rem">₹${Number(s.amountPaid||0).toLocaleString('en-IN')}</span></div>
       <div class="m-row"><span class="m-label">Covers</span><span class="m-val">First Month Fee${s.kitOptIn?' + Enrollment Kit':''}</span></div>
       <div class="m-row"><span class="m-label">Payment Status</span><span class="m-val"><span class="pill ${paymentOk?'pill-green':'pill-yellow'}">${s.paymentStatus||'—'}</span></span></div>
-      <div class="m-row"><span class="m-label">Razorpay Order ID</span><span class="m-val" style="font-family:monospace;font-size:.7rem">${s.razorpayOrderId||'—'}</span></div>
-      <div class="m-row"><span class="m-label">Payment ID</span><span class="m-val" style="font-family:monospace;font-size:.7rem">${s.razorpayPaymentId||'—'}</span></div>
+      ${s.razorpayPaymentId && s.razorpayPaymentId.startsWith('OFFLINE')
+        ? `<div class="m-row"><span class="m-label">Payment Mode</span><span class="m-val" style="font-size:.8rem;font-weight:600">Offline / Cash</span></div>
+           <div class="m-row"><span class="m-label">Receipt / Ref</span><span class="m-val" style="font-family:monospace;font-size:.7rem">${s.razorpayPaymentId.replace('OFFLINE-','')}</span></div>`
+        : `<div class="m-row"><span class="m-label">Razorpay Order ID</span><span class="m-val" style="font-family:monospace;font-size:.7rem">${s.razorpayOrderId||'—'}</span></div>
+           <div class="m-row"><span class="m-label">Payment ID</span><span class="m-val" style="font-family:monospace;font-size:.7rem">${s.razorpayPaymentId||'—'}</span></div>`
+      }
     </div>
     
     <div class="modal-section">
@@ -1073,6 +1201,135 @@ function loadDemoData(){
    INIT
 ════════════════════════════════════ */
 initAdmin();
+
+/* ════════════════════════════════════
+   MANUAL ENTRY MODAL
+════════════════════════════════════ */
+function openManualEntry() {
+  document.getElementById('manualOverlay').style.display = 'flex';
+  document.getElementById('manualEntryForm').reset();
+  document.getElementById('me_error').style.display = 'none';
+  document.getElementById('me_submitBtn').disabled = false;
+  document.getElementById('me_submitBtn').textContent = '💾 Save Student';
+  // Reset dropdowns
+  document.getElementById('me_dayId').innerHTML = '<option value="">Select class type first…</option>';
+  document.getElementById('me_time').innerHTML = '<option value="">Select day group first…</option>';
+}
+
+function closeManualEntry(e) {
+  if (e && e.target !== document.getElementById('manualOverlay')) return;
+  document.getElementById('manualOverlay').style.display = 'none';
+}
+
+function meBuildDays() {
+  const type = document.getElementById('me_classType').value;
+  const daySelect = document.getElementById('me_dayId');
+  const timeSelect = document.getElementById('me_time');
+  daySelect.innerHTML = '<option value="">Select day group…</option>';
+  timeSelect.innerHTML = '<option value="">Select day group first…</option>';
+  if (!type || !BATCHES[type]) return;
+  BATCHES[type].days.forEach(d => {
+    daySelect.innerHTML += `<option value="${d.id}">${d.label}</option>`;
+  });
+  meCalcAmount();
+}
+
+function meBuildSlots() {
+  const type = document.getElementById('me_classType').value;
+  const dayId = document.getElementById('me_dayId').value;
+  const timeSelect = document.getElementById('me_time');
+  timeSelect.innerHTML = '<option value="">Select time slot…</option>';
+  if (!type || !dayId || !BATCHES[type]) return;
+  const day = BATCHES[type].days.find(d => d.id === dayId);
+  if (!day) return;
+  day.slots.forEach(slot => {
+    timeSelect.innerHTML += `<option value="${slot}">${slot}</option>`;
+  });
+}
+
+function meCalcAmount() {
+  const type = document.getElementById('me_classType').value;
+  const kitOptIn = document.getElementById('me_kitOptIn').checked;
+  const amountInput = document.getElementById('me_amountPaid');
+  const label = document.getElementById('me_amountLabel');
+  if (!type) {
+    amountInput.value = '';
+    amountInput.placeholder = 'Select class type first';
+    label.textContent = 'auto';
+    return;
+  }
+  const base = type === 'offline' ? 2500 : 2200;
+  const kit = kitOptIn ? 2000 : 0;
+  const total = base + kit;
+  amountInput.value = total;
+  label.textContent = type === 'offline'
+    ? `₹${base} offline${kitOptIn ? ' + ₹2000 kit' : ''}`
+    : `₹${base} online${kitOptIn ? ' + ₹2000 kit' : ''}`;
+}
+
+async function submitManualEntry(event) {
+  event.preventDefault();
+  const errDiv = document.getElementById('me_error');
+  const submitBtn = document.getElementById('me_submitBtn');
+  errDiv.style.display = 'none';
+
+  const classType = document.getElementById('me_classType').value;
+  const dayId = document.getElementById('me_dayId').value;
+  const time = document.getElementById('me_time').value;
+
+  if (!classType || !dayId || !time) {
+    errDiv.textContent = 'Please select Class Type, Day Group, and Time Slot.';
+    errDiv.style.display = 'block';
+    return;
+  }
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = '⏳ Saving…';
+
+  const formData = new FormData();
+  formData.append('childName',      document.getElementById('me_childName').value.trim());
+  formData.append('childAge',       document.getElementById('me_childAge').value.trim());
+  formData.append('childClass',     document.getElementById('me_childClass').value.trim());
+  formData.append('schoolName',     document.getElementById('me_schoolName').value.trim());
+  formData.append('parentName',     document.getElementById('me_parentName').value.trim());
+  formData.append('email',          document.getElementById('me_email').value.trim());
+  formData.append('contact1',       document.getElementById('me_contact1').value.trim());
+  formData.append('contact2',       document.getElementById('me_contact2').value.trim());
+  formData.append('classType',      classType);
+  formData.append('dayId',          dayId);
+  formData.append('time',           time);
+  formData.append('slotKey',        `${classType}|${dayId}|${time}`);
+  formData.append('kitOptIn',       document.getElementById('me_kitOptIn').checked);
+  formData.append('amountPaid',     document.getElementById('me_amountPaid').value);
+  formData.append('offlinePaymentRef', document.getElementById('me_paymentRef').value.trim());
+  const photoFile = document.getElementById('me_photo').files[0];
+  if (photoFile) formData.append('photo', photoFile);
+
+  try {
+    const res = await fetch(`${BACKEND}/api/enrollment/manual`, {
+      method: 'POST',
+      body: formData
+    });
+    const data = await res.json();
+    if (data.success) {
+      document.getElementById('manualOverlay').style.display = 'none';
+      // Refresh student list from backend
+      await initAdmin();
+      showPage('students', document.querySelector('.nav-item[onclick*="students"]'));
+      alert(`✅ Student enrolled!\nEnrollment ID: ${data.student.enrollmentId}\nPayment: Offline`);
+    } else {
+      errDiv.textContent = '❌ ' + (data.error || 'Failed to save. Please try again.');
+      errDiv.style.display = 'block';
+      submitBtn.disabled = false;
+      submitBtn.textContent = '💾 Save Student';
+    }
+  } catch (err) {
+    errDiv.textContent = '❌ Network error: ' + err.message;
+    errDiv.style.display = 'block';
+    submitBtn.disabled = false;
+    submitBtn.textContent = '💾 Save Student';
+  }
+}
 </script>
 </body>
 </html>
