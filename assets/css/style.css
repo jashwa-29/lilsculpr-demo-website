@@ -78,9 +78,9 @@ Version: 1.0.0
 /*------------------- 1.2. Function -------------------*/
 /*------------------- 1.3. Variable-------------------*/
 :root {
-  --theme-color: #9C29B2;
-  --secondary-color: #88c90d;
-  --title-color: #103741;
+  --theme-color: #e16910;
+  --secondary-color: #034395;
+  --title-color: #034395;
   --body-color: #74787c;
   --smoke-color: #f9f6ef;
   --smoke-theme: #fef5ff;
@@ -117,6 +117,7 @@ body {
   font-weight: 400;
   color: var(--body-color);
   line-height: 26px;
+  background-color: #fff6e9;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -1559,7 +1560,7 @@ textarea.form-control.is-invalid {
 .sub-title {
   font-size: 24px;
   font-weight: 600;
-  color: #9C29B2; /* Ensuring high contrast violet */
+  color: var(--theme-color); /* Ensuring high contrast violet */
   display: block;
   margin-bottom: 29px;
   margin-top: -4px;
@@ -4186,8 +4187,8 @@ ul.popular-service-wrap li:hover {
   z-index: 999;
 }
 .sticky-wrapper.will-sticky .sticky-active .header-menu-area.v4 {
-  background-color: var(--white-color);
-  border-bottom: 2px solid var(--theme-color);
+  background-color: #fff6e9;
+  border-bottom: 2px solid #fff6e9;
 }
 
 .header-layout1 .sticky-wrapper.will-sticky .header-logo a img {
@@ -10172,7 +10173,7 @@ span.select2-selection.select2-selection--single:focus {
 }
 .class-card .class-content {
   margin-top: -100px;
-  background-color: var(--smoke-theme);
+  background-color: var(--white-color); /* cards use white background */
   border-radius: 50px;
   padding: 134px 40px 30px 40px;
 }
@@ -14553,7 +14554,7 @@ select[name="batch"] option.full-slot:disabled {
     display: block;
     width: 1px;
     height: 60px;
-    background: linear-gradient(to bottom, rgba(255,255,255,0), #9C29B2);
+    background: linear-gradient(to bottom, rgba(255,255,255,0), var(--theme-color));
     margin: 40px auto 0;
     opacity: 0.8;
 }
@@ -14630,8 +14631,8 @@ select[name="batch"] option.full-slot:disabled {
 /* Carousel Stability */
 .classes-section .vs-carousel,
 .blog-section .vs-carousel {
-    min-height: 500px;
-    background: #fdfdfd;
+  min-height: 500px;
+  background: transparent; /* removed pale white background so carousel blends with body */
 }
 
 /* Fix for shape mockups causing shifts */

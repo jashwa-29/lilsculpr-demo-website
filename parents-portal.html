@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parents Portal - Lil Sculpr</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #f97316;
+      --primary-dk: #ea580c;
+      --secondary: #6366f1;
+      --bg: #f8f7ff;
+      --text: #1e1b18;
+      --muted: #6b7280;
+      --border: #e8e4f0;
+      --green: #22c55e;
+      --red: #ef4444;
+      --yellow: #f59e0b;
+      --radius: 12px;
+    }
+    
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+      border-bottom: 2px solid var(--border);
+      margin-bottom: 30px;
+    }
+
+    .logo {
+      height: 40px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      padding: 30px;
+      margin-bottom: 20px;
+    }
+
+    /* Form Styles */
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      transition: all 0.2s;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dk);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--border);
+      color: var(--text);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    /* Dashboard Layout */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .stat-box {
+      background: #fff5eb;
+      border: 1px solid #fed7aa;
+      border-radius: 8px;
+      padding: 15px;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--primary-dk);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #ea580c;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 5px;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .pill-green { background: #dcfce7; color: #166534; }
+    .pill-red { background: #fee2e2; color: #991b1b; }
+    .pill-yellow { background: #fef9c3; color: #854d0e; }
+    .pill-blue { background: #dbeafe; color: #1e40af; }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .table th {
+      text-align: left;
+      padding: 12px 16px;
+      background: #f9fafb;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .table td {
+      padding: 14px 16px;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .tabs {
+      display: flex;
+      border-bottom: 2px solid var(--border);
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .tab {
+      padding: 10px 20px;
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--muted);
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+      transition: all 0.2s;
+    }
+
+    .tab:hover {
+      color: var(--text);
+    }
+
+    .tab.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .batch-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .batch-card .batch-info {
+      flex: 1;
+    }
+
+    #loginView, #dashboardView {
+      display: none;
+    }
+
+    #loginView.active, #dashboardView.active {
+      display: block;
+    }
+
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #333;
+      color: #fff;
+      padding: 15px 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      z-index: 1000;
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: all 0.3s;
+      pointer-events: none;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .loading-spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(0,0,0,0.1);
+      border-radius: 50%;
+      border-top-color: var(--primary);
+      animation: spin 0.8s ease infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .text-center { text-align: center; }
+    .mt-20 { margin-top: 20px; }
+    .mb-10 { margin-bottom: 10px; }
+
+    /* Token breakdown styling */
+    .token-breakdown {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      font-size: 0.75rem;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+
+    .token-breakdown .available { color: var(--green); }
+    .token-breakdown .used { color: var(--muted); }
+    .token-breakdown .expired { color: var(--red); }
+
+    .booking-section {
+      margin-top: 15px;
+    }
+
+    .no-tokens-msg {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #991b1b;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    .certificate-item {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .certificate-item .cert-info {
+      flex: 1;
+    }
+
+    /* Responsive fixes */
+    @media (max-width: 600px) {
+      .batch-card {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .certificate-item {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .tabs {
+        flex-direction: column;
+        border-bottom: none;
+      }
+      .tab {
+        border-bottom: 2px solid var(--border);
+        margin-bottom: 2px;
+      }
+      .tab.active {
+        border-bottom-color: var(--primary);
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div id="toast" class="toast">Message goes here</div>
+
+<div class="container">
+  <header>
+    <img src="https://www.lilsculpr.com/assets/img/logo.webp" alt="Lil Sculpr" class="logo">
+    <h2 style="font-family: 'Nunito', sans-serif; color: var(--primary); font-weight: 800;">Parents Portal</h2>
+    <div id="userHeader" style="display: none; align-items: center; gap: 15px;">
+      <span id="headerName" style="font-weight: 600;"></span>
+      <button class="btn btn-outline" style="padding: 6px 12px; font-size: 0.8rem;" onclick="logout()">Logout</button>
+    </div>
+  </header>
+
+  <!-- Login View -->
+  <div id="loginView" class="active">
+    <div class="card" style="max-width: 450px; margin: 40px auto; text-align: center;">
+      <h2 style="font-family: 'Nunito', sans-serif; font-size: 1.8rem; font-weight: 800; margin-bottom: 10px;">Welcome Back!</h2>
+      <p style="color: var(--muted); font-size: 0.9rem; margin-bottom: 30px;">Enter your details to view your child's progress, attendance, and manage make-up classes.</p>
+      
+      <form id="loginForm" onsubmit="handleLogin(event)">
+        <div class="form-group text-left" style="text-align: left;">
+          <label class="form-label">Enrollment ID</label>
+          <input type="text" id="enrollmentId" class="form-input" placeholder="e.g. LS-2024-001" required>
+        </div>
+        <div class="form-group text-left" style="text-align: left;">
+          <label class="form-label">Registered Phone Number</label>
+          <input type="tel" id="contactNumber" class="form-input" placeholder="e.g. 9876543210" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%;" id="loginBtn">Login to Portal</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Dashboard View -->
+  <div id="dashboardView">
+    <div class="dashboard-grid">
+      <!-- Left Sidebar (Profile & Tokens) -->
+      <div>
+        <div class="card">
+          <h3 id="childName" style="font-family: 'Nunito', sans-serif; font-size: 1.5rem; font-weight: 800; margin-bottom: 5px;">Child Name</h3>
+          <p id="childDetails" style="color: var(--muted); font-size: 0.9rem; margin-bottom: 20px;">Age 6 · Offline Class</p>
+          
+          <div style="border-top: 1px solid var(--border); padding-top: 15px; margin-bottom: 15px;">
+            <div style="font-size: 0.8rem; color: var(--muted); margin-bottom: 5px;">Current Batch</div>
+            <div id="batchInfo" style="font-weight: 600;">Mon & Fri (4:00-5:00 PM)</div>
+          </div>
+
+          <div class="stat-box">
+            <div class="stat-number" id="tokenCount">0</div>
+            <div class="stat-label">Available Make-up Tokens</div>
+            <p style="font-size: 0.75rem; color: #9a3412; margin-top: 8px;">Earn 1 token automatically when your child misses a class. Tokens expire in 30 days.</p>
+            <div id="tokenBreakdown" class="token-breakdown"></div>
+          </div>
+          
+          <!-- Update Profile Section -->
+          <div style="border-top: 1px solid var(--border); padding-top: 15px; margin-top: 15px;">
+            <h4 style="font-family: 'Nunito', sans-serif; font-size: 1rem; font-weight: 800; margin-bottom: 10px;">Profile Settings</h4>
+            <div class="form-group" style="margin-bottom: 10px;">
+              <label class="form-label" style="font-size: 0.75rem;">Child's Date of Birth</label>
+              <input type="date" id="profileDob" class="form-input" style="padding: 8px; font-size: 0.85rem;">
+            </div>
+            <button class="btn btn-outline" style="width: 100%; padding: 6px; font-size: 0.8rem;" onclick="updateDob()">Update Date of Birth</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Area (Tabs) -->
+      <div>
+        <div class="card" style="padding: 20px;">
+          <div class="tabs">
+            <div class="tab active" onclick="switchTab('makeup', this)">Make-up Classes</div>
+            <div class="tab" onclick="switchTab('attendance', this)">Attendance</div>
+            <div class="tab" onclick="switchTab('fees', this)">Fees</div>
+            <div class="tab" onclick="switchTab('certificates', this)">Certificates</div>
+          </div>
+
+          <!-- Make-up Classes Tab -->
+          <div id="tab-makeup" class="tab-content active">
+            <h3 style="font-family: 'Nunito', sans-serif; font-weight: 800; margin-bottom: 15px;">Book a Make-up Class</h3>
+            
+            <div id="noTokensMsg" class="no-tokens-msg" style="display: none;">
+              You do not have any make-up tokens available. If your child misses a class, a token will be credited here automatically.
+            </div>
+
+            <div id="bookingSection" class="booking-section">
+              <div class="form-group">
+                <label class="form-label">Select Date for Make-up Class</label>
+                <input type="date" id="makeupDate" class="form-input" onchange="loadAvailableBatches()">
+              </div>
+              <div id="availableBatchesContainer">
+                <!-- Batches will be rendered here -->
+              </div>
+            </div>
+
+            <h3 style="font-family: 'Nunito', sans-serif; font-weight: 800; margin-top: 30px; margin-bottom: 15px;">Your Bookings</h3>
+            <div id="bookingsList"></div>
+          </div>
+
+          <!-- Attendance Tab -->
+          <div id="tab-attendance" class="tab-content">
+            <h3 style="font-family: 'Nunito', sans-serif; font-weight: 800; margin-bottom: 15px;">Recent Attendance</h3>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="attendanceTbody"></tbody>
+            </table>
+          </div>
+
+          <!-- Fees Tab -->
+          <div id="tab-fees" class="tab-content">
+            <h3 style="font-family: 'Nunito', sans-serif; font-weight: 800; margin-bottom: 15px;">Fee History</h3>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Month</th>
+                  <th>Status</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+              <tbody id="feesTbody"></tbody>
+            </table>
+          </div>
+
+          <!-- Certificates Tab -->
+          <div id="tab-certificates" class="tab-content">
+            <h3 style="font-family: 'Nunito', sans-serif; font-weight: 800; margin-bottom: 15px;">Completed Levels</h3>
+            <p style="color: var(--muted); font-size: 0.9rem; margin-bottom: 20px;">Download certificates for completed levels below.</p>
+            <div id="certificatesList"></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ─── CONFIG ──────────────────────────────────────────────────────────────
+  // Use the production backend URL
+  const API_BASE = 'https://backend.lilsculpr.com/api/portal';
+  // For local development, uncomment this line and comment the one above:
+ // const API_BASE = 'http://localhost:5000/api/portal';
+  
+  let globalStudentId = localStorage.getItem('lilsculpr_portal_sid');
+
+  // ─── UTILITY FUNCTIONS ──────────────────────────────────────────────────
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._hideTimer);
+    t._hideTimer = setTimeout(() => t.classList.remove('show'), 3500);
+  }
+
+  function formatDate(dateStr) {
+    if (!dateStr) return '—';
+    try {
+      return new Date(dateStr).toLocaleDateString('en-IN', {
+        weekday: 'short',
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric'
+      });
+    } catch {
+      return dateStr;
+    }
+  }
+
+  function formatDateTime(dateStr) {
+    if (!dateStr) return '—';
+    try {
+      return new Date(dateStr).toLocaleString('en-IN', {
+        weekday: 'short',
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    } catch {
+      return dateStr;
+    }
+  }
+
+  // ─── TAB SWITCHING ──────────────────────────────────────────────────────
+  function switchTab(tabId, clickedElement) {
+    // Remove active class from all tabs and content
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    
+    // Activate the clicked tab
+    if (clickedElement) {
+      clickedElement.classList.add('active');
+    } else {
+      // Fallback: find tab by data attribute or text
+      const tabs = document.querySelectorAll('.tab');
+      tabs.forEach(t => {
+        if (t.textContent.trim().toLowerCase().includes(tabId)) {
+          t.classList.add('active');
+        }
+      });
+    }
+    
+    // Show the corresponding content
+    const content = document.getElementById('tab-' + tabId);
+    if (content) {
+      content.classList.add('active');
+    }
+  }
+
+  // ─── LOGIN / LOGOUT ─────────────────────────────────────────────────────
+  async function handleLogin(e) {
+    e.preventDefault();
+    const btn = document.getElementById('loginBtn');
+    btn.textContent = 'Logging in...';
+    btn.disabled = true;
+    
+    const eid = document.getElementById('enrollmentId').value.trim();
+    const phone = document.getElementById('contactNumber').value.trim();
+
+    try {
+      const res = await fetch(`${API_BASE}/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ enrollmentId: eid, contact1: phone })
+      });
+      const data = await res.json();
+      
+      if (data.success) {
+        localStorage.setItem('lilsculpr_portal_sid', data.studentId);
+        globalStudentId = data.studentId;
+        loadDashboard();
+        showToast('✅ Login successful!');
+      } else {
+        showToast('❌ ' + (data.error || 'Login failed'));
+      }
+    } catch (err) {
+      console.error('Login error:', err);
+      showToast('❌ Server error. Please try again.');
+    }
+    btn.textContent = 'Login to Portal';
+    btn.disabled = false;
+  }
+
+  function logout() {
+    localStorage.removeItem('lilsculpr_portal_sid');
+    globalStudentId = null;
+    document.getElementById('loginView').classList.add('active');
+    document.getElementById('dashboardView').classList.remove('active');
+    document.getElementById('userHeader').style.display = 'none';
+    showToast('👋 Logged out successfully');
+  }
+
+  // ─── DASHBOARD LOADING ──────────────────────────────────────────────────
+  async function loadDashboard() {
+    if (!globalStudentId) {
+      logout();
+      return;
+    }
+
+    try {
+      const res = await fetch(`${API_BASE}/dashboard/${globalStudentId}`);
+      const data = await res.json();
+      
+      if (data.success) {
+        document.getElementById('loginView').classList.remove('active');
+        document.getElementById('dashboardView').classList.add('active');
+        document.getElementById('userHeader').style.display = 'flex';
+        
+        renderDashboard(data);
+      } else {
+        showToast('❌ Session expired. Please login again.');
+        logout();
+      }
+    } catch (err) {
+      console.error('Dashboard load error:', err);
+      showToast('❌ Error loading dashboard');
+      logout();
+    }
+  }
+
+  // ─── RENDER DASHBOARD ──────────────────────────────────────────────────
+  function renderDashboard(data) {
+    const s = data.student;
+    
+    // ── Header ──
+    document.getElementById('headerName').textContent = s.parentName || 'Parent';
+    
+    // ── Student Info ──
+    document.getElementById('childName').textContent = s.childName || '—';
+    document.getElementById('childDetails').textContent = 
+      `Age ${s.childAge || '—'} · ${s.classType === 'offline' ? '🏫 Offline' : '💻 Online'} Class`;
+    
+    const dayLabel = s.dayId === 'monfri' ? 'Mon & Fri' :
+                     s.dayId === 'tuethu' ? 'Tue & Thu' :
+                     s.dayId === 'satsu' ? 'Sat & Sun' : s.dayId;
+    document.getElementById('batchInfo').textContent = `${dayLabel} (${s.time || '—'})`;
+    
+    // ── Pre-fill DOB ──
+    if (s.dateOfBirth) {
+      try {
+        document.getElementById('profileDob').value = new Date(s.dateOfBirth).toISOString().split('T')[0];
+      } catch (e) {
+        console.error('Invalid dateOfBirth:', e);
+      }
+    }
+    
+    // ── Token Count (CRITICAL FIX) ──
+    // ✅ Using data.tokens.available (correct field from API)
+    const availableTokens = data.tokens?.available || 0;
+    document.getElementById('tokenCount').textContent = availableTokens;
+    
+    // ── Token Breakdown ──
+    const breakdown = document.getElementById('tokenBreakdown');
+    breakdown.innerHTML = `
+      <span class="available">✅ ${data.tokens?.available || 0} Available</span>
+      <span class="used">📚 ${data.tokens?.used || 0} Used</span>
+      <span class="expired">⏰ ${data.tokens?.expired || 0} Expired</span>
+    `;
+
+    // ── Booking Section ──
+    if (availableTokens > 0) {
+      document.getElementById('bookingSection').style.display = 'block';
+      document.getElementById('noTokensMsg').style.display = 'none';
+      
+      // Set min date to tomorrow
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      document.getElementById('makeupDate').min = tomorrow.toISOString().split('T')[0];
+      
+      // Auto-load batches if date is already set
+      const currentDate = document.getElementById('makeupDate').value;
+      if (currentDate) {
+        loadAvailableBatches();
+      }
+    } else {
+      document.getElementById('bookingSection').style.display = 'none';
+      document.getElementById('noTokensMsg').style.display = 'block';
+    }
+
+    // ── Bookings List ──
+    const bList = document.getElementById('bookingsList');
+    bList.innerHTML = '';
+    if (!data.compensations || data.compensations.length === 0) {
+      bList.innerHTML = '<p style="color:var(--muted); font-size:0.9rem;">No make-up classes booked yet.</p>';
+    } else {
+      data.compensations.forEach(c => {
+        let statusPill = `<span class="pill pill-yellow">Booked</span>`;
+        if (c.status === 'Attended') statusPill = `<span class="pill pill-green">Attended</span>`;
+        if (c.status === 'Missed') statusPill = `<span class="pill pill-red">Missed</span>`;
+        if (c.status === 'Booked') statusPill = `<span class="pill pill-yellow">Booked</span>`;
+
+        bList.innerHTML += `
+          <div class="batch-card">
+            <div class="batch-info">
+              <div style="font-weight:600; margin-bottom:4px;">${formatDate(c.date)}</div>
+              <div style="font-size:0.85rem; color:var(--muted);">
+                ${c.batchType === 'offline' ? '🏫 Offline' : '💻 Online'} · ${c.time || '—'}
+              </div>
+            </div>
+            <div>${statusPill}</div>
+          </div>
+        `;
+      });
+    }
+
+    // ── Attendance ──
+    const aTbody = document.getElementById('attendanceTbody');
+    aTbody.innerHTML = '';
+    if (!data.attendance || data.attendance.length === 0) {
+      aTbody.innerHTML = '<tr><td colspan="2" style="text-align:center; color:var(--muted);">No attendance records found.</td></tr>';
+    } else {
+      data.attendance.slice(0, 15).forEach(a => {
+        const p = a.status === 'P' 
+          ? `<span class="pill pill-green">Present</span>` 
+          : `<span class="pill pill-red">Absent</span>`;
+        aTbody.innerHTML += `<tr><td>${formatDate(a.date)}</td><td>${p}</td></tr>`;
+      });
+    }
+
+    // ── Fees ──
+    const fTbody = document.getElementById('feesTbody');
+    fTbody.innerHTML = '';
+    if (!data.fees || data.fees.length === 0) {
+      fTbody.innerHTML = '<tr><td colspan="3" style="text-align:center; color:var(--muted);">No fee records found.</td></tr>';
+    } else {
+      data.fees.forEach(f => {
+        const p = f.status === 'Paid' 
+          ? `<span class="pill pill-green">Paid</span>` 
+          : `<span class="pill pill-yellow">Pending</span>`;
+        fTbody.innerHTML += `<tr>
+          <td><strong>${f.month || '—'} ${f.year || ''}</strong></td>
+          <td>${p}</td>
+          <td>₹${(f.amount || 0).toLocaleString('en-IN')}</td>
+        </tr>`;
+      });
+    }
+
+    // ── Certificates ──
+    const cList = document.getElementById('certificatesList');
+    cList.innerHTML = '';
+    const levelHistory = s.levelHistory || [];
+    
+    if (levelHistory.length === 0) {
+      cList.innerHTML = `
+        <div class="certificate-item">
+          <div class="cert-info">
+            <div style="font-weight:600; margin-bottom:4px;">Currently at Level ${s.currentLevel || 1}</div>
+            <div style="font-size:0.85rem; color:var(--muted);">Complete Level ${s.currentLevel || 1} to earn your first certificate!</div>
+          </div>
+        </div>
+      `;
+    } else {
+      levelHistory.forEach(h => {
+        const completedDate = h.completedDate ? formatDate(h.completedDate) : '';
+        cList.innerHTML += `
+          <div class="certificate-item">
+            <div class="cert-info">
+              <div style="font-weight:600; margin-bottom:4px;">Level ${h.level} Completion ✅</div>
+              <div style="font-size:0.85rem; color:var(--muted);">Completed on ${completedDate}</div>
+            </div>
+            <button class="btn btn-outline" style="padding: 6px 12px; font-size: 0.8rem;" 
+                    onclick="window.open('/certificate.html?sid=${s._id}&level=${h.level}', '_blank')">
+              Download
+            </button>
+          </div>
+        `;
+      });
+    }
+  }
+
+  // ─── AVAILABLE BATCHES ──────────────────────────────────────────────────
+  async function loadAvailableBatches() {
+    const date = document.getElementById('makeupDate').value;
+    if (!date) {
+      document.getElementById('availableBatchesContainer').innerHTML = 
+        '<p style="color:var(--muted); font-size:0.9rem;">Please select a date first.</p>';
+      return;
+    }
+
+    document.getElementById('availableBatchesContainer').innerHTML = 
+      '<p style="color:var(--muted); font-size:0.9rem;">⏳ Loading available slots...</p>';
+    
+    try {
+      const res = await fetch(`${API_BASE}/available-batches`);
+      const data = await res.json();
+      
+      if (data.success) {
+        let html = '';
+        if (!data.availableSlots || data.availableSlots.length === 0) {
+          html = '<p style="color:var(--muted); font-size:0.9rem;">No open slots available for this day.</p>';
+        } else {
+          data.availableSlots.forEach(slot => {
+            const dayLabel = slot.dayLabel || slot.dayId || '—';
+            html += `
+              <div class="batch-card">
+                <div class="batch-info">
+                  <div style="font-weight:600; margin-bottom:4px;">⏰ ${slot.time || '—'}</div>
+                  <div style="font-size:0.85rem; color:var(--muted);">
+                    ${slot.type === 'offline' ? '🏫 Offline' : '💻 Online'} · ${dayLabel}
+                    · <span style="color: var(--green, #22c55e); font-weight: 600;">Open</span>
+                  </div>
+                </div>
+                <button class="btn btn-primary" style="padding: 6px 12px; font-size: 0.8rem;" 
+                        onclick="bookClass('${date}', '${slot.type}', '${slot.dayId}', '${slot.time}')">
+                  Book Slot
+                </button>
+              </div>
+            `;
+          });
+        }
+        document.getElementById('availableBatchesContainer').innerHTML = html;
+      } else {
+        document.getElementById('availableBatchesContainer').innerHTML = 
+          '<p style="color:var(--red); font-size:0.9rem;">Failed to load available slots.</p>';
+      }
+    } catch (err) {
+      console.error('Load batches error:', err);
+      document.getElementById('availableBatchesContainer').innerHTML = 
+        '<p style="color:var(--red); font-size:0.9rem;">Failed to load available slots. Please try again.</p>';
+    }
+  }
+
+  // ─── BOOK MAKE-UP CLASS ─────────────────────────────────────────────────
+  async function bookClass(date, batchType, dayId, time) {
+    if (!globalStudentId) {
+      showToast('❌ Please login first.');
+      return;
+    }
+    
+    if (!confirm(`Book Make-up class for ${formatDate(date)} at ${time}? This will use 1 Token.`)) {
+      return;
+    }
+
+    try {
+      const res = await fetch(`${API_BASE}/book-compensation`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          studentId: globalStudentId, 
+          date, 
+          batchType, 
+          dayId, 
+          time 
+        })
+      });
+      const data = await res.json();
+      
+      if (data.success) {
+        showToast('✅ Make-up class booked successfully!');
+        document.getElementById('makeupDate').value = '';
+        document.getElementById('availableBatchesContainer').innerHTML = '';
+        // Refresh dashboard after a short delay
+        setTimeout(loadDashboard, 500);
+      } else {
+        showToast('❌ ' + (data.error || 'Failed to book class'));
+      }
+    } catch (err) {
+      console.error('Booking error:', err);
+      showToast('❌ Server error during booking');
+    }
+  }
+
+  // ─── UPDATE DOB ─────────────────────────────────────────────────────────
+  async function updateDob() {
+    if (!globalStudentId) return;
+    const dobInput = document.getElementById('profileDob').value;
+    if (!dobInput) {
+      showToast('❌ Please select a date.');
+      return;
+    }
+
+    try {
+      const res = await fetch(`${API_BASE}/update-dob/${globalStudentId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ dateOfBirth: dobInput })
+      });
+      const data = await res.json();
+      if (data.success) {
+        showToast('✅ Date of birth updated successfully!');
+        loadDashboard(); // reload to show updated age
+      } else {
+        showToast('❌ ' + (data.error || 'Update failed'));
+      }
+    } catch (err) {
+      console.error('Update DOB error:', err);
+      showToast('❌ Server error during update');
+    }
+  }
+
+  // ─── INIT ──────────────────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', () => {
+    // Check if user is already logged in
+    if (globalStudentId) {
+      loadDashboard();
+    } else {
+      document.getElementById('loginView').classList.add('active');
+    }
+    
+    // Set default date for makeup
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    document.getElementById('makeupDate').min = tomorrow.toISOString().split('T')[0];
+  });
+</script>
+</body>
+</html>

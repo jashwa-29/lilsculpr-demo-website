@@ -1,7 +1,7 @@
 (function($) {
     "use strict";
   const BACKEND_API = 'https://backend.lilsculpr.com/api/enrollment';
-    // const BACKEND_API = 'http://localhost:5000/api/enrollment';
+   // const BACKEND_API = 'http://localhost:5000/api/enrollment';
     
     // UI elements
     const form = '#admissionForm';
@@ -170,7 +170,7 @@
         }
 
         valid = req('childName', 'e-childName') && valid;
-        valid = req('childAge', 'e-childAge') && valid;
+        valid = req('childDob', 'e-childDob') && valid;
         valid = req('childClass', 'e-childClass') && valid;
         valid = req('schoolName', 'e-schoolName') && valid;
         valid = req('parentName', 'e-parentName') && valid;
@@ -237,7 +237,8 @@
                         formData.append("razorpayPaymentId", response.razorpay_payment_id);
                         formData.append("razorpaySignature", response.razorpay_signature);
                         formData.append("childName", $('#childName').val().trim());
-                        formData.append("childAge", $('#childAge').val());
+                        formData.append("childAge", $('#childDob').val());
+                        formData.append("dateOfBirth", $('#childDob').val());
                         formData.append("childClass", $('#childClass').val());
                         formData.append("schoolName", $('#schoolName').val().trim());
                         formData.append("parentName", $('#parentName').val().trim());
