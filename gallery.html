@@ -1191,7 +1191,7 @@ src="https://www.facebook.com/tr?id=886450287373984&ev=PageView&noscript=1"
       try {
         const response = await fetch(API_BASE);
         if (!response.ok) {
-          throw new Error(\`HTTP error! status: \${response.status}\`);
+          throw new Error('HTTP error! status: ' + response.status);
         }
         const data = await response.json();
 
