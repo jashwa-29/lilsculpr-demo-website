@@ -390,6 +390,18 @@ src="https://www.facebook.com/tr?id=886450287373984&ev=PageView&noscript=1"
         </div>
         <!--======== / Breadcrumb ========-->
 
+        <!--======== Category Filter Bar ========-->
+        <section class="category-filter-section" style="background: #f8f4ff; padding: 30px 0 0 0;">
+            <div class="container">
+                <div class="category-filter-wrapper" id="categoryFilterContainer" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; padding: 20px 0; border-bottom: 2px solid rgba(156, 41, 178, 0.1);">
+                    <button class="filter-btn active" data-category="all" style="padding: 10px 24px; border-radius: 50px; border: 2px solid #9C29B2; background: #9C29B2; color: white; font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: all 0.3s ease; font-family: 'Catamaran', sans-serif;">
+                        📷 All
+                        <span class="count" style="background: rgba(255,255,255,0.2); padding: 2px 10px; border-radius: 20px; margin-left: 8px; font-size: 0.8rem;">0</span>
+                    </button>
+                    <!-- Categories will be injected by JavaScript -->
+                </div>
+            </div>
+        </section>
         <!--======== Gallery Section ========-->
         <section style="background: white; position: relative; padding: 60px 0;">
             <div class="container">
@@ -1155,6 +1167,10 @@ src="https://www.facebook.com/tr?id=886450287373984&ev=PageView&noscript=1"
         '</a>' +
         '</div>' +
         '</div>' +
+        '<div class="gallery-card-caption p-3 text-center bg-white border-t border-gray-100" style="border-radius: 0 0 10px 10px;">' +
+        '<h4 class="text-sm font-bold" style="font-size: 1.1rem; color: #333; margin-bottom: 5px;">' + title + '</h4>' +
+        '<p class="text-xs text-muted" style="font-size: 0.9rem; color: #666; margin: 0;">' + description + '</p>' +
+        '</div>' +
         '</div>' +
         '</div>';
     }
@@ -1186,14 +1202,20 @@ src="https://www.facebook.com/tr?id=886450287373984&ev=PageView&noscript=1"
     }
 
     // Fetch and render gallery items
-    async function loadGallery() {
+    async function loadGallery(category = 'all') {
       showLoading();
       try {
-        const response = await fetch(API_BASE);
+        const url = category === 'all' ? API_BASE : API_BASE + '?category=' + encodeURIComponent(category);
+        const response = await fetch(url);
         if (!response.ok) {
           throw new Error('HTTP error! status: ' + response.status);
         }
         const data = await response.json();
+
+        // Render categories if provided
+        if (data.categories) {
+           renderCategories(data.categories, category);
+        }
 
         if (data.success && data.data && data.data.length > 0) {
           // Sort items by displayOrder, then by createdAt (newest first)
@@ -1208,26 +1230,33 @@ src="https://www.facebook.com/tr?id=886450287373984&ev=PageView&noscript=1"
           const cardsHtml = items.map(item => createGalleryCard(item)).join('');
           container.innerHTML = cardsHtml;
 
-          // Re-initialize Magnific Popup for the new images
-          if (typeof window.$ !== 'undefined' && typeof window.$.fn.magnificPopup !== 'undefined') {
-            window.$('.popup-image').magnificPopup({
-              type: 'image',
-              gallery: {
-                enabled: true,
-                navigateByImgClick: true,
-                preload: [0, 1]
-              },
-              mainClass: 'mfp-with-zoom',
-              zoom: {
-                enabled: true,
-                duration: 300,
-                easing: 'ease-in-out',
-                opener: function(openerElement) {
-                  return openerElement.is('img') ? openerElement : openerElement.find('img');
+          // Initialize Magnific Popup with polling to ensure jQuery is loaded
+          const initPopup = () => {
+            if (typeof window.$ !== 'undefined' && typeof window.$.fn.magnificPopup !== 'undefined') {
+              window.$('#galleryContainer').magnificPopup({
+                delegate: '.popup-image', // Use delegation for dynamic content
+                type: 'image',
+                gallery: {
+                  enabled: true,
+                  navigateByImgClick: true,
+                  preload: [0, 1]
+                },
+                mainClass: 'mfp-with-zoom',
+                zoom: {
+                  enabled: true,
+                  duration: 300,
+                  easing: 'ease-in-out',
+                  opener: function(openerElement) {
+                    // The opener is the <a> tag. Find the sibling img inside the card.
+                    return openerElement.closest('.gallery-card-img').find('img');
+                  }
                 }
-              }
-            });
-          }
+              });
+            } else {
+              setTimeout(initPopup, 100); // Check again in 100ms
+            }
+          };
+          initPopup();
         } else {
           showEmpty();
         }
@@ -1237,10 +1266,46 @@ src="https://www.facebook.com/tr?id=886450287373984&ev=PageView&noscript=1"
       }
     }
 
+    function renderCategories(counts, activeCategory) {
+        const filterContainer = document.getElementById('categoryFilterContainer');
+        if (!filterContainer) return;
+        
+        let totalCount = 0;
+        for (const data of Object.values(counts)) {
+            totalCount += data.count;
+        }
+
+        let html = '<button class="filter-btn ' + (activeCategory === 'all' ? 'active' : '') + '" data-category="all" style="padding: 10px 24px; border-radius: 50px; border: 2px solid #9C29B2; background: ' + (activeCategory === 'all' ? '#9C29B2' : 'transparent') + '; color: ' + (activeCategory === 'all' ? 'white' : '#9C29B2') + '; font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: all 0.3s ease; font-family: \'Catamaran\', sans-serif;">' +
+                   '📷 All <span class="count" style="background: ' + (activeCategory === 'all' ? 'rgba(255,255,255,0.2)' : 'rgba(156,41,178,0.1)') + '; padding: 2px 10px; border-radius: 20px; margin-left: 8px; font-size: 0.8rem;">' + totalCount + '</span></button>';
+
+        for (const [category, data] of Object.entries(counts)) {
+            if (data.count > 0) {
+                const isActive = category === activeCategory;
+                const icon = data.icon || '✨';
+                html += '<button class="filter-btn ' + (isActive ? 'active' : '') + '" data-category="' + category + '" style="padding: 10px 24px; border-radius: 50px; border: 2px solid #9C29B2; background: ' + (isActive ? '#9C29B2' : 'transparent') + '; color: ' + (isActive ? 'white' : '#9C29B2') + '; font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: all 0.3s ease; font-family: \'Catamaran\', sans-serif;">' +
+                        icon + ' ' + category + ' <span class="count" style="background: ' + (isActive ? 'rgba(255,255,255,0.2)' : 'rgba(156,41,178,0.1)') + '; padding: 2px 10px; border-radius: 20px; margin-left: 8px; font-size: 0.8rem;">' + data.count + '</span></button>';
+            }
+        }
+        
+        filterContainer.innerHTML = html;
+        
+        // Add click events to new buttons
+        const buttons = filterContainer.querySelectorAll('.filter-btn');
+        buttons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const cat = this.getAttribute('data-category');
+                if (cat !== activeCategory) {
+                    loadGallery(cat);
+                }
+            });
+        });
+    }
+
     // Start loading the gallery
     loadGallery();
   });
 </script>
+
 
     <!-- Tracking Scripts (Throttled for Performance) -->
     <script>
