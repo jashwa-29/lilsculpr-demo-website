@@ -40,12 +40,13 @@
         }
     }
 
-    async function createOrderOnBackend(classType, kitOptIn) {
+    async function createOrderOnBackend(classType, kitOptIn, batchId) {
         try {
-            console.log(`📦 Creating order...`);
+            console.log(`📦 Creating order for batch: ${batchId}...`);
             const response = await axios.post(`${BACKEND_API}/create-order`, {
                 classType: classType,
-                kitOptIn: kitOptIn
+                kitOptIn: kitOptIn,
+                batchId: batchId // ← Send batchId to backend for validation
             });
             if (response.data.success) {
                 console.log('✅ Order created successfully:', response.data.order.id);
@@ -242,8 +243,8 @@
         try {
             const kitOptIn = $('#kitOptIn').is(':checked');
             
-            // 1. Create Order
-            const { order, amount, key_id } = await createOrderOnBackend(selectedSlot.type, kitOptIn);
+            // 1. Create Order — passing batchId so backend validates capacity
+            const { order, amount, key_id } = await createOrderOnBackend(selectedSlot.type, kitOptIn, selectedSlot.batchId);
             
             // 2. Initialize Payment — key is provided by backend, never hardcoded in frontend
             const options = {
