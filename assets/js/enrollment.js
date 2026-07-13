@@ -1,6 +1,8 @@
 (function($) {
     "use strict";
-  const BACKEND_API = 'https://backend.lilsculpr.com/api/enrollment';
+  const BACKEND_BASE = 'https://backend.lilsculpr.com/api';
+  const BACKEND_API = `${BACKEND_BASE}/enrollment`;
+   // const BACKEND_BASE = 'http://localhost:5000/api';
    // const BACKEND_API = 'http://localhost:5000/api/enrollment';
     
     // UI elements
@@ -9,8 +11,8 @@
 
     /* ── DATA LAYER ── */
     let MAX_PER_SLOT = 8;
-    let BATCHES = {};
-    let SLOT_COUNTS = {};
+    // Raw batch documents from DB, keyed by type
+    let BATCHES_BY_TYPE = { offline: [], online: [] };
 
     function slotKey(type, dayId, time) {
         return `${type}|${dayId}|${time}`;
@@ -21,21 +23,20 @@
     let selectedSlot = null;
 
     // ==================== API FUNCTIONS ====================
-    async function fetchStudentsAndBatches() {
+    async function fetchBatchesFromDB() {
         try {
-            console.log('🔄 Fetching config data...');
-            const batchesRes = await axios.get(`${BACKEND_API}/batches`);
+            console.log('🔄 Fetching batches from database...');
+            const response = await axios.get(`${BACKEND_BASE}/batches`);
             
-            if (batchesRes.data.success) {
-                BATCHES = batchesRes.data.batches;
-                SLOT_COUNTS = batchesRes.data.slotCounts || {};
-                if (batchesRes.data.maxPerSlot) {
-                    MAX_PER_SLOT = batchesRes.data.maxPerSlot;
-                }
-                console.log('✅ Batches config and dynamic capacities fetched successfully');
+            if (response.data.success && response.data.batches) {
+                const allBatches = response.data.batches;
+                // Group by type
+                BATCHES_BY_TYPE.offline = allBatches.filter(b => b.type === 'offline' && b.status === 'active');
+                BATCHES_BY_TYPE.online  = allBatches.filter(b => b.type === 'online'  && b.status === 'active');
+                console.log(`✅ Loaded ${allBatches.length} batches from database`);
             }
         } catch (error) {
-            console.error('❌ Failed to fetch config:', error);
+            console.error('❌ Failed to fetch batches:', error);
         }
     }
 
@@ -82,52 +83,77 @@
     }
 
     // ==================== UI FUNCTIONS ====================
-    function seatsLeft(type, dayId, time) {
-        const key = slotKey(type, dayId, time);
-        const used = SLOT_COUNTS[key] || 0;
-        return Math.max(0, MAX_PER_SLOT - used);
+    // Compute available seats for a batch document
+    function seatsLeft(batch) {
+        const enrolled = batch.enrolledStudents ? batch.enrolledStudents.length : 0;
+        return Math.max(0, (batch.capacity || MAX_PER_SLOT) - enrolled);
     }
 
+    // Day label map
+    const DAY_LABELS = {
+        monfri:  '📅 Monday & Friday',
+        tuethu:  '📅 Tuesday & Thursday',
+        satsu:   '📅 Saturday & Sunday'
+    };
+
     async function buildAllSlots() {
-        await fetchStudentsAndBatches();
-        
-        if (Object.keys(BATCHES).length === 0) return;
-        
+        await fetchBatchesFromDB();
+
         ['offline', 'online'].forEach(type => {
             const container = $(`#slots-${type}`);
             if (!container.length) return;
-            
             container.empty();
-            BATCHES[type].days.forEach(day => {
+
+            const batches = BATCHES_BY_TYPE[type];
+            if (!batches.length) {
+                container.html('<p style="color:var(--muted);font-size:0.85rem;">No available slots at the moment. Please check back soon.</p>');
+                return;
+            }
+
+            // Group batches by dayId
+            const grouped = {};
+            batches.forEach(batch => {
+                if (!grouped[batch.dayId]) grouped[batch.dayId] = [];
+                grouped[batch.dayId].push(batch);
+            });
+
+            // Render each day group
+            ['monfri', 'tuethu', 'satsu'].forEach(dayId => {
+                const dayBatches = grouped[dayId];
+                if (!dayBatches || !dayBatches.length) return;
+
                 const grp = $('<div class="batch-group"></div>');
-                grp.append(`<h4>📅 ${day.label}</h4><div class="batch-slots" id="bs-${type}-${day.id}"></div>`);
+                grp.append(`<h4>${DAY_LABELS[dayId] || dayId}</h4><div class="batch-slots" id="bs-${type}-${dayId}"></div>`);
                 container.append(grp);
-                
+
                 const wrap = grp.find('.batch-slots');
-                day.slots.forEach(time => {
-                    const left = seatsLeft(type, day.id, time);
+
+                dayBatches.forEach(batch => {
+                    const left = seatsLeft(batch);
                     const full = left === 0;
-                    const few = left <= 2 && left > 0;
-                    const seatClass = full ? "seats-full" : few ? "seats-few" : "seats-ok";
-                    const seatText = full ? "Full" : left === 1 ? "1 seat left" : `${left} seats left`;
-                    
+                    const few  = left <= 2 && left > 0;
+                    const seatClass = full ? 'seats-full' : few ? 'seats-few' : 'seats-ok';
+                    const seatText  = full ? 'Full' : left === 1 ? '1 seat left' : `${left} seats left`;
+
                     const btn = $('<div></div>').addClass(`slot-btn ${full ? 'full' : ''}`)
                         .attr({
-                            'data-type': type,
-                            'data-day': day.id,
-                            'data-time': time
+                            'data-type':   type,
+                            'data-day':    batch.dayId,
+                            'data-time':   batch.time,
+                            'data-batchid': batch._id
                         })
-                        .html(`<span class="time">⏰ ${time}</span><span class="seats ${seatClass}">${seatText}</span>`);
-                    
+                        .html(`<span class="time">⏰ ${batch.time}</span><span class="seats ${seatClass}">${seatText}</span>`);
+
                     if (!full) {
                         btn.on('click', function() {
                             $('.slot-btn').removeClass('selected');
                             $(this).addClass('selected');
                             selectedSlot = {
                                 type,
-                                dayId: day.id,
-                                time,
-                                key: slotKey(type, day.id, time)
+                                dayId: batch.dayId,
+                                time:  batch.time,
+                                batchId: batch._id,
+                                key:   slotKey(type, batch.dayId, batch.time)
                             };
                         });
                     }
@@ -249,9 +275,11 @@
                         formData.append("dayId", selectedSlot.dayId);
                         formData.append("time", selectedSlot.time);
                         formData.append("slotKey", selectedSlot.key);
+                        formData.append("batchId", selectedSlot.batchId || '');
                         formData.append("kitOptIn", kitOptIn);
                         formData.append("amountPaid", amount);
                         formData.append("photo", $('#photoInput')[0].files[0]);
+
 
                         const result = await submitEnrollment(formData);
                         
