@@ -1147,7 +1147,7 @@ src="https://www.facebook.com/tr?id=886450287373984&ev=PageView&noscript=1"
 
       return `
         <div class="col-xl-3 col-lg-4 col-sm-6">
-          <div class="gallery-card-elegant wow fadeInUp" data-wow-delay="0.1s">
+          <div class="gallery-card-elegant">
             <div class="gallery-card-img">
               <img src="${imgSrc}" alt="${title}" loading="lazy">
               <div class="gallery-card-overlay">
@@ -1225,8 +1225,8 @@ src="https://www.facebook.com/tr?id=886450287373984&ev=PageView&noscript=1"
           container.innerHTML = cardsHtml;
 
           // Re-initialize Magnific Popup for the new images
-          if (typeof $.fn.magnificPopup !== 'undefined') {
-            $('.popup-image').magnificPopup({
+          if (typeof window.$ !== 'undefined' && typeof window.$.fn.magnificPopup !== 'undefined') {
+            window.$('.popup-image').magnificPopup({
               type: 'image',
               gallery: {
                 enabled: true,
