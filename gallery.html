@@ -1271,19 +1271,28 @@ src="https://www.facebook.com/tr?id=886450287373984&ev=PageView&noscript=1"
         if (!filterContainer) return;
         
         let totalCount = 0;
-        for (const data of Object.values(counts)) {
-            totalCount += data.count;
+        for (const count of Object.values(counts)) {
+            totalCount += count;
         }
 
         let html = '<button class="filter-btn ' + (activeCategory === 'all' ? 'active' : '') + '" data-category="all" style="padding: 10px 24px; border-radius: 50px; border: 2px solid #9C29B2; background: ' + (activeCategory === 'all' ? '#9C29B2' : 'transparent') + '; color: ' + (activeCategory === 'all' ? 'white' : '#9C29B2') + '; font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: all 0.3s ease; font-family: \'Catamaran\', sans-serif;">' +
                    '📷 All <span class="count" style="background: ' + (activeCategory === 'all' ? 'rgba(255,255,255,0.2)' : 'rgba(156,41,178,0.1)') + '; padding: 2px 10px; border-radius: 20px; margin-left: 8px; font-size: 0.8rem;">' + totalCount + '</span></button>';
 
-        for (const [category, data] of Object.entries(counts)) {
-            if (data.count > 0) {
+        const icons = {
+            'Miniature Food': '🍔',
+            'Animals & Characters': '🦒',
+            'Clay Sculptures': '🏺',
+            'Decorative Art': '🎨',
+            'Class Activities': '👨‍🎨',
+            'Other': '✨'
+        };
+
+        for (const [category, count] of Object.entries(counts)) {
+            if (count > 0) {
                 const isActive = category === activeCategory;
-                const icon = data.icon || '✨';
+                const icon = icons[category] || '✨';
                 html += '<button class="filter-btn ' + (isActive ? 'active' : '') + '" data-category="' + category + '" style="padding: 10px 24px; border-radius: 50px; border: 2px solid #9C29B2; background: ' + (isActive ? '#9C29B2' : 'transparent') + '; color: ' + (isActive ? 'white' : '#9C29B2') + '; font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: all 0.3s ease; font-family: \'Catamaran\', sans-serif;">' +
-                        icon + ' ' + category + ' <span class="count" style="background: ' + (isActive ? 'rgba(255,255,255,0.2)' : 'rgba(156,41,178,0.1)') + '; padding: 2px 10px; border-radius: 20px; margin-left: 8px; font-size: 0.8rem;">' + data.count + '</span></button>';
+                        icon + ' ' + category + ' <span class="count" style="background: ' + (isActive ? 'rgba(255,255,255,0.2)' : 'rgba(156,41,178,0.1)') + '; padding: 2px 10px; border-radius: 20px; margin-left: 8px; font-size: 0.8rem;">' + count + '</span></button>';
             }
         }
         
