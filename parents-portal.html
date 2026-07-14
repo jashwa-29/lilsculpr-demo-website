@@ -436,11 +436,15 @@
           <div id="tab-makeup" class="tab-content active">
             <h3 style="font-family: 'Nunito', sans-serif; font-weight: 800; margin-bottom: 15px;">Book a Make-up Class</h3>
             
-            <div id="noTokensMsg" class="no-tokens-msg" style="display: none;">
-              You do not have any make-up tokens available. If your child misses a class, a token will be credited here automatically.
+            <div id="noTokensMsg" class="no-tokens-msg" style="display: none; background: #e0f2fe; border-color: #bae6fd; color: #0369a1;">
+              You can submit a request for a make-up class. An admin will review and approve it based on availability.
             </div>
 
-            <div id="bookingSection" class="booking-section">
+            <div id="bookingSection" class="booking-section" style="display: block;">
+              <div class="form-group">
+                <label class="form-label">Reason for Make-up Class</label>
+                <input type="text" id="makeupReason" class="form-input" placeholder="e.g., Sick leave, Travel" required>
+              </div>
               <div class="form-group">
                 <label class="form-label">Select Date for Make-up Class</label>
                 <input type="date" id="makeupDate" class="form-input" onchange="loadAvailableBatches()">
@@ -680,25 +684,23 @@
       <span class="expired">⏰ ${data.tokens?.expired || 0} Expired</span>
     `;
 
-    // ── Booking Section ──
-    if (availableTokens > 0) {
-      document.getElementById('bookingSection').style.display = 'block';
-      document.getElementById('noTokensMsg').style.display = 'none';
-      
-      // Set min date to tomorrow
-      const tomorrow = new Date();
-      tomorrow.setDate(tomorrow.getDate() + 1);
-      document.getElementById('makeupDate').min = tomorrow.toISOString().split('T')[0];
-      
-      // Auto-load batches if date is already set
-      const currentDate = document.getElementById('makeupDate').value;
-      if (currentDate) {
-        loadAvailableBatches();
-      }
-    } else {
-      document.getElementById('bookingSection').style.display = 'none';
-      document.getElementById('noTokensMsg').style.display = 'block';
+    // ── Booking Section (Always show for request system) ──
+    document.getElementById('bookingSection').style.display = 'block';
+    document.getElementById('noTokensMsg').style.display = 'block';
+    
+    // Set min date to tomorrow
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    document.getElementById('makeupDate').min = tomorrow.toISOString().split('T')[0];
+    
+    // Auto-load batches if date is already set
+    const currentDate = document.getElementById('makeupDate').value;
+    if (currentDate) {
+      loadAvailableBatches();
     }
+    
+    // Also fetch pending requests and prepend them to the booking list
+    loadCompensationRequests(globalStudentId);
 
     // ── Bookings List ──
     const bList = document.getElementById('bookingsList');
@@ -824,8 +826,8 @@
                   </div>
                 </div>
                 <button class="btn btn-primary" style="padding: 6px 12px; font-size: 0.8rem;" 
-                        onclick="bookClass('${date}', '${slot.type}', '${slot.dayId}', '${slot.time}')">
-                  Book Slot
+                        onclick="submitCompensationRequest('${date}', '${slot.type}', '${slot.dayId}', '${slot.time}')">
+                  Request Slot
                 </button>
               </div>
             `;
@@ -843,43 +845,100 @@
     }
   }
 
-  // ─── BOOK MAKE-UP CLASS ─────────────────────────────────────────────────
-  async function bookClass(date, batchType, dayId, time) {
+  // ─── SUBMIT COMPENSATION REQUEST ───────────────────────────────────────
+  async function submitCompensationRequest(date, batchType, dayId, time) {
     if (!globalStudentId) {
       showToast('❌ Please login first.');
       return;
     }
     
-    if (!confirm(`Book Make-up class for ${formatDate(date)} at ${time}? This will use 1 Token.`)) {
+    const reason = document.getElementById('makeupReason').value.trim();
+    if (!reason) {
+      showToast('❌ Please enter a reason for the make-up class.');
+      document.getElementById('makeupReason').focus();
       return;
     }
 
+    if (!confirm(`Submit request for a Make-up class on ${formatDate(date)} at ${time}?`)) {
+      return;
+    }
+
+    // Since we're using /api/portal for the dashboard, let's submit to the new endpoint
+    // Actually the new endpoint is mounted at /api/compensation-requests
+    const requestApiUrl = API_BASE.replace('/portal', '/compensation-requests');
+
     try {
-      const res = await fetch(`${API_BASE}/book-compensation`, {
+      const res = await fetch(requestApiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
           studentId: globalStudentId, 
-          date, 
-          batchType, 
-          dayId, 
-          time 
+          requestedDate: date, 
+          requestedBatchType: batchType, 
+          requestedDayId: dayId, 
+          requestedTime: time,
+          reason
         })
       });
       const data = await res.json();
       
       if (data.success) {
-        showToast('✅ Make-up class booked successfully!');
+        showToast('✅ Request submitted successfully!');
         document.getElementById('makeupDate').value = '';
+        document.getElementById('makeupReason').value = '';
         document.getElementById('availableBatchesContainer').innerHTML = '';
         // Refresh dashboard after a short delay
         setTimeout(loadDashboard, 500);
       } else {
-        showToast('❌ ' + (data.error || 'Failed to book class'));
+        showToast('❌ ' + (data.error || 'Failed to submit request'));
       }
     } catch (err) {
-      console.error('Booking error:', err);
-      showToast('❌ Server error during booking');
+      console.error('Request error:', err);
+      showToast('❌ Server error during submission');
+    }
+  }
+
+  // ─── LOAD COMPENSATION REQUESTS ────────────────────────────────────────
+  async function loadCompensationRequests(studentId) {
+    const requestApiUrl = API_BASE.replace('/portal', `/compensation-requests/student/${studentId}`);
+    try {
+      const res = await fetch(requestApiUrl);
+      const data = await res.json();
+      
+      if (data.success && data.data && data.data.length > 0) {
+        const bList = document.getElementById('bookingsList');
+        
+        // We will filter out 'accepted' since those become standard bookings and appear in the dashboard compensations array
+        const activeRequests = data.data.filter(r => r.status === 'pending' || r.status === 'rejected');
+        
+        let html = '';
+        activeRequests.forEach(req => {
+          const isPending = req.status === 'pending';
+          const statusPill = isPending 
+            ? '<span class="pill pill-yellow">Pending Review</span>'
+            : '<span class="pill pill-red">Rejected</span>';
+            
+          html += `
+            <div class="batch-card" style="background-color: ${isPending ? '#fffbeb' : '#fef2f2'}; border-color: ${isPending ? '#fef08a' : '#fecaca'}">
+              <div class="batch-info">
+                <div style="font-weight:600; margin-bottom:4px;">Requested: ${formatDate(req.requestedDate)}</div>
+                <div style="font-size:0.85rem; color:var(--muted);">
+                  ${req.requestedBatchType === 'offline' ? '🏫 Offline' : '💻 Online'} · ${req.requestedTime || '—'}
+                </div>
+                ${req.rejectionReason ? `<div style="font-size:0.8rem; color:#991b1b; margin-top:4px;">Reason: ${req.rejectionReason}</div>` : ''}
+              </div>
+              <div>${statusPill}</div>
+            </div>
+          `;
+        });
+        
+        // Prepend requests to the booking list
+        if (html) {
+          bList.innerHTML = html + bList.innerHTML;
+        }
+      }
+    } catch(err) {
+      console.error('Failed to load compensation requests:', err);
     }
   }
 
