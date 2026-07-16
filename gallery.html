@@ -91,15 +91,296 @@
   .vs-hero-wrapper .slick-track { min-height: 800px !important; }
   @media (max-width: 991px) { .vs-hero-wrapper .slick-list { min-height: 600px !important; } .vs-hero-wrapper .slick-track { min-height: 600px !important; } }
   @media (max-width: 767px) { .vs-hero-wrapper .slick-list { min-height: 500px !important; } .vs-hero-wrapper .slick-track { min-height: 500px !important; } }
+  
+  /* Gallery styles */
+  .gallery-grid { margin: 0 -10px; }
+  .gallery-grid > [class*='col-'] { padding: 0 10px; margin-bottom: 20px; }
+  .gallery-card-elegant {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    background: #fff;
+    cursor: pointer;
+  }
+  .gallery-card-elegant:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 35px rgba(156, 41, 178, 0.15);
+  }
+  .gallery-card-img {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background: #f5f5f5;
+  }
+  .gallery-card-img::before {
+    content: '';
+    display: block;
+    padding-top: 75%;
+  }
+  .gallery-card-img img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .gallery-card-elegant:hover .gallery-card-img img {
+    transform: scale(1.08);
+  }
+  .gallery-card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(156, 41, 178, 0.88), rgba(184, 77, 209, 0.88));
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+  }
+  .gallery-card-elegant:hover .gallery-card-overlay {
+    opacity: 1;
+  }
+  .gallery-zoom-icon {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--theme-color);
+    font-size: 22px;
+    transform: scale(0) rotate(-180deg);
+    transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    text-decoration: none;
+    pointer-events: none;
+  }
+  .gallery-card-elegant:hover .gallery-zoom-icon {
+    transform: scale(1) rotate(0deg);
+  }
+  .gallery-card-caption {
+    padding: 16px 14px;
+    text-align: center;
+    background: white;
+    border-top: 1px solid #f3f4f6;
+    border-radius: 0 0 10px 10px;
+  }
+  .gallery-card-caption h4 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #1F2937;
+    margin-bottom: 4px;
+  }
+  .gallery-card-caption .cat-label {
+    font-size: 0.85rem;
+    color: #6B7280;
+  }
+  .gallery-card-caption .desc {
+    font-size: 0.8rem;
+    color: #9CA3AF;
+    margin-top: 4px;
+  }
+  @media (max-width: 1199px) { .gallery-grid > [class*='col-'] { margin-bottom: 15px; } }
+  @media (max-width: 767px) { .gallery-grid { margin: 0 -8px; } .gallery-grid > [class*='col-'] { padding: 0 8px; margin-bottom: 16px; } }
+  
+  /* Filter button styles */
+  .filter-btn {
+    padding: 8px 20px;
+    border-radius: 50px;
+    border: 2px solid #9C29B2;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Catamaran', sans-serif;
+    background: transparent;
+    color: #9C29B2;
+    white-space: nowrap;
+  }
+  .filter-btn:hover {
+    background: #9C29B2;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(156, 41, 178, 0.25);
+  }
+  .filter-btn.active {
+    background: #9C29B2;
+    color: white;
+    box-shadow: 0 4px 12px rgba(156, 41, 178, 0.3);
+  }
+  .filter-btn .count {
+    background: rgba(156, 41, 178, 0.15);
+    padding: 1px 8px;
+    border-radius: 20px;
+    margin-left: 6px;
+    font-size: 0.75rem;
+  }
+  .filter-btn.active .count {
+    background: rgba(255,255,255,0.25);
+  }
+  .mb-30 { margin-bottom: 30px; }
+  .mb-40 { margin-bottom: 40px; }
+  .mb-60 { margin-bottom: 60px; }
+  .mt-50 { margin-top: 50px; }
+  .text-center { text-align: center; }
+  .text-theme { color: #9C29B2; }
+  .py-10 { padding-top: 40px; padding-bottom: 40px; }
+  .py-5 { padding-top: 30px; padding-bottom: 30px; }
+  .gap-3 { gap: 1rem; }
+  .gap-md-4 { gap: 1.5rem; }
+  .d-flex { display: flex; }
+  .flex-wrap { flex-wrap: wrap; }
+  .justify-content-center { justify-content: center; }
+  .align-items-center { align-items: center; }
+  .gap-2 { gap: 0.5rem; }
+
+  /* Custom Lightbox Styles */
+  .custom-lightbox {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.92);
+    z-index: 99999;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .custom-lightbox.active {
+    display: flex;
+    opacity: 1;
+  }
+  .custom-lightbox-inner {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .custom-lightbox-inner img {
+    max-width: 90vw;
+    max-height: 85vh;
+    border-radius: 8px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    object-fit: contain;
+    animation: scaleIn 0.3s ease;
+  }
+  .custom-lightbox-close {
+    position: fixed;
+    top: 20px;
+    right: 30px;
+    background: white;
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 28px;
+    cursor: pointer;
+    color: #333;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    transition: transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+  .custom-lightbox-close:hover {
+    transform: rotate(90deg) scale(1.1);
+  }
+  .custom-lightbox-prev,
+  .custom-lightbox-next {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.9);
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    color: #333;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+  .custom-lightbox-prev:hover,
+  .custom-lightbox-next:hover {
+    background: white;
+    transform: translateY(-50%) scale(1.1);
+  }
+  .custom-lightbox-prev {
+    left: 30px;
+  }
+  .custom-lightbox-next {
+    right: 30px;
+  }
+  .custom-lightbox-counter {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255,255,255,0.8);
+    font-size: 14px;
+    background: rgba(0,0,0,0.5);
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-family: 'Catamaran', sans-serif;
+  }
+  @keyframes scaleIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @media (max-width: 768px) {
+    .custom-lightbox-prev,
+    .custom-lightbox-next {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+    }
+    .custom-lightbox-prev { left: 10px; }
+    .custom-lightbox-next { right: 10px; }
+    .custom-lightbox-close {
+      width: 40px;
+      height: 40px;
+      font-size: 22px;
+      top: 10px;
+      right: 15px;
+    }
+    .custom-lightbox-counter {
+      bottom: 15px;
+      font-size: 12px;
+      padding: 5px 15px;
+    }
+  }
 </style>
 <link rel="stylesheet" href="assets/css/bootstrap.min.css" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="assets/css/style.min.css" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="assets/css/fontawesome.min.css" media="print" onload="this.media='all'">
-<link rel="stylesheet" href="assets/css/magnific-popup.min.css" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="assets/css/slick.min.css" media="print" onload="this.media='all'">
 <noscript>
   <link rel="stylesheet" href="assets/css/fontawesome.min.css">
-  <link rel="stylesheet" href="assets/css/magnific-popup.min.css">
   <link rel="stylesheet" href="assets/css/slick.min.css">
 </noscript>
 </head>
@@ -231,7 +512,7 @@
     <div class="container">
       <!-- Elegant Title Area -->
       <div class="row justify-content-center text-center mb-40">
-        <div class="col-xl-9 col-lg-10 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="col-xl-9 col-lg-10">
           <div class="title-area">
             <span class="sub-title" style="color: var(--theme-color); letter-spacing: 2px; text-transform: uppercase; font-size: 0.9rem; font-weight: 700; margin-bottom: 15px; display: block;">Student Creations</span>
             <h2 class="sec-title" style="font-size: 2.8rem; line-height: 1.2; margin-bottom: 25px;">Creative Clay Art by <span style="color: var(--theme-color);">Kids</span></h2>
@@ -289,140 +570,6 @@
         </div>
       </div>
 
-      <style>
-        .gallery-grid { margin: 0 -10px; }
-        .gallery-grid > [class*='col-'] { padding: 0 10px; margin-bottom: 20px; }
-        .gallery-card-elegant {
-          position: relative;
-          border-radius: 12px;
-          overflow: hidden;
-          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-          box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-          background: #fff;
-        }
-        .gallery-card-elegant:hover {
-          transform: translateY(-8px);
-          box-shadow: 0 12px 35px rgba(156, 41, 178, 0.15);
-        }
-        .gallery-card-img {
-          position: relative;
-          width: 100%;
-          overflow: hidden;
-          background: #f5f5f5;
-        }
-        .gallery-card-img::before {
-          content: '';
-          display: block;
-          padding-top: 75%;
-        }
-        .gallery-card-img img {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .gallery-card-elegant:hover .gallery-card-img img {
-          transform: scale(1.08);
-        }
-        .gallery-card-overlay {
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background: linear-gradient(135deg, rgba(156, 41, 178, 0.88), rgba(184, 77, 209, 0.88));
-          opacity: 0;
-          transition: opacity 0.4s ease;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          z-index: 2;
-        }
-        .gallery-card-elegant:hover .gallery-card-overlay {
-          opacity: 1;
-        }
-        .gallery-zoom-icon {
-          width: 55px;
-          height: 55px;
-          border-radius: 50%;
-          background: white;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: var(--theme-color);
-          font-size: 22px;
-          transform: scale(0) rotate(-180deg);
-          transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-          box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-        }
-        .gallery-card-elegant:hover .gallery-zoom-icon {
-          transform: scale(1) rotate(0deg);
-        }
-        .gallery-card-caption {
-          padding: 16px 14px;
-          text-align: center;
-          background: white;
-          border-top: 1px solid #f3f4f6;
-          border-radius: 0 0 10px 10px;
-        }
-        .gallery-card-caption h4 {
-          font-size: 1.05rem;
-          font-weight: 700;
-          color: #1F2937;
-          margin-bottom: 4px;
-        }
-        .gallery-card-caption .cat-label {
-          font-size: 0.85rem;
-          color: #6B7280;
-        }
-        .gallery-card-caption .desc {
-          font-size: 0.8rem;
-          color: #9CA3AF;
-          margin-top: 4px;
-        }
-        @media (max-width: 1199px) { .gallery-grid > [class*='col-'] { margin-bottom: 15px; } }
-        @media (max-width: 767px) { .gallery-grid { margin: 0 -8px; } .gallery-grid > [class*='col-'] { padding: 0 8px; margin-bottom: 16px; } }
-        
-        /* Filter button styles */
-        .filter-btn {
-          padding: 8px 20px;
-          border-radius: 50px;
-          border: 2px solid #9C29B2;
-          font-weight: 600;
-          font-size: 0.9rem;
-          cursor: pointer;
-          transition: all 0.3s ease;
-          font-family: 'Catamaran', sans-serif;
-          background: transparent;
-          color: #9C29B2;
-          white-space: nowrap;
-        }
-        .filter-btn:hover {
-          background: #9C29B2;
-          color: white;
-          transform: translateY(-2px);
-          box-shadow: 0 4px 12px rgba(156, 41, 178, 0.25);
-        }
-        .filter-btn.active {
-          background: #9C29B2;
-          color: white;
-          box-shadow: 0 4px 12px rgba(156, 41, 178, 0.3);
-        }
-        .filter-btn .count {
-          background: rgba(156, 41, 178, 0.15);
-          padding: 1px 8px;
-          border-radius: 20px;
-          margin-left: 6px;
-          font-size: 0.75rem;
-        }
-        .filter-btn.active .count {
-          background: rgba(255,255,255,0.25);
-        }
-      </style>
-
       <!-- Dynamic Gallery Container -->
       <div id="galleryContainer" class="row gallery-grid">
         <!-- Items will be injected here by JavaScript -->
@@ -443,7 +590,7 @@
   <!-- Why Student Artwork Matters -->
   <section style="background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%); position: relative; overflow: hidden; padding: 60px 0;">
     <div class="container" style="position: relative; z-index: 2;">
-      <div class="row justify-content-center text-center mb-60 wow fadeInUp" data-wow-delay="0.1s">
+      <div class="row justify-content-center text-center mb-60">
         <div class="col-xl-8 col-lg-9">
           <div class="title-area">
             <span class="sub-title" style="color: var(--theme-color); letter-spacing: 2px; text-transform: uppercase; font-size: 0.9rem; font-weight: 700; margin-bottom: 15px; display: block;">Building Creative Confidence</span>
@@ -454,7 +601,7 @@
         </div>
       </div>
       <div class="row g-4">
-        <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
+        <div class="col-lg-4 col-md-6">
           <div class="confidence-card" style="background: white; border-radius: 20px; padding: 40px 35px; box-shadow: 0 10px 30px rgba(0,0,0,0.06); transition: all 0.4s ease; height: 100%; border: 1px solid rgba(156, 41, 178, 0.08); position: relative; overflow: hidden;">
             <div style="position: relative; z-index: 1;">
               <div style="width: 70px; height: 70px; background: linear-gradient(135deg, #9C29B2 0%, #B84DD1 100%); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin-bottom: 25px; box-shadow: 0 8px 25px rgba(156, 41, 178, 0.25);">
@@ -465,7 +612,7 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+        <div class="col-lg-4 col-md-6">
           <div class="confidence-card" style="background: white; border-radius: 20px; padding: 40px 35px; box-shadow: 0 10px 30px rgba(0,0,0,0.06); transition: all 0.4s ease; height: 100%; border: 1px solid rgba(156, 41, 178, 0.08); position: relative; overflow: hidden;">
             <div style="position: relative; z-index: 1;">
               <div style="width: 70px; height: 70px; background: linear-gradient(135deg, #B84DD1 0%, #D171E8 100%); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin-bottom: 25px; box-shadow: 0 8px 25px rgba(184, 77, 209, 0.25);">
@@ -476,7 +623,7 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.4s">
+        <div class="col-lg-4 col-md-6">
           <div class="confidence-card" style="background: white; border-radius: 20px; padding: 40px 35px; box-shadow: 0 10px 30px rgba(0,0,0,0.06); transition: all 0.4s ease; height: 100%; border: 1px solid rgba(156, 41, 178, 0.08); position: relative; overflow: hidden;">
             <div style="position: relative; z-index: 1;">
               <div style="width: 70px; height: 70px; background: linear-gradient(135deg, #D171E8 0%, #E8A5F5 100%); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin-bottom: 25px; box-shadow: 0 8px 25px rgba(209, 113, 232, 0.25);">
@@ -494,7 +641,7 @@
   <!-- Learning Through Practice -->
   <section style="background: linear-gradient(180deg, #fafafa 0%, #ffffff 100%); position: relative; overflow: hidden; padding: 60px 0;">
     <div class="container py-5" style="position: relative; z-index: 2;">
-      <div class="row justify-content-center text-center mb-60 wow fadeInUp" data-wow-delay="0.1s">
+      <div class="row justify-content-center text-center mb-60">
         <div class="col-xl-8 col-lg-9">
           <div class="title-area">
             <span class="sub-title" style="color: var(--theme-color); letter-spacing: 2px; text-transform: uppercase; font-size: 0.9rem; font-weight: 700; margin-bottom: 15px; display: block;">Structured Syllabus</span>
@@ -505,7 +652,7 @@
         </div>
       </div>
       <div class="row g-4">
-        <div class="col-lg-6 wow fadeInLeft" data-wow-delay="0.2s">
+        <div class="col-lg-6">
           <div class="learning-step-card" style="background: white; border-radius: 20px; padding: 35px; box-shadow: 0 10px 30px rgba(0,0,0,0.06); transition: all 0.4s ease; border-left: 5px solid #9C29B2; position: relative; overflow: hidden;">
             <div style="position: relative; z-index: 1; display: flex; align-items: start; gap: 20px;">
               <div style="min-width: 60px; height: 60px; background: linear-gradient(135deg, #9C29B2 0%, #B84DD1 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(156, 41, 178, 0.25); flex-shrink: 0;">
@@ -518,7 +665,7 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-6 wow fadeInRight" data-wow-delay="0.3s">
+        <div class="col-lg-6">
           <div class="learning-step-card" style="background: white; border-radius: 20px; padding: 35px; box-shadow: 0 10px 30px rgba(0,0,0,0.06); transition: all 0.4s ease; border-left: 5px solid #B84DD1; position: relative; overflow: hidden;">
             <div style="position: relative; z-index: 1; display: flex; align-items: start; gap: 20px;">
               <div style="min-width: 60px; height: 60px; background: linear-gradient(135deg, #B84DD1 0%, #D171E8 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(184, 77, 209, 0.25); flex-shrink: 0;">
@@ -531,7 +678,7 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-6 wow fadeInLeft" data-wow-delay="0.4s">
+        <div class="col-lg-6">
           <div class="learning-step-card" style="background: white; border-radius: 20px; padding: 35px; box-shadow: 0 10px 30px rgba(0,0,0,0.06); transition: all 0.4s ease; border-left: 5px solid #D171E8; position: relative; overflow: hidden;">
             <div style="position: relative; z-index: 1; display: flex; align-items: start; gap: 20px;">
               <div style="min-width: 60px; height: 60px; background: linear-gradient(135deg, #D171E8 0%, #E8A5F5 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(209, 113, 232, 0.25); flex-shrink: 0;">
@@ -544,7 +691,7 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-6 wow fadeInRight" data-wow-delay="0.5s">
+        <div class="col-lg-6">
           <div class="learning-step-card" style="background: white; border-radius: 20px; padding: 35px; box-shadow: 0 10px 30px rgba(0,0,0,0.06); transition: all 0.4s ease; border-left: 5px solid #E8A5F5; position: relative; overflow: hidden;">
             <div style="position: relative; z-index: 1; display: flex; align-items: start; gap: 20px;">
               <div style="min-width: 60px; height: 60px; background: linear-gradient(135deg, #E8A5F5 0%, #F5C9FF 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(232, 165, 245, 0.25); flex-shrink: 0;">
@@ -558,7 +705,7 @@
           </div>
         </div>
       </div>
-      <div class="row justify-content-center mt-50 wow fadeInUp" data-wow-delay="0.6s">
+      <div class="row justify-content-center mt-50">
         <div class="col-xl-8 col-lg-9 text-center">
           <div style="background: linear-gradient(135deg, rgba(156, 41, 178, 0.05) 0%, rgba(184, 77, 209, 0.05) 100%); border-radius: 16px; padding: 30px; border: 1px solid rgba(156, 41, 178, 0.1);">
             <p style="color: #2D3748; font-size: 1.1rem; line-height: 1.8; margin: 0; font-weight: 500;">
@@ -577,7 +724,7 @@
     <div class="container" style="position: relative; z-index: 2;">
       <div class="row justify-content-center">
         <div class="col-xl-10 col-lg-11">
-          <div class="wow fadeInUp" data-wow-delay="0.1s" style="background: linear-gradient(135deg, rgba(156, 41, 178, 0.03) 0%, rgba(255,255,255,1) 50%, rgba(184, 77, 209, 0.03) 100%); border-radius: 24px; padding: 60px 50px; box-shadow: 0 15px 50px rgba(0,0,0,0.08); border: 1px solid rgba(156, 41, 178, 0.1); position: relative; overflow: hidden;">
+          <div style="background: linear-gradient(135deg, rgba(156, 41, 178, 0.03) 0%, rgba(255,255,255,1) 50%, rgba(184, 77, 209, 0.03) 100%); border-radius: 24px; padding: 60px 50px; box-shadow: 0 15px 50px rgba(0,0,0,0.08); border: 1px solid rgba(156, 41, 178, 0.1); position: relative; overflow: hidden;">
             <div style="position: relative; z-index: 1; text-align: center;">
               <div style="display: inline-flex; align-items: center; justify-content: center; width: 80px; height: 80px; background: linear-gradient(135deg, #9C29B2 0%, #B84DD1 100%); border-radius: 20px; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(156, 41, 178, 0.3);">
                 <i class="fas fa-map-marker-alt" style="font-size: 36px; color: white;"></i>
@@ -620,7 +767,7 @@
     <div class="container" style="position: relative; z-index: 2;">
       <div class="row justify-content-center">
         <div class="col-xl-11">
-          <div class="wow fadeInUp" data-wow-delay="0.1s" style="background: linear-gradient(135deg, #9C29B2 0%, #B84DD1 50%, #D171E8 100%); border-radius: 30px; padding: 70px 50px; box-shadow: 0 20px 60px rgba(156, 41, 178, 0.3); position: relative; overflow: hidden;">
+          <div style="background: linear-gradient(135deg, #9C29B2 0%, #B84DD1 50%, #D171E8 100%); border-radius: 30px; padding: 70px 50px; box-shadow: 0 20px 60px rgba(156, 41, 178, 0.3); position: relative; overflow: hidden;">
             <div style="position: relative; z-index: 1; text-align: center;">
               <div style="display: inline-flex; align-items: center; justify-content: center; width: 90px; height: 90px; background: white; border-radius: 50%; margin-bottom: 30px; box-shadow: 0 15px 40px rgba(0,0,0,0.2);">
                 <i class="fas fa-palette" style="font-size: 42px; color: var(--theme-color);"></i>
@@ -628,15 +775,15 @@
               <h2 class="text-white mb-20" style="font-size: 2.8rem; line-height: 1.3; font-weight: 800; text-shadow: 0 2px 10px rgba(0,0,0,0.1);">Want Your Child's Artwork <br>Featured Here?</h2>
               <p class="mb-50" style="font-size: 1.2rem; color: rgba(255,255,255,0.95); max-width: 700px; margin: 0 auto 50px; line-height: 1.8;">Join Lil Sculpr and let your child create beautiful clay models with confidence and joy.</p>
               <div class="d-flex flex-wrap justify-content-center gap-3">
-                <a href="contact.html" class="cta-btn-elegant" style="display: inline-flex; align-items: center; gap: 10px; background: white; color: var(--theme-color); padding: 18px 40px; border-radius: 50px; font-weight: 700; font-size: 1.05rem; text-decoration: none; box-shadow: 0 10px 30px rgba(0,0,0,0.2); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 15px 40px rgba(0,0,0,0.25)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.2)';">
+                <a href="contact.html" style="display: inline-flex; align-items: center; gap: 10px; background: white; color: var(--theme-color); padding: 18px 40px; border-radius: 50px; font-weight: 700; font-size: 1.05rem; text-decoration: none; box-shadow: 0 10px 30px rgba(0,0,0,0.2); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 15px 40px rgba(0,0,0,0.25)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.2)';">
                   <i class="fas fa-user-plus"></i>
                   <span>Enroll Your Child</span>
                 </a>
-                <a href="contact.html" class="cta-btn-elegant" style="display: inline-flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.2); color: white; padding: 18px 40px; border-radius: 50px; font-weight: 700; font-size: 1.05rem; text-decoration: none; border: 2px solid white; backdrop-filter: blur(10px); transition: all 0.3s ease;" onmouseover="this.style.background='white'; this.style.color='var(--theme-color)';" onmouseout="this.style.background='rgba(255,255,255,0.2)'; this.style.color='white';">
+                <a href="contact.html" style="display: inline-flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.2); color: white; padding: 18px 40px; border-radius: 50px; font-weight: 700; font-size: 1.05rem; text-decoration: none; border: 2px solid white; backdrop-filter: blur(10px); transition: all 0.3s ease;" onmouseover="this.style.background='white'; this.style.color='var(--theme-color)';" onmouseout="this.style.background='rgba(255,255,255,0.2)'; this.style.color='white';">
                   <i class="fas fa-calendar-check"></i>
                   <span>Book Free Trial Class</span>
                 </a>
-                <a href="contact.html" class="cta-btn-elegant" style="display: inline-flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.2); color: white; padding: 18px 40px; border-radius: 50px; font-weight: 700; font-size: 1.05rem; text-decoration: none; border: 2px solid white; backdrop-filter: blur(10px); transition: all 0.3s ease;" onmouseover="this.style.background='white'; this.style.color='var(--theme-color)';" onmouseout="this.style.background='rgba(255,255,255,0.2)'; this.style.color='white';">
+                <a href="contact.html" style="display: inline-flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.2); color: white; padding: 18px 40px; border-radius: 50px; font-weight: 700; font-size: 1.05rem; text-decoration: none; border: 2px solid white; backdrop-filter: blur(10px); transition: all 0.3s ease;" onmouseover="this.style.background='white'; this.style.color='var(--theme-color)';" onmouseout="this.style.background='rgba(255,255,255,0.2)'; this.style.color='white';">
                   <i class="fas fa-phone-alt"></i>
                   <span>Contact Us Today</span>
                 </a>
@@ -654,7 +801,7 @@
   <div class="widget-area">
     <div class="container">
       <div class="row justify-content-between">
-        <div class="col-xl-auto col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="col-xl-auto col-md-6">
           <div class="widget footer-widget">
             <div class="vs-widget-about">
               <div class="about-logo">
@@ -671,7 +818,7 @@
             </div>
           </div>
         </div>
-        <div class="col-xl-auto col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="col-xl-auto col-md-6">
           <div class="widget footer-widget widget_nav_menu">
             <h4 class="widget_title">Details Info</h4>
             <ul class="menu">
@@ -686,7 +833,7 @@
             </ul>
           </div>
         </div>
-        <div class="col-xl-auto col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="col-xl-auto col-md-6">
           <div class="widget footer-widget">
             <h4 class="widget_title">Our Blogs</h4>
             <div class="recent-post-wrap">
@@ -723,7 +870,7 @@
             </div>
           </div>
         </div>
-        <div class="col-xl-auto col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="col-xl-auto col-md-6">
           <div class="widget footer-widget">
             <h3 class="widget_title">Contact Us</h3>
             <div class="vs-widget-contact">
@@ -798,11 +945,22 @@
   </div>
 </div>
 
+<!-- Custom Lightbox HTML -->
+<div class="custom-lightbox" id="customLightbox">
+  <button class="custom-lightbox-close" id="lightboxClose" aria-label="Close lightbox">✕</button>
+  <button class="custom-lightbox-prev" id="lightboxPrev" aria-label="Previous image">‹</button>
+  <button class="custom-lightbox-next" id="lightboxNext" aria-label="Next image">›</button>
+  <div class="custom-lightbox-inner">
+    <img id="lightboxImage" src="" alt="Gallery image">
+  </div>
+  <div class="custom-lightbox-counter" id="lightboxCounter">1 / 1</div>
+</div>
+
 <!-- Scripts -->
-<script src="assets/js/jquery-3.5.0.min.js" defer></script>
+<script src="assets/js/jquery-3.5.0.min.js"></script>
+<!-- Load other scripts -->
 <script src="assets/js/slick.min.js" defer></script>
 <script src="assets/js/bootstrap.min.js" defer></script>
-<script src="assets/js/jquery.magnific-popup.min.js" defer></script>
 <script src="assets/js/imagesloaded.pkgd.min.js" defer></script>
 <script src="assets/js/isotope.pkgd.min.js" defer></script>
 <script src="assets/js/jquery.counterup.min.js" defer></script>
@@ -810,19 +968,19 @@
 <script src="assets/js/vscustom-carousel.min.js" defer></script>
 <script src="assets/js/jquery-ui.min.js" defer></script>
 <script src="assets/js/wow.min.js" defer></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js" defer></script>
 <script src="assets/js/courseForm.js" defer></script>
 <script src="assets/js/main.min.js" defer></script>
 <script src="./assets/js/spinner.js" defer></script>
 
 <!-- ============================================================ -->
-<!-- DYNAMIC GALLERY JAVASCRIPT - CATEGORY FILTER BELOW FEATURE LIST -->
+<!-- DYNAMIC GALLERY JAVASCRIPT - WITH CUSTOM LIGHTBOX            -->
 <!-- ============================================================ -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   // ─── USE PRODUCTION URL ──────────────────────────────────────────
   const API_BASE = 'https://backend.lilsculpr.com/api/gallery';
-// const API_BASE = 'http://localhost:5000/api/gallery'; // For local testing
+  // const API_BASE = 'http://localhost:5000/api/gallery'; // For local testing
 
   const container = document.getElementById('galleryContainer');
   const filterContainer = document.getElementById('categoryFilterContainer');
@@ -832,9 +990,78 @@ document.addEventListener('DOMContentLoaded', function() {
   let allGalleryItems = [];
   let allCategories = [];
   let activeCategory = 'all';
+  let currentLightboxIndex = 0;
+  let lightboxImages = [];
+
+  // ─── Custom Lightbox functions ──────────────────────────────────
+  const lightbox = document.getElementById('customLightbox');
+  const lightboxImage = document.getElementById('lightboxImage');
+  const lightboxCounter = document.getElementById('lightboxCounter');
+  const lightboxClose = document.getElementById('lightboxClose');
+  const lightboxPrev = document.getElementById('lightboxPrev');
+  const lightboxNext = document.getElementById('lightboxNext');
+
+  function openLightbox(index) {
+    if (!lightboxImages.length || index < 0 || index >= lightboxImages.length) return;
+    
+    currentLightboxIndex = index;
+    const item = lightboxImages[currentLightboxIndex];
+    lightboxImage.src = item.imageUrl;
+    lightboxImage.alt = item.title || 'Gallery image';
+    updateLightboxCounter();
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function updateLightboxCounter() {
+    if (lightboxImages.length > 1) {
+      lightboxCounter.textContent = `${currentLightboxIndex + 1} / ${lightboxImages.length}`;
+      lightboxCounter.style.display = 'block';
+    } else {
+      lightboxCounter.style.display = 'none';
+    }
+  }
+
+  function navigateLightbox(direction) {
+    const newIndex = currentLightboxIndex + direction;
+    if (newIndex >= 0 && newIndex < lightboxImages.length) {
+      openLightbox(newIndex);
+    }
+  }
+
+  // Lightbox event listeners
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightboxPrev.addEventListener('click', function(e) {
+    e.stopPropagation();
+    navigateLightbox(-1);
+  });
+  lightboxNext.addEventListener('click', function(e) {
+    e.stopPropagation();
+    navigateLightbox(1);
+  });
+  
+  // Close on backdrop click
+  lightbox.addEventListener('click', function(e) {
+    if (e.target === this) {
+      closeLightbox();
+    }
+  });
+
+  // Keyboard events for lightbox
+  document.addEventListener('keydown', function(e) {
+    if (!lightbox.classList.contains('active')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') navigateLightbox(-1);
+    if (e.key === 'ArrowRight') navigateLightbox(1);
+  });
 
   // ─── Create gallery card HTML ──────────────────────────────────
-  function createGalleryCard(item) {
+  function createGalleryCard(item, index) {
     const imageUrl = item.imageUrl?.startsWith('http')
       ? item.imageUrl
       : `https://backend.lilsculpr.com${item.imageUrl || ''}`;
@@ -859,14 +1086,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const categoryIcon = item.categoryIcon || item.category?.icon || '📁';
 
     return `
-      <div class="col-xl-3 col-lg-4 col-sm-6">
-        <div class="gallery-card-elegant">
+      <div class="col-xl-3 col-lg-4 col-sm-6 gallery-item" data-category="${item.category?._id || item.category || ''}" data-index="${index}">
+        <div class="gallery-card-elegant" data-lightbox-index="${index}">
           <div class="gallery-card-img">
             <img src="${imageUrl}" alt="${title}" loading="lazy" onerror="this.src='assets/img/placeholder-gallery.jpg'">
             <div class="gallery-card-overlay">
-              <a href="${imageUrl}" class="gallery-zoom-icon popup-image" title="${title}">
+              <div class="gallery-zoom-icon">
                 <i class="fal fa-search-plus"></i>
-              </a>
+              </div>
             </div>
           </div>
           <div class="gallery-card-caption">
@@ -883,7 +1110,6 @@ document.addEventListener('DOMContentLoaded', function() {
   function renderCategories(categories, active) {
     if (!filterContainer) return;
 
-    // Calculate total count
     const totalCount = categories.reduce((sum, cat) => sum + (cat.itemCount || 0), 0);
 
     let html = `
@@ -907,7 +1133,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     filterContainer.innerHTML = html;
 
-    // Update item count display
     if (itemCountDisplay) {
       const filtered = active === 'all' ? allGalleryItems : allGalleryItems.filter(item => {
         const itemCategoryId = item.category?._id || item.category;
@@ -917,12 +1142,10 @@ document.addEventListener('DOMContentLoaded', function() {
       itemCountDisplay.textContent = `Showing ${filtered.length} of ${totalItems} images`;
     }
 
-    // Add click events to filter buttons
     filterContainer.querySelectorAll('.filter-btn').forEach(btn => {
       btn.addEventListener('click', function() {
         const cat = this.getAttribute('data-category');
         activeCategory = cat;
-        // Update active state
         filterContainer.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         this.classList.add('active');
         filterAndRender(cat);
@@ -941,7 +1164,6 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
 
-    // Sort by displayOrder, then by createdAt
     filtered.sort((a, b) => {
       if (a.displayOrder !== b.displayOrder) {
         return (a.displayOrder || 0) - (b.displayOrder || 0);
@@ -950,24 +1172,31 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     if (filtered.length > 0) {
-      container.innerHTML = filtered.map(createGalleryCard).join('');
+      // Store filtered items for lightbox
+      lightboxImages = filtered.map(item => ({
+        imageUrl: item.imageUrl?.startsWith('http')
+          ? item.imageUrl
+          : `https://backend.lilsculpr.com${item.imageUrl || ''}`,
+        title: item.title || 'Gallery image'
+      }));
 
-      // Update item count
+      container.innerHTML = filtered.map((item, index) => createGalleryCard(item, index)).join('');
+
       if (itemCountDisplay) {
         const totalItems = allGalleryItems.length;
         itemCountDisplay.textContent = `Showing ${filtered.length} of ${totalItems} images`;
       }
 
-      // Re-initialize Magnific Popup
-      if (typeof window.$ !== 'undefined' && typeof window.$.fn.magnificPopup !== 'undefined') {
-        window.$('#galleryContainer').magnificPopup({
-          delegate: '.popup-image',
-          type: 'image',
-          gallery: { enabled: true, navigateByImgClick: true, preload: [0, 1] },
-          mainClass: 'mfp-with-zoom',
-          zoom: { enabled: true, duration: 300, easing: 'ease-in-out' }
+      // Attach click events to gallery cards
+      container.querySelectorAll('.gallery-card-elegant').forEach(card => {
+        card.addEventListener('click', function() {
+          const index = parseInt(this.getAttribute('data-lightbox-index'));
+          if (!isNaN(index) && index >= 0 && index < lightboxImages.length) {
+            openLightbox(index);
+          }
         });
-      }
+      });
+
     } else {
       container.innerHTML = `
         <div class="col-12 text-center py-10">
@@ -976,6 +1205,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <p class="text-muted" style="font-size: 0.9rem;">Check back soon for new student artwork!</p>
         </div>
       `;
+      lightboxImages = [];
       if (itemCountDisplay) {
         itemCountDisplay.textContent = 'No images in this category';
       }
@@ -984,7 +1214,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // ─── Load categories and gallery items ──────────────────────────
   async function loadGallery() {
-    // Show loading state
     container.innerHTML = `
       <div class="col-12 text-center py-10">
         <div class="spinner-border text-primary" role="status" style="width: 50px; height: 50px;">
@@ -995,7 +1224,6 @@ document.addEventListener('DOMContentLoaded', function() {
     `;
 
     try {
-      // 1. Fetch categories first
       const catResponse = await fetch(`${API_BASE}/categories`);
       const catData = await catResponse.json();
 
@@ -1003,14 +1231,12 @@ document.addEventListener('DOMContentLoaded', function() {
         allCategories = catData.data || [];
       }
 
-      // 2. Fetch gallery items
       const itemsResponse = await fetch(API_BASE);
       const itemsData = await itemsResponse.json();
 
       if (itemsData.success) {
         allGalleryItems = itemsData.data || [];
 
-        // Build category counts from actual items
         const counts = {};
         allGalleryItems.forEach(item => {
           const catId = item.category?._id || item.category;
@@ -1019,16 +1245,12 @@ document.addEventListener('DOMContentLoaded', function() {
           }
         });
 
-        // Update categories with counts
         allCategories = allCategories.map(cat => ({
           ...cat,
           itemCount: counts[cat._id] || 0
         }));
 
-        // Render categories (filter bar below feature list)
         renderCategories(allCategories, activeCategory);
-
-        // Render items
         filterAndRender(activeCategory);
       } else {
         container.innerHTML = `
@@ -1045,7 +1267,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="col-12 text-center py-10">
           <div style="font-size: 48px; margin-bottom: 16px;">⚠️</div>
           <p class="text-muted" style="font-size: 1.1rem;">Failed to load gallery. Please check your connection.</p>
-          <button onclick="location.reload()" class="mt-4 px-4 py-2 bg-primary text-white rounded-lg" style="border: none; cursor: pointer; font-weight: 600;">Retry</button>
+          <button onclick="location.reload()" style="margin-top: 20px; padding: 12px 30px; background: #9C29B2; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 1rem;">Retry</button>
         </div>
       `;
     }
