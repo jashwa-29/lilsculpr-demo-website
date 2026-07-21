@@ -14643,6 +14643,6 @@ select[name="batch"] option.full-slot:disabled {
 
 
 /* Hide workshop items */
-li:has(> a[href*='free-workshop-register.html']) { display: none !important; }
-.popup-container { display: none !important; }
+/* li:has(> a[href*='free-workshop-register.html']) { display: none !important; }
+.popup-container { display: none !important; } */
 

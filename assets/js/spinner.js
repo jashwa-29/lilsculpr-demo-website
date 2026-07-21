@@ -3,7 +3,7 @@
             // DOM Elements
             const spinnerPopup = document.getElementById('spinner-popup');
             const closePopup = document.getElementById('close-popup');
-            const wheel = document.getElementById('wheel');
+            const wheel = document.getElementById('spinner-wheel');
             const spinBtn = document.getElementById('spin-btn');
             const winnerPopup = document.getElementById('winner-popup');
             const winnerText = document.getElementById('winner-text');
@@ -39,16 +39,18 @@
             function scaleCanvas() {
                 const rect = wheel.getBoundingClientRect();
                 const dpr = window.devicePixelRatio || 1;
-                wheel.width = Math.round(rect.width * dpr);
-                wheel.height = Math.round(rect.height * dpr);
+                const size = rect.width > 0 ? rect.width : parseInt(wheel.getAttribute('width'));
+                wheel.width = Math.round(size * dpr);
+                wheel.height = Math.round(size * dpr);
                 ctx.scale(dpr, dpr);
             }
 
             // Create Wheel Slices
             function createWheel() {
-                const width = wheel.getBoundingClientRect().width;
+                const rect = wheel.getBoundingClientRect();
+                const width = rect.width > 0 ? rect.width : parseInt(wheel.getAttribute('width'));
                 const center = width / 2;
-                const radius = center - 10;
+                const radius = Math.max(center - 10, 10);
                 const slices = prizes.length;
                 const sliceAngle = (2 * Math.PI) / slices;
 
