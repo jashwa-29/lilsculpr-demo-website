@@ -1,0 +1,484 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="IE=edge" />
+    <title>Clay Modeling Workshops | Lil Sculpr</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="author" content="Lil Sculpr Clay Modeling Academy" />
+    <meta
+      name="description"
+      content="Join our exciting clay modeling workshops at Lil Sculpr. Strawberry Cottage Workshop and Koi Fish Frame Art — book your spot today!"
+    />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Clay Modeling Workshops | Lil Sculpr" />
+    <meta
+      property="og:description"
+      content="Join our exciting clay modeling workshops. Strawberry Cottage Workshop and Koi Fish Frame Art — book your spot today!"
+    />
+    <meta property="og:image" content="assets/img/logo.webp" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:title" content="Clay Modeling Workshops | Lil Sculpr" />
+    <meta
+      property="twitter:description"
+      content="Join our exciting clay modeling workshops. Book your spot today!"
+    />
+    <meta property="twitter:image" content="assets/img/logo.webp" />
+    <link rel="canonical" href="https://www.lilsculpr.com/workshops.html" />
+
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-KK89945D");
+    </script>
+
+    <!-- Favicons -->
+    <link rel="icon" href="favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="android-chrome-192x192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="android-chrome-512x512.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Catamaran:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      media="print"
+      onload="this.media = 'all'"
+    />
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/style.min.css" />
+
+    <link rel="stylesheet" href="assets/css/fontawesome.min.css" media="print" onload="this.media = 'all'" />
+    <link rel="stylesheet" href="assets/css/magnific-popup.min.css" media="print" onload="this.media = 'all'" />
+    <link rel="stylesheet" href="assets/css/slick.min.css" media="print" onload="this.media = 'all'" />
+
+    <noscript>
+      <link rel="stylesheet" href="assets/css/fontawesome.min.css" />
+      <link rel="stylesheet" href="assets/css/magnific-popup.min.css" />
+      <link rel="stylesheet" href="assets/css/slick.min.css" />
+    </noscript>
+
+    <!-- Facebook Pixel -->
+    <script>
+      !(function (f, b, e, v, n, t, s) {
+        if (f.fbq) return;
+        n = f.fbq = function () {
+          n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+        };
+        if (!f._fbq) f._fbq = n;
+        n.push = n;
+        n.loaded = !0;
+        n.version = "2.0";
+        n.queue = [];
+        t = b.createElement(e);
+        t.async = !0;
+        t.src = v;
+        s = b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t, s);
+      })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
+      fbq("init", "886450287373984");
+      fbq("track", "PageView");
+    </script>
+
+    <style>
+      .fal, .fab, .fas, .far { font-display: swap; }
+
+      .workshop-card {
+        background: #fff;
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.07);
+        transition: all 0.4s ease;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid rgba(156, 41, 178, 0.08);
+      }
+
+      .workshop-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 60px rgba(156, 41, 178, 0.12);
+      }
+
+      .workshop-card-img {
+        height: 220px;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+      }
+
+      .workshop-card-badge {
+        position: absolute;
+        top: 16px;
+        left: 16px;
+        background: #9c29b2;
+        color: #fff;
+        padding: 6px 14px;
+        border-radius: 30px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+      }
+
+      .workshop-card-body {
+        padding: 28px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .workshop-card-title {
+        font-size: 1.3rem;
+        font-weight: 800;
+        color: #2d3748;
+        margin-bottom: 8px;
+      }
+
+      .workshop-card-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 14px;
+      }
+
+      .workshop-card-meta span {
+        font-size: 0.8rem;
+        color: #6b7280;
+        background: #f5f0ff;
+        padding: 4px 12px;
+        border-radius: 20px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-weight: 500;
+      }
+
+      .workshop-card-meta span i { color: #9c29b2; }
+
+      .workshop-card-desc {
+        font-size: 0.9rem;
+        color: #6b7280;
+        line-height: 1.6;
+        margin-bottom: 20px;
+        flex: 1;
+      }
+
+      .workshop-card-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-top: 16px;
+        border-top: 1px solid #f0edf5;
+      }
+
+      .workshop-price {
+        font-size: 1.4rem;
+        font-weight: 800;
+        color: #9c29b2;
+      }
+
+      .workshop-price small {
+        font-size: 0.75rem;
+        font-weight: 400;
+        color: #6b7280;
+      }
+
+      .section-title-wrapper {
+        text-align: center;
+        margin-bottom: 50px;
+      }
+
+      .section-title-wrapper .sec-subtitle {
+        display: inline-block;
+        background: #f5f0ff;
+        color: #9c29b2;
+        padding: 6px 20px;
+        border-radius: 30px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        margin-bottom: 12px;
+      }
+
+      @media (max-width: 768px) {
+        .workshop-card-img { height: 180px; }
+        .workshop-card-body { padding: 20px; }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KK89945D" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=886450287373984&ev=PageView&noscript=1" /></noscript>
+
+    <!-- Search Popup -->
+    <div class="popup-search-box d-none d-lg-block">
+      <button class="searchClose border-theme text-theme"><i class="fal fa-times"></i></button>
+      <form action="#">
+        <input type="text" class="border-theme" placeholder="What are you looking for" />
+        <button type="submit"><i class="fal fa-search"></i></button>
+      </form>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="vs-menu-wrapper">
+      <div class="vs-menu-area">
+        <button class="vs-menu-toggle" aria-label="Open mobile menu"><i class="fal fa-times"></i></button>
+        <div class="mobile-logo">
+          <a href="index.html"><img src="assets/img/logo.webp" alt="Lil Sculpr Logo" width="188" height="102" /></a>
+        </div>
+        <div class="vs-mobile-menu">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="classes.html">Classes</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Header -->
+    <header class="vs-header">
+      <div class="header-top-area d-none d-lg-block">
+        <div class="container">
+          <div class="row align-items-center justify-content-between">
+            <div class="col-auto">
+              <div class="header-links">
+                <ul>
+                  <li><i class="fal fa-clock"></i>3:00 pm - 8:00 pm - Tue - Sun</li>
+                  <li><i class="fal fa-phone"></i><a href="tel:+919600443185">+91 96 00 44 31 85</a></li>
+                  <li><i class="fal fa-map-marker-alt"></i>468 A, C sector, 2nd Street, AE Block, Anna Nagar West Extension, Chennai - 600101</li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-auto">
+              <div class="header-social">
+                <ul>
+                  <li><a href="https://www.facebook.com/profile.php?id=61583300934216"><i class="fab fa-facebook-f"></i></a></li>
+                  <li><a href="https://www.pinterest.com/lilsculpr/"><i class="fab fa-pinterest-p"></i></a></li>
+                  <li><a href="https://www.instagram.com/lilsculpr/"><i class="fab fa-instagram"></i></a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sticky-wrapper">
+        <div class="sticky-active">
+          <div class="header-menu-area">
+            <div class="container position-relative">
+              <div class="row gx-20 align-items-center justify-content-between">
+                <div class="col-auto">
+                  <div class="header-logo">
+                    <a href="index.html">
+                      <img src="assets/img/logo.webp" alt="Lil Sculpr Logo" width="188" height="102" />
+                    </a>
+                  </div>
+                </div>
+                <div class="col-auto">
+                  <nav class="main-menu menu-style1 d-none d-lg-inline-block">
+                    <ul>
+                      <li><a href="index.html">Home</a></li>
+                      <li><a href="about.html">About</a></li>
+                      <li><a href="classes.html">Classes</a></li>
+                      <li><a href="gallery.html">Gallery</a></li>
+                      <li><a href="blog.html">Blog</a></li>
+                      <li>
+                        <a href="./workshops.html">Workshop</a>
+                      </li>
+                    </ul>
+                  </nav>
+                  <button type="button" class="vs-menu-toggle d-block d-lg-none" aria-label="Open mobile menu">
+                    <i class="fal fa-bars"></i> Menu
+                  </button>
+                </div>
+                <div class="col-auto d-none d-xl-block">
+                  <div class="header-button">
+                    <a href="contact.html" class="vs-btn wave-btn">Contact Us</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="breadcumb-wrapper" data-bg-src="./assets/img/lil-sculpr/coverimg.webp">
+      <div class="container">
+        <div class="breadcumb-content">
+          <h2 class="breadcumb-title">Our Workshops</h2>
+          <ul class="breadcumb-menu">
+            <li><a href="index.html">Home</a></li>
+            <li class="active">Workshops</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Workshops Listing -->
+    <section class="space-top space-bottom position-relative overflow-hidden">
+      <div class="design-blob blob-saffron"></div>
+      <div class="design-blob blob-green"></div>
+
+      <div class="container position-relative z-index-2">
+        <div class="section-title-wrapper">
+          <span class="sec-subtitle">✨ Upcoming Workshops</span>
+          <h2 class="h1">Choose a Clay Modeling Workshop</h2>
+          <p class="text-muted">Fun, hands-on clay modeling sessions for kids aged 5-14 in Chennai.</p>
+        </div>
+
+        <div class="row g-30 justify-content-center">
+          <!-- Strawberry Cottage Workshop Card -->
+          <div class="col-lg-6 col-xl-5">
+            <div class="workshop-card wow fadeInLeft" data-wow-delay="0.1s">
+              <div class="workshop-card-img" style="background-image: url('assets/img/lil-sculpr/strawberry-cottage.jpeg'); background-color: #fdf2f8; background-size: cover; background-position: center;">
+                <span class="workshop-card-badge">🍓 Popular</span>
+              </div>
+              <div class="workshop-card-body">
+                <h3 class="workshop-card-title">Strawberry Cottage Workshop 🍓</h3>
+                <div class="workshop-card-meta">
+                  <span><i class="fas fa-calendar-alt"></i> July 26, 2026</span>
+                  <span><i class="fas fa-clock"></i> 11 AM - 1 PM</span>
+                  <span><i class="fas fa-users"></i> 30 Slots</span>
+                </div>
+                <p class="workshop-card-desc">
+                  Kids sculpt their own magical strawberry cottage — a delightful keepsake! All materials included. Perfect for beginners.
+                </p>
+                <div class="workshop-card-footer">
+                  <div class="workshop-price">₹399 <small>per child</small></div>
+                  <a href="strawberry-cottage-register.html" class="vs-btn wave-btn">Book Now</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Koi Fish Frame Art Card -->
+          <div class="col-lg-6 col-xl-5">
+            <div class="workshop-card wow fadeInRight" data-wow-delay="0.2s">
+              <div class="workshop-card-img" style="background-image: url('assets/img/lil-sculpr/koi-fish-art.jpeg'); background-color: #eff6ff; background-size: cover; background-position: center;">
+                <span class="workshop-card-badge">🐟 New</span>
+              </div>
+              <div class="workshop-card-body">
+                <h3 class="workshop-card-title">Koi Fish Frame Art 🐟</h3>
+                <div class="workshop-card-meta">
+                  <span><i class="fas fa-calendar-alt"></i> July 27, 2026</span>
+                  <span><i class="fas fa-clock"></i> 11 AM - 1 PM</span>
+                  <span><i class="fas fa-users"></i> 30 Slots</span>
+                </div>
+                <p class="workshop-card-desc">
+                  Create a stunning koi fish clay art on a decorative frame. All materials, frame base, and expert guidance included!
+                </p>
+                <div class="workshop-card-footer">
+                  <div class="workshop-price">₹499 <small>per child</small></div>
+                  <a href="koi-fish-register.html" class="vs-btn wave-btn">Book Now</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-wrapper footer-layout3" data-bg-src="assets/img/bg/footer-4.webp">
+      <div class="widget-area">
+        <div class="container">
+          <div class="row justify-content-between">
+            <div class="col-xl-auto col-md-6">
+              <div class="widget footer-widget">
+                <div class="vs-widget-about">
+                  <div class="about-logo">
+                    <a href="index.html">
+                      <img src="./assets/img/logo.webp" alt="Lil Sculpr Logo" width="180" height="60" loading="lazy" />
+                    </a>
+                  </div>
+                  <p class="about-text">Lil Sculpr offers fun and structured clay modelling classes for kids in Chennai. Learn clay art from basics to advanced with expert guidance.</p>
+                  <div class="multi-social">
+                    <a href="https://www.facebook.com/profile.php?id=61583300934216"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.pinterest.com/lilsculpr/"><i class="fab fa-pinterest-p"></i></a>
+                    <a href="https://www.instagram.com/lilsculpr/"><i class="fab fa-instagram"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-auto col-md-6">
+              <div class="widget footer-widget widget_nav_menu">
+                <h4 class="widget_title">Details Info</h4>
+                <ul class="menu">
+                  <li><a href="classes.html">Classes</a></li>
+                  <li><a href="contact.html">Appointment</a></li>
+                  <li><a href="about.html">About Us</a></li>
+                  <li><a href="gallery.html">Gallery</a></li>
+                  <li><a href="return-refund-policy.html">Return & Refund Policy</a></li>
+                  <li><a href="terms-and-conditions.html">Terms & Conditions</a></li>
+                  <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-xl-auto col-md-6">
+              <div class="widget footer-widget">
+                <h3 class="widget_title">Contact Us</h3>
+                <div class="vs-widget-contact">
+                  <p class="footer-info"><i class="fas fa-map-marker-alt"></i>468 A, C sector, 2nd Street, AE Block, Anna Nagar West Extension, Chennai - 600101</p>
+                  <p class="footer-info"><i class="fas fa-envelope"></i><a href="mailto:lilsculpr@gmail.com">lilsculpr@gmail.com</a></p>
+                  <p class="footer-info"><i class="fas fa-phone-alt"></i><a href="tel:+919600443185">+91 96 00 44 31 85</a></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-copyright">
+        <div class="container">
+          <p class="copyright">&copy; Lil Sculpr. All Rights Reserved. | <a href="https://www.swiflare.com/">Designed & Developed by Swiflare Ai Innovations</a></p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scroll To Top -->
+    <a href="#" class="scrollToTop scroll-btn"><i class="fas fa-chevron-up"></i></a>
+    <a href="https://wa.me/919600443185" class="whatsapp-float" target="_blank">
+      <i class="fab fa-whatsapp"></i>
+      <div class="whatsapp-tooltip">Tap to Book Free Assessment</div>
+    </a>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery-3.5.0.min.js"></script>
+    <script src="assets/js/slick.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/jquery.magnific-popup.min.js"></script>
+    <script src="assets/js/imagesloaded.pkgd.min.js"></script>
+    <script src="assets/js/isotope.pkgd.min.js"></script>
+    <script src="assets/js/jquery.counterup.min.js"></script>
+    <script src="assets/js/parallax.min.js"></script>
+    <script src="assets/js/vscustom-carousel.min.js"></script>
+    <script src="assets/js/jquery-ui.min.js"></script>
+    <script src="assets/js/wow.min.js"></script>
+    <script src="assets/js/main.min.js"></script>
+    <script src="./assets/js/spinner.js"></script>
+  </body>
+</html>

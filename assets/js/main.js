@@ -195,20 +195,6 @@ $(scrollToTopBtn).each(function () {
 })
 
 
- document.querySelector('.close-btn').addEventListener('click', function() {
-            document.querySelector('.popup-container').classList.add('collapsed');
-        });
-        
-        document.querySelector('.popup-tab').addEventListener('click', function() {
-            document.querySelector('.popup-container').classList.remove('collapsed');
-        });
-        
-        // document.querySelector('.cta-button').addEventListener('click', function() {
-        //     // alert('Redirecting to registration page...');
-        //     // In a real implementation, this would be: window.location.href = 'register.html';
-        //     window.location.href = 'special-offer-register.html';
-        // });
-
 
 /*---------- 06. Set Background Image & Color & Mask ----------*/
 if ($('[data-bg-src]').length > 0) {

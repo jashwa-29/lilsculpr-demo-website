@@ -38,7 +38,7 @@
     <meta property="twitter:image" content="assets/img/logo.webp" />
     <link
       rel="canonical"
-      href="https://www.lilsculpr.com/special-offer-register.html"
+      href="https://www.lilsculpr.com/strawberry-cottage-register.html"
     />
 
     <!-- Google Tag Manager -->
@@ -514,6 +514,144 @@
           margin: 0 auto;
         }
       }
+
+      /* Payment Result Modals */
+      .payment-modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 99999;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(4px);
+      }
+
+      .payment-modal-overlay.active {
+        display: flex;
+      }
+
+      .payment-modal {
+        background: #fff;
+        border-radius: 24px;
+        padding: 40px;
+        text-align: center;
+        max-width: 440px;
+        width: 92%;
+        position: relative;
+        animation: modalIn 0.3s ease;
+      }
+
+      @keyframes modalIn {
+        from { transform: scale(0.9); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
+      }
+
+      .modal-icon {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+        font-size: 40px;
+        font-weight: 700;
+      }
+
+      .modal-icon.success {
+        background: #dcfce7;
+        color: #16a34a;
+      }
+
+      .modal-icon.failure {
+        background: #fee2e2;
+        color: #dc2626;
+      }
+
+      .payment-modal h3 {
+        font-weight: 800;
+        margin-bottom: 8px;
+        color: #2d3748;
+        font-size: 1.4rem;
+      }
+
+      .payment-modal p {
+        color: #6b7280;
+        font-size: 0.95rem;
+        margin-bottom: 24px;
+        line-height: 1.5;
+      }
+
+      .modal-btn {
+        display: inline-block;
+        padding: 12px 32px;
+        border-radius: 12px;
+        font-weight: 700;
+        font-size: 0.95rem;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        font-family: inherit;
+      }
+
+      .modal-btn.success-btn {
+        background: #9c29b2;
+        color: #fff;
+      }
+
+      .modal-btn.success-btn:hover {
+        background: #7e22a0;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(156, 41, 178, 0.3);
+      }
+
+      .modal-btn.failure-btn {
+        background: #dc2626;
+        color: #fff;
+      }
+
+      .modal-btn.failure-btn:hover {
+        background: #b91c1c;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+      }
+
+      .modal-details {
+        background: #f8f7ff;
+        border-radius: 12px;
+        padding: 16px 20px;
+        margin-bottom: 24px;
+        text-align: left;
+      }
+
+      .modal-details .detail-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 6px 0;
+        border-bottom: 1px solid #f0edf5;
+      }
+
+      .modal-details .detail-row:last-child {
+        border-bottom: none;
+      }
+
+      .modal-details .detail-label {
+        font-size: 0.8rem;
+        color: #6b7280;
+        font-weight: 500;
+      }
+
+      .modal-details .detail-value {
+        font-size: 0.9rem;
+        color: #2d3748;
+        font-weight: 600;
+      }
     </style>
   </head>
 
@@ -655,7 +793,7 @@
                       <li><a href="gallery.html">Gallery</a></li>
                       <li><a href="blog.html">Blog</a></li>
                       <li>
-                        <a href="./special-offer-register.html">Workshop</a>
+                        <a href="./workshops.html">Workshop</a>
                       </li>
                     </ul>
                   </nav>
@@ -987,6 +1125,36 @@
           <p>Please wait while we process your payment. Do not close this window.</p>
         </div>
       </div>
+
+      <!-- Payment Success Modal -->
+      <div id="paymentSuccessModal" class="payment-modal-overlay">
+        <div class="payment-modal">
+          <div class="modal-icon success">&#10003;</div>
+          <h3>Payment Successful! &#127881;</h3>
+          <p>Your child's seat is confirmed. Check your email for the workshop details.</p>
+          <div class="modal-details">
+            <div class="detail-row">
+              <span class="detail-label">Workshop</span>
+              <span class="detail-value" id="successWorkshop">Strawberry Cottage Workshop</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">Date &amp; Time</span>
+              <span class="detail-value">July 26, 2026 &#183; 11:00 AM - 1:00 PM</span>
+            </div>
+          </div>
+          <button class="modal-btn success-btn" id="successModalBtn">Continue</button>
+        </div>
+      </div>
+
+      <!-- Payment Failure Modal -->
+      <div id="paymentFailureModal" class="payment-modal-overlay">
+        <div class="payment-modal">
+          <div class="modal-icon failure">&#10007;</div>
+          <h3>Payment Failed</h3>
+          <p id="failureMessage">Something went wrong. Please try again.</p>
+          <button class="modal-btn failure-btn" id="failureModalBtn">Try Again</button>
+        </div>
+      </div>
     </section>
 
     <!-- Footer -->
@@ -1109,311 +1277,6 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="assets/js/main.min.js"></script>
     <script src="./assets/js/spinner.js"></script>
-
-    <!-- Main Workshop Script -->
-    <script>
-      (function() {
-        'use strict';
-
-        // ─── Configuration ──────────────────────────────────────────────
-        const API_BASE = 'https://backend.lilsculpr.com/api/special-course';
-        // const API_BASE = 'http://localhost:5000/api/special-course'; // For local testing
-
-        const WORKSHOP_NAME = 'Strawberry Cottage Workshop';
-        const WORKSHOP_PRICE = 399;
-        const WORKSHOP_DATE = '2026-07-26';
-
-        // ─── DOM References ─────────────────────────────────────────────
-        const form = document.getElementById('workshopForm');
-        const submitBtn = document.getElementById('submitBtn');
-        const paymentStatus = document.getElementById('payment-status');
-        const paymentLoading = document.getElementById('paymentLoading');
-
-        // ─── Slot Availability ──────────────────────────────────────────
-        const slotIndicator = document.getElementById('slotIndicator');
-        const slotCount = document.getElementById('slotCount');
-        const slotCapacity = document.getElementById('slotCapacity');
-        const slotFill = document.getElementById('slotFill');
-        const slotStatusText = document.getElementById('slotStatusText');
-
-        async function checkSlotAvailability() {
-          if (!slotIndicator) return;
-          try {
-            const params = new URLSearchParams({
-              carnivalName: WORKSHOP_NAME,
-              batch: 'Strawberry Cottage Workshop 🍓 ⏰ 11:00 AM – 1:00 PM',
-              date: WORKSHOP_DATE
-            });
-            const response = await axios.get(`${API_BASE}/check-slots?${params}`);
-            const data = response.data;
-            if (data.success) {
-              const avail = data.data.availableSlots;
-              const cap = data.data.capacity;
-              const ratio = cap > 0 ? avail / cap : 0;
-
-              slotCount.textContent = avail;
-              slotCapacity.textContent = cap;
-              slotFill.style.width = (ratio * 100) + '%';
-
-              if (avail === 0) {
-                slotIndicator.style.background = '#fef2f2';
-                slotIndicator.style.borderColor = '#fca5a5';
-                slotCount.style.color = '#dc2626';
-                slotStatusText.textContent = '❌ Workshop is full!';
-                slotStatusText.style.color = '#dc2626';
-                slotFill.style.background = '#ef4444';
-                submitBtn.disabled = true;
-                submitBtn.title = 'No slots available';
-              } else if (avail <= 5) {
-                slotIndicator.style.background = '#fff7ed';
-                slotIndicator.style.borderColor = '#fdba74';
-                slotCount.style.color = '#ea580c';
-                slotStatusText.textContent = '⚠️ Only ' + avail + ' slot' + (avail > 1 ? 's' : '') + ' remaining!';
-                slotStatusText.style.color = '#ea580c';
-                slotFill.style.background = '#f97316';
-              } else {
-                slotIndicator.style.background = '#f0fdf4';
-                slotIndicator.style.borderColor = '#86efac';
-                slotCount.style.color = '#166534';
-                slotStatusText.textContent = '✅ Slots available — register now!';
-                slotStatusText.style.color = '#166534';
-                slotFill.style.background = '#22c55e';
-              }
-            }
-          } catch (err) {
-            console.error('Slot check failed:', err);
-            slotStatusText.textContent = 'Could not check availability';
-            slotStatusText.style.color = '#6b7280';
-          }
-        }
-
-        // ─── Utility Functions ──────────────────────────────────────────
-        function showStatus(message, type = 'info') {
-          paymentStatus.className = 'payment-status ' + type;
-          paymentStatus.textContent = message;
-          paymentStatus.style.display = 'block';
-          setTimeout(() => {
-            paymentStatus.style.display = 'none';
-          }, 8000);
-        }
-
-        function setLoading(loading) {
-          if (loading) {
-            submitBtn.classList.add('btn-loading');
-            submitBtn.disabled = true;
-            paymentLoading.classList.add('active');
-          } else {
-            submitBtn.classList.remove('btn-loading');
-            submitBtn.disabled = false;
-            paymentLoading.classList.remove('active');
-          }
-        }
-
-        function getFormData() {
-          return {
-            parentName: document.getElementById('parentName').value.trim(),
-            email: document.getElementById('email').value.trim(),
-            phone: document.getElementById('phone').value.trim(),
-            childName: document.getElementById('childName').value.trim(),
-            childAge: document.getElementById('childAge').value.trim(),
-            selectedDate: WORKSHOP_DATE,
-            selectedBatch: document.getElementById('selectedBatch').value,
-            carnivalName: WORKSHOP_NAME,
-            materialType: document.getElementById('materialTypeHidden').value === 'true'
-          };
-        }
-
-        function validateForm(data) {
-          const errors = [];
-
-          if (!data.parentName || data.parentName.length < 2) {
-            errors.push('Please enter a valid parent name');
-          }
-
-          if (!data.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
-            errors.push('Please enter a valid email address');
-          }
-
-          if (!data.phone || !/^\d{10}$/.test(data.phone.replace(/\D/g, ''))) {
-            errors.push('Please enter a valid 10-digit phone number');
-          }
-
-          if (!data.childName || data.childName.length < 2) {
-            errors.push('Please enter a valid child name');
-          }
-
-          const age = parseInt(data.childAge);
-          if (!data.childAge || isNaN(age) || age < 5 || age > 14) {
-            errors.push('Child age must be between 5 and 14 years');
-          }
-
-          if (!document.getElementById('paymentConfirm').checked) {
-            errors.push('Please confirm the payment terms');
-          }
-
-          return errors;
-        }
-
-        // ─── API Calls ──────────────────────────────────────────────────
-        async function registerWorkshop(data) {
-          try {
-            const response = await axios.post(`${API_BASE}/register`, data);
-            return response.data;
-          } catch (error) {
-            if (error.response) {
-              throw error.response.data;
-            }
-            throw { message: 'Network error. Please check your connection.' };
-          }
-        }
-
-        async function createPaymentOrder(registrationId) {
-          try {
-            const response = await axios.post(`${API_BASE}/create-order`, {
-              registrationId: registrationId
-            });
-            return response.data;
-          } catch (error) {
-            if (error.response) {
-              throw error.response.data;
-            }
-            throw { message: 'Failed to create payment order.' };
-          }
-        }
-
-        async function verifyPayment(paymentData) {
-          try {
-            const response = await axios.post(`${API_BASE}/verify-payment`, paymentData);
-            return response.data;
-          } catch (error) {
-            if (error.response) {
-              throw error.response.data;
-            }
-            throw { message: 'Payment verification failed.' };
-          }
-        }
-
-        // ─── Razorpay Payment ──────────────────────────────────────────
-        function openRazorpay(orderData, registrationId) {
-          return new Promise((resolve, reject) => {
-            const options = {
-              key: orderData.data.key_id,
-              amount: orderData.data.amount * 100,
-              currency: orderData.data.currency,
-              name: 'Lil Sculpr Clay Academy',
-              description: 'Strawberry Cottage Workshop',
-              image: 'https://www.lilsculpr.com/assets/img/logo.webp',
-              order_id: orderData.data.orderId,
-              prefill: {
-                name: document.getElementById('parentName').value,
-                email: document.getElementById('email').value,
-                contact: document.getElementById('phone').value
-              },
-              theme: {
-                color: '#9C29B2'
-              },
-              handler: function(response) {
-                resolve({
-                  razorpay_payment_id: response.razorpay_payment_id,
-                  razorpay_order_id: response.razorpay_order_id,
-                  razorpay_signature: response.razorpay_signature,
-                  registrationId: registrationId
-                });
-              },
-              modal: {
-                ondismiss: function() {
-                  reject({ message: 'Payment was cancelled by user.' });
-                }
-              }
-            };
-
-            const rzp = new Razorpay(options);
-            rzp.open();
-          });
-        }
-
-        // ─── Form Submit Handler ──────────────────────────────────────
-        form.addEventListener('submit', async function(e) {
-          e.preventDefault();
-
-          // Get and validate form data
-          const formData = getFormData();
-          const errors = validateForm(formData);
-
-          if (errors.length > 0) {
-            showStatus('❌ ' + errors.join(' • '), 'error');
-            return;
-          }
-
-          setLoading(true);
-          showStatus('⏳ Registering for workshop...', 'info');
-
-          try {
-            // Step 1: Register for workshop
-            const registerResult = await registerWorkshop(formData);
-
-            if (!registerResult.success) {
-              throw { message: registerResult.message || 'Registration failed' };
-            }
-
-            const registrationId = registerResult.data.registrationId;
-            showStatus('✅ Registration created! Creating payment order...', 'info');
-
-            // Step 2: Create payment order
-            const orderResult = await createPaymentOrder(registrationId);
-
-            if (!orderResult.success) {
-              throw { message: orderResult.message || 'Failed to create payment order' };
-            }
-
-            // Step 3: Open Razorpay
-            showStatus('💳 Opening payment gateway...', 'info');
-
-            const paymentResponse = await openRazorpay(orderResult, registrationId);
-
-            // Step 4: Verify payment
-            showStatus('✅ Payment successful! Verifying...', 'info');
-
-            const verifyResult = await verifyPayment({
-              razorpay_payment_id: paymentResponse.razorpay_payment_id,
-              razorpay_order_id: paymentResponse.razorpay_order_id,
-              razorpay_signature: paymentResponse.razorpay_signature,
-              registrationId: registrationId
-            });
-
-            if (verifyResult.success) {
-              showStatus('🎉 Registration confirmed! Check your email for details.', 'success');
-              form.reset();
-              document.getElementById('paymentConfirm').checked = false;
-              // Refresh slot count
-              checkSlotAvailability();
-            } else {
-              throw { message: verifyResult.message || 'Payment verification failed' };
-            }
-
-          } catch (error) {
-            console.error('Workshop registration error:', error);
-            showStatus('❌ ' + (error.message || 'Something went wrong. Please try again.'), 'error');
-          } finally {
-            setLoading(false);
-          }
-        });
-
-        // ─── Input Validation Helpers ──────────────────────────────────
-        document.getElementById('phone').addEventListener('input', function() {
-          this.value = this.value.replace(/\D/g, '').slice(0, 10);
-        });
-
-        // ─── Cleanup on page unload ────────────────────────────────────
-        window.addEventListener('beforeunload', function() {
-          if (paymentLoading.classList.contains('active')) {
-            setLoading(false);
-          }
-        });
-
-        console.log('✅ Workshop registration form initialized');
-        checkSlotAvailability();
-      })();
-    </script>
+    <script src="./assets/js/strawberry-cottage-workshop.js"></script>
   </body>
 </html>
