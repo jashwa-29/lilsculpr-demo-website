@@ -4,7 +4,7 @@ const API_BASE = 'https://backend.lilsculpr.com/api/special-course';
   // const API_BASE = 'http://localhost:5000/api/special-course';
   const WORKSHOP_NAME = 'Up, Up & Away! 3D Clay Canvas Workshop';
   const WORKSHOP_PRICE = 699;
-  const WORKSHOP_DATE = '2026-08-09';
+  const WORKSHOP_DATE = '2026-08-01';
 
   const form = document.getElementById('workshopForm');
   const submitBtn = document.getElementById('submitBtn');
