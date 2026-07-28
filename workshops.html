@@ -9,7 +9,7 @@
     <meta name="author" content="Lil Sculpr Clay Modeling Academy" />
     <meta
       name="description"
-      content="Join our exciting clay modeling workshops at Lil Sculpr. Strawberry Cottage Workshop and Koi Fish Frame Art — book your spot today!"
+      content="Join our exciting clay modeling workshops at Lil Sculpr. Strawberry Cottage, Koi Fish Frame Art, Kids Clay Mirror, and 3D Canvas Workshop — book your spot today!"
     />
 
     <!-- Open Graph -->
@@ -17,7 +17,7 @@
     <meta property="og:title" content="Clay Modeling Workshops | Lil Sculpr" />
     <meta
       property="og:description"
-      content="Join our exciting clay modeling workshops. Strawberry Cottage Workshop and Koi Fish Frame Art — book your spot today!"
+      content="Join our exciting clay modeling workshops. Strawberry Cottage, Koi Fish Frame Art, Kids Clay Mirror, and 3D Canvas Workshop — book your spot today!"
     />
     <meta property="og:image" content="assets/img/logo.webp" />
 
@@ -351,53 +351,12 @@
           <p class="text-muted">Fun, hands-on clay modeling sessions for kids aged 5-14 in Chennai.</p>
         </div>
 
-        <div class="row g-30 justify-content-center">
-          <!-- Strawberry Cottage Workshop Card -->
-          <div class="col-lg-6 col-xl-5">
-            <div class="workshop-card wow fadeInLeft" data-wow-delay="0.1s">
-              <div class="workshop-card-img" style="background-image: url('assets/img/lil-sculpr/strawberry-cottage.jpeg'); background-color: #fdf2f8; background-size: cover; background-position: center;">
-                <span class="workshop-card-badge">🍓 Popular</span>
-              </div>
-              <div class="workshop-card-body">
-                <h3 class="workshop-card-title">Strawberry Cottage Workshop 🍓</h3>
-                <div class="workshop-card-meta">
-                  <span><i class="fas fa-calendar-alt"></i> July 25, 2026</span>
-                  <span><i class="fas fa-clock"></i> 11 AM - 1 PM</span>
-                  <span><i class="fas fa-users"></i> 30 Slots</span>
-                </div>
-                <p class="workshop-card-desc">
-                  Kids sculpt their own magical strawberry cottage — a delightful keepsake! All materials included. Perfect for beginners.
-                </p>
-                <div class="workshop-card-footer">
-                  <div class="workshop-price">₹399 <small>per child</small></div>
-                  <a href="strawberry-cottage-register.html" class="vs-btn wave-btn">Book Now</a>
-                </div>
-              </div>
+        <div class="row g-30 justify-content-center" id="workshopContainer">
+          <div class="col-12 text-center py-5">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading workshops...</span>
             </div>
-          </div>
-
-          <!-- Koi Fish Frame Art Card -->
-          <div class="col-lg-6 col-xl-5">
-            <div class="workshop-card wow fadeInRight" data-wow-delay="0.2s">
-              <div class="workshop-card-img" style="background-image: url('assets/img/lil-sculpr/koi-fish-art.jpeg'); background-color: #eff6ff; background-size: cover; background-position: center;">
-                <span class="workshop-card-badge">🐟 New</span>
-              </div>
-              <div class="workshop-card-body">
-                <h3 class="workshop-card-title">Koi Fish Frame Art 🐟</h3>
-                <div class="workshop-card-meta">
-                  <span><i class="fas fa-calendar-alt"></i> July 26, 2026</span>
-                  <span><i class="fas fa-clock"></i> 11 AM - 1 PM</span>
-                  <span><i class="fas fa-users"></i> 30 Slots</span>
-                </div>
-                <p class="workshop-card-desc">
-                  Create a stunning koi fish clay art on a decorative frame. All materials, frame base, and expert guidance included!
-                </p>
-                <div class="workshop-card-footer">
-                  <div class="workshop-price">₹499 <small>per child</small></div>
-                  <a href="koi-fish-register.html" class="vs-btn wave-btn">Book Now</a>
-                </div>
-              </div>
-            </div>
+            <p class="text-muted mt-2">Loading workshops...</p>
           </div>
         </div>
       </div>
@@ -480,5 +439,50 @@
     <script src="assets/js/wow.min.js"></script>
     <script src="assets/js/main.min.js"></script>
     <script src="./assets/js/spinner.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var container = document.getElementById('workshopContainer');
+        if (!container) return;
+        var apiBase = 'http://localhost:5000/api';
+        fetch(apiBase + '/workshops/active')
+          .then(function(r) { return r.json() })
+          .then(function(resp) {
+            if (!resp.success || !resp.data || resp.data.length === 0) {
+              container.innerHTML = '<div class="col-12 text-center py-5"><p class="text-muted">No workshops available right now. Check back soon!</p></div>';
+              return;
+            }
+            var html = '';
+            resp.data.forEach(function(w, i) {
+              var delay = 0.1 + (i * 0.1);
+              var anim = i % 2 === 0 ? 'fadeInLeft' : 'fadeInRight';
+              html += '<div class="col-lg-6 col-xl-5">' +
+                '<div class="workshop-card wow ' + anim + '" data-wow-delay="' + delay + 's">' +
+                '<div class="workshop-card-img" style="background-image: url(\'' + (w.image || '') + '\'); background-color: ' + (w.backgroundColor || '#f5f0ff') + '; background-size: cover; background-position: center;">' +
+                (w.badge ? '<span class="workshop-card-badge" style="background:' + (w.badgeColor || '#9c29b2') + '">' + (w.emoji || '') + ' ' + w.badge + '</span>' : '') +
+                '</div>' +
+                '<div class="workshop-card-body">' +
+                '<h3 class="workshop-card-title">' + w.name + '</h3>' +
+                '<div class="workshop-card-meta">' +
+                '<span><i class="fas fa-calendar-alt"></i> ' + new Date(w.date).toLocaleDateString('en-IN', {day:'numeric',month:'long',year:'numeric'}) + '</span>' +
+                '<span><i class="fas fa-clock"></i> ' + (w.timeStart || '') + ' - ' + (w.timeEnd || '') + '</span>' +
+                '<span><i class="fas fa-users"></i> ' + w.capacity + ' Slots</span>' +
+                '</div>' +
+                '<p class="workshop-card-desc">' + (w.shortDescription || w.description || '') + '</p>' +
+                '<div class="workshop-card-footer">' +
+                '<div class="workshop-price">₹' + w.price + ' <small>per child</small></div>' +
+                (w.registrationPageUrl ? '<a href="' + w.registrationPageUrl + '" class="vs-btn wave-btn">Book Now</a>' : '') +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
+            });
+            container.innerHTML = html;
+            if (typeof WOW !== 'undefined') { new WOW().init(); }
+          })
+          .catch(function() {
+            container.innerHTML = '<div class="col-12 text-center py-5"><p class="text-muted">Unable to load workshops. Please try again later.</p></div>';
+          });
+      });
+    </script>
   </body>
 </html>
