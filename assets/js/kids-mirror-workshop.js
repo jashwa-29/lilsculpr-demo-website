@@ -1,7 +1,7 @@
 (function() {
   'use strict';
-// const API_BASE = 'https://backend.lilsculpr.com/api/special-course';
-  const API_BASE = 'http://localhost:5000/api/special-course';
+const API_BASE = 'https://backend.lilsculpr.com/api/special-course';
+  // const API_BASE = 'http://localhost:5000/api/special-course';
   const WORKSHOP_NAME = 'Kids Fruit & Vegetable Clay Mirror Workshop';
   const WORKSHOP_PRICE = 750;
   const WORKSHOP_DATE = '2026-08-02';

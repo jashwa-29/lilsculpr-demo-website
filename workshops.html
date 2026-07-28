@@ -443,7 +443,7 @@
       document.addEventListener('DOMContentLoaded', function() {
         var container = document.getElementById('workshopContainer');
         if (!container) return;
-        var apiBase = 'http://localhost:5000/api';
+        var apiBase = 'https://backend.lilsculpr.com/api';
         fetch(apiBase + '/workshops/active')
           .then(function(r) { return r.json() })
           .then(function(resp) {
