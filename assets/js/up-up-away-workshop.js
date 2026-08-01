@@ -15,14 +15,7 @@ const API_BASE = 'https://backend.lilsculpr.com/api/special-course';
   const successWorkshop = document.getElementById('successWorkshop');
   const failureMessage = document.getElementById('failureMessage');
 
-  const slotIndicator = document.getElementById('slotIndicator');
-  const slotCount = document.getElementById('slotCount');
-  const slotCapacity = document.getElementById('slotCapacity');
-  const slotFill = document.getElementById('slotFill');
-  const slotStatusText = document.getElementById('slotStatusText');
-
   async function checkSlotAvailability() {
-    if (!slotIndicator) return;
     try {
       const params = new URLSearchParams({
         carnivalName: WORKSHOP_NAME,
@@ -34,41 +27,22 @@ const API_BASE = 'https://backend.lilsculpr.com/api/special-course';
       if (data.success) {
         const avail = data.data.availableSlots;
         const cap = data.data.capacity;
-        const ratio = cap > 0 ? avail / cap : 0;
 
-        slotCount.textContent = avail;
-        slotCapacity.textContent = cap;
-        slotFill.style.width = (ratio * 100) + '%';
+        console.log('Slots: ' + avail + ' / ' + cap + ' remaining');
 
         if (avail === 0) {
-          slotIndicator.style.background = '#fef2f2';
-          slotIndicator.style.borderColor = '#fca5a5';
-          slotCount.style.color = '#dc2626';
-          slotStatusText.textContent = '❌ Workshop is full!';
-          slotStatusText.style.color = '#dc2626';
-          slotFill.style.background = '#ef4444';
           submitBtn.disabled = true;
           submitBtn.title = 'No slots available';
+          console.log('❌ Workshop is full!');
         } else if (avail <= 5) {
-          slotIndicator.style.background = '#fff7ed';
-          slotIndicator.style.borderColor = '#fdba74';
-          slotCount.style.color = '#ea580c';
-          slotStatusText.textContent = '⚠️ Only ' + avail + ' slot' + (avail > 1 ? 's' : '') + ' remaining!';
-          slotStatusText.style.color = '#ea580c';
-          slotFill.style.background = '#f97316';
+          console.log('⚠️ Only ' + avail + ' slot' + (avail > 1 ? 's' : '') + ' remaining!');
         } else {
-          slotIndicator.style.background = '#f0fdf4';
-          slotIndicator.style.borderColor = '#86efac';
-          slotCount.style.color = '#166534';
-          slotStatusText.textContent = '✅ Slots available — register now!';
-          slotStatusText.style.color = '#166534';
-          slotFill.style.background = '#22c55e';
+          console.log('✅ Slots available — register now!');
         }
       }
     } catch (err) {
       console.error('Slot check failed:', err);
-      slotStatusText.textContent = 'Could not check availability';
-      slotStatusText.style.color = '#6b7280';
+      console.log('Could not check availability');
     }
   }
 
