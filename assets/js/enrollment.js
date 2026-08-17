@@ -1,9 +1,9 @@
 (function($) {
     "use strict";
 //    const BACKEND_BASE = 'http://localhost:5000/api';
-   const BACKEND_API = `${BACKEND_BASE}/enrollment`;
    const BACKEND_BASE = 'https://backend.lilsculpr.com/api';
-   // const BACKEND_API = 'https://backend.lilsculpr.com/api/enrollment';
+   const BACKEND_API = `${BACKEND_BASE}/enrollment`;
+    // const BACKEND_API = 'https://backend.lilsculpr.com/api/enrollment';
     
     // UI elements
     const form = '#admissionForm';
