@@ -1,9 +1,9 @@
 (function($) {
     "use strict";
-  const BACKEND_BASE = 'https://backend.lilsculpr.com/api';
-  const BACKEND_API = `${BACKEND_BASE}/enrollment`;
-   // const BACKEND_BASE = 'http://localhost:5000/api';
-   // const BACKEND_API = 'http://localhost:5000/api/enrollment';
+//    const BACKEND_BASE = 'http://localhost:5000/api';
+   const BACKEND_API = `${BACKEND_BASE}/enrollment`;
+   const BACKEND_BASE = 'https://backend.lilsculpr.com/api';
+   // const BACKEND_API = 'https://backend.lilsculpr.com/api/enrollment';
     
     // UI elements
     const form = '#admissionForm';
@@ -11,6 +11,7 @@
 
     /* ── DATA LAYER ── */
     let MAX_PER_SLOT = 8;
+    const MAX_PHOTO_SIZE = 2 * 1024 * 1024; // 2MB — must match backend multer limit
     // Raw batch documents from DB, keyed by type
     let BATCHES_BY_TYPE = { offline: [], online: [] };
 
@@ -21,6 +22,150 @@
     /* ── STATE ── */
     let currentType = "offline";
     let selectedSlot = null;
+
+    // ==================== FLEXI-BATCH ====================
+    const FLEXI_DAYS = [
+        { day: 'Monday' },
+        { day: 'Tuesday' },
+        { day: 'Wednesday' },
+        { day: 'Thursday' },
+        { day: 'Friday' },
+        { day: 'Saturday' },
+        { day: 'Sunday' }
+    ];
+    const FLEXI_TIMES = [
+        { value: '11:00 AM', label: '11:00 AM – 12:00 PM', start: '11:00 AM', end: '12:00 PM' },
+        { value: '12:00 PM', label: '12:00 PM – 1:00 PM', start: '12:00 PM', end: '1:00 PM' },
+        // 1:00 PM - 2:00 PM is lunch break (excluded)
+        { value: '2:00 PM', label: '2:00 PM – 3:00 PM', start: '2:00 PM', end: '3:00 PM' },
+        { value: '3:00 PM', label: '3:00 PM – 4:00 PM', start: '3:00 PM', end: '4:00 PM' },
+        { value: '4:00 PM', label: '4:00 PM – 5:00 PM', start: '4:00 PM', end: '5:00 PM' },
+        { value: '5:00 PM', label: '5:00 PM – 6:00 PM', start: '5:00 PM', end: '6:00 PM' },
+        { value: '6:00 PM', label: '6:00 PM – 7:00 PM', start: '6:00 PM', end: '7:00 PM' }
+    ];
+    let flexiSelectedDays = [];
+    let flexiSelectedTime = '';
+
+    function initFlexiOptions() {
+        const daysEl = $('#flexiDaysContainer');
+        if (daysEl.length && !daysEl.children().length) {
+            FLEXI_DAYS.forEach(d => {
+                daysEl.append(`
+                    <div class="flexi-option flexi-day" data-day="${d.day}" onclick="toggleFlexiDay(this)">
+                        <input type="checkbox" value="${d.day}">
+                        <span class="opt-icon">📅</span><span>${d.day}</span>
+                    </div>
+                `);
+            });
+        }
+        const timesEl = $('#flexiTimesContainer');
+        if (timesEl.length && !timesEl.children().length) {
+            FLEXI_TIMES.forEach(t => {
+                timesEl.append(`
+                    <div class="flexi-option flexi-time" data-time="${t.value}" onclick="selectFlexiTime(this)">
+                        <input type="radio" name="flexiTime" value="${t.value}">
+                        <span class="opt-icon">⏰</span><span>${t.label}</span>
+                    </div>
+                `);
+            });
+        }
+    }
+
+    window.toggleFlexiDay = function(el) {
+        const $el = $(el);
+        const day = $el.data('day');
+        const idx = flexiSelectedDays.indexOf(day);
+
+        if (idx >= 0) {
+            flexiSelectedDays.splice(idx, 1);
+            $el.removeClass('selected');
+        } else {
+            if (flexiSelectedDays.length >= 2) {
+                showToast('You can select a maximum of 2 flexi days.', 'error');
+                return;
+            }
+            flexiSelectedDays.push(day);
+            $el.addClass('selected');
+        }
+        updateFlexiSummary();
+    };
+
+    window.selectFlexiTime = function(el) {
+        flexiSelectedTime = $(el).data('time');
+        $('.flexi-option[data-time]').removeClass('selected');
+        $(el).addClass('selected');
+        updateFlexiSummary();
+    };
+
+    function getFlexiTimeSlot() {
+        return FLEXI_TIMES.find(t => t.value === flexiSelectedTime) || null;
+    }
+
+    function updateFlexiSummary() {
+        const summary = $('#flexiSummary');
+        if (!summary.length) return;
+        if (flexiSelectedDays.length >= 2 && flexiSelectedTime) {
+            const daysText = flexiSelectedDays.join(' & ');
+            const slot = getFlexiTimeSlot();
+            $('#flexiSummaryText').text(`${daysText} · ${slot ? slot.label : flexiSelectedTime}`);
+            summary.show();
+            $('#e-flexi').css('display', 'none');
+        } else {
+            summary.hide();
+        }
+    }
+
+    function getFlexiSchedule() {
+        const slot = getFlexiTimeSlot();
+        const timeLabel = slot ? slot.label : flexiSelectedTime;
+        const timeStart = slot ? slot.start : flexiSelectedTime;
+        const timeEnd = slot ? slot.end : flexiSelectedTime;
+        return flexiSelectedDays.map(day => ({
+            day,
+            time: timeLabel,
+            timeStart,
+            timeEnd
+        }));
+    }
+
+    function isFlexiMode() {
+        return $('#batchType').val() === 'flexi';
+    }
+
+    function computeChildAge() {
+        const dobVal = $('#childDob').val();
+        if (!dobVal) return '';
+        const dob = new Date(dobVal);
+        const today = new Date();
+        if (isNaN(dob.getTime()) || dob > today) return '';
+        let age = today.getFullYear() - dob.getFullYear();
+        const m = today.getMonth() - dob.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) age--;
+        return `${age} years`;
+    }
+
+    function getFlexiClassType() {
+        const val = $('#flexiClassType').val();
+        if (val) return val;
+        return $('#selectedType').val() || 'offline';
+    }
+
+    window.switchBatchType = function(type) {
+        $('#batchType').val(type);
+        $('.batch-mode-tab').removeClass('active');
+
+        if (type === 'flexi') {
+            $('#bmFlexi').addClass('active');
+            $('#regularBatchBlock').hide();
+            $('#flexiBatchBlock').show();
+            initFlexiOptions();
+            updateFlexiSummary();
+        } else {
+            $('#bmRegular').addClass('active');
+            $('#flexiBatchBlock').hide();
+            $('#regularBatchBlock').show();
+        }
+    };
 
     // ==================== API FUNCTIONS ====================
     async function fetchBatchesFromDB() {
@@ -64,12 +209,10 @@
     async function submitEnrollment(formData) {
         try {
             console.log(`📝 Submitting enrollment...`);
-            // we use axios.post with multipart form data since it contains a file
-            const response = await axios.post(`${BACKEND_API}/submit`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            });
+            // we use axios.post with FormData since it contains a file.
+            // Do NOT set Content-Type manually — axios/browser appends the boundary,
+            // which multer needs to parse the uploaded photo.
+            const response = await axios.post(`${BACKEND_API}/submit`, formData);
             if (response.data.success) {
                 console.log('✅ Enrollment submitted successfully');
                 return response.data;
@@ -167,6 +310,7 @@
     // Export some functions to global scope as they are called from HTML inline onclick
     window.switchType = function(type, el) {
         currentType = type;
+        $('#selectedType').val(type);
         $('.type-tab').removeClass('active');
         $(el).addClass('active');
         $('.batch-panel').removeClass('visible');
@@ -176,6 +320,12 @@
     window.previewPhoto = function(input) {
         const file = input.files[0];
         if (!file) return;
+        if (file.size > MAX_PHOTO_SIZE) {
+            input.value = '';
+            $('#photoPreview').attr('src', '').hide();
+            alert(`Photo is too large (${(file.size / (1024 * 1024)).toFixed(1)} MB). Maximum allowed size is 2 MB.`);
+            return;
+        }
         const r = new FileReader();
         r.onload = e => {
             $('#photoPreview').attr('src', e.target.result).show();
@@ -208,13 +358,27 @@
         if (!photoFile) {
             alert("Please upload a child photograph.");
             valid = false;
+        } else if (photoFile.size > MAX_PHOTO_SIZE) {
+            alert(`Photo is too large (${(photoFile.size / (1024 * 1024)).toFixed(1)} MB). Maximum allowed size is 2 MB.`);
+            $('#photoInput').val('');
+            $('#photoPreview').attr('src', '').hide();
+            valid = false;
         }
 
-        if (!selectedSlot) {
-            $('#e-batch').css('display', 'block');
-            valid = false;
+        if (isFlexiMode()) {
+            if (flexiSelectedDays.length < 2 || !flexiSelectedTime) {
+                $('#e-flexi').css('display', 'block');
+                valid = false;
+            } else {
+                $('#e-flexi').css('display', 'none');
+            }
         } else {
-            $('#e-batch').css('display', 'none');
+            if (!selectedSlot) {
+                $('#e-batch').css('display', 'block');
+                valid = false;
+            } else {
+                $('#e-batch').css('display', 'none');
+            }
         }
 
         const d1 = $('#decl1').is(':checked');
@@ -242,9 +406,12 @@
 
         try {
             const kitOptIn = $('#kitOptIn').is(':checked');
-            
-            // 1. Create Order — passing batchId so backend validates capacity
-            const { order, amount, key_id } = await createOrderOnBackend(selectedSlot.type, kitOptIn, selectedSlot.batchId);
+            const flexiMode = isFlexiMode();
+
+            // 1. Create Order — passing batchId so backend validates capacity (only for regular)
+            const orderType = flexiMode ? getFlexiClassType() : selectedSlot.type;
+            const orderBatchId = flexiMode ? null : selectedSlot.batchId;
+            const { order, amount, key_id } = await createOrderOnBackend(orderType, kitOptIn, orderBatchId);
             
             // 2. Initialize Payment — key is provided by backend, never hardcoded in frontend
             const options = {
@@ -264,7 +431,7 @@
                         formData.append("razorpayPaymentId", response.razorpay_payment_id);
                         formData.append("razorpaySignature", response.razorpay_signature);
                         formData.append("childName", $('#childName').val().trim());
-                        formData.append("childAge", $('#childDob').val());
+                        formData.append("childAge", computeChildAge());
                         formData.append("dateOfBirth", $('#childDob').val());
                         formData.append("childClass", $('#childClass').val());
                         formData.append("schoolName", $('#schoolName').val().trim());
@@ -272,15 +439,27 @@
                         formData.append("contact1", $('#contact1').val().trim());
                         formData.append("contact2", $('#contact2').val().trim());
                         formData.append("email", $('#email').val().trim());
-                        formData.append("classType", selectedSlot.type);
-                        formData.append("dayId", selectedSlot.dayId);
-                        formData.append("time", selectedSlot.time);
-                        formData.append("slotKey", selectedSlot.key);
-                        formData.append("batchId", selectedSlot.batchId || '');
+                        formData.append("classType", flexiMode ? getFlexiClassType() : selectedSlot.type);
                         formData.append("kitOptIn", kitOptIn);
                         formData.append("amountPaid", amount);
                         formData.append("photo", $('#photoInput')[0].files[0]);
 
+                        if (flexiMode) {
+                            const schedule = getFlexiSchedule();
+                            formData.append("batchType", "flexi");
+                            formData.append("flexiSchedule", JSON.stringify(schedule));
+                            formData.append("flexiNotes", $('#flexiNotes').val().trim());
+                            formData.append("dayId", schedule[0].day);
+                            formData.append("time", schedule[0].time);
+                            formData.append("slotKey", "flexi|" + schedule.map(s => s.day).join('+'));
+                            formData.append("batchId", "");
+                        } else {
+                            formData.append("batchType", "regular");
+                            formData.append("dayId", selectedSlot.dayId);
+                            formData.append("time", selectedSlot.time);
+                            formData.append("slotKey", selectedSlot.key);
+                            formData.append("batchId", selectedSlot.batchId || '');
+                        }
 
                         const result = await submitEnrollment(formData);
                         
@@ -350,6 +529,9 @@
         if ($('#slots-offline').length) {
             buildAllSlots();
         }
+
+        // Render flexi-batch options so they're ready when the user switches modes
+        initFlexiOptions();
         
         console.log('✅ Enrollment form initialized successfully');
     }

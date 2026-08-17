@@ -4166,6 +4166,7 @@ ul.popular-service-wrap li:hover {
 .header-menu-area {
   position: relative;
   z-index: 3;
+  box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.1);
 }
 
 .header-top-area {

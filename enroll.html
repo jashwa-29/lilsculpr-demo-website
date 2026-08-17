@@ -308,6 +308,104 @@
     }
     .type-tab.active .sub-label { color: var(--primary-dk); }
 
+    /* ---------- BATCH MODE TOGGLE (Regular vs Flexi) ---------- */
+    .batch-mode-tabs {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .batch-mode-tab {
+      flex: 1;
+      min-width: 180px;
+      padding: 16px 12px;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-sm);
+      text-align: center;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.92rem;
+      background: white;
+      color: var(--muted);
+      transition: 0.25s ease;
+    }
+    .batch-mode-tab .tab-icon { font-size: 1.6rem; display: block; margin-bottom: 4px; }
+    .batch-mode-tab .sub-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: var(--muted);
+      display: block;
+      margin-top: 2px;
+    }
+    .batch-mode-tab.active {
+      border-color: var(--primary);
+      background: var(--primary-light);
+      color: var(--primary-dk);
+      box-shadow: 0 4px 16px rgba(249,115,22,0.12);
+    }
+    .batch-mode-tab.active .sub-label { color: var(--primary-dk); }
+
+    /* ---------- FLEXI-BATCH SECTION ---------- */
+    .flexi-info {
+      background: #eef2ff;
+      border: 1px solid #c7d2fe;
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      font-size: 0.82rem;
+      color: #3730a3;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+    .flexi-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .flexi-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: 0.15s;
+      background: white;
+      color: #1e1b18;
+      user-select: none;
+    }
+    .flexi-option:hover { border-color: var(--primary); }
+    .flexi-option.selected {
+      border-color: var(--primary);
+      background: var(--primary-light);
+      color: var(--primary-dk);
+      box-shadow: 0 0 0 3px rgba(249,115,22,0.12);
+    }
+    .flexi-option input { display: none; }
+    .flexi-option .opt-icon { font-size: 1.1rem; }
+    .flexi-option.flexi-day {
+      min-width: 84px;
+      justify-content: center;
+      text-align: center;
+    }
+    .flexi-option.flexi-time {
+      min-width: 148px;
+      justify-content: center;
+      text-align: center;
+    }
+    .flexi-summary-box {
+      display: none;
+      background: #e8f4fd;
+      border: 1px solid #b8d4e8;
+      color: #1a5276;
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      font-size: 0.85rem;
+      margin: 14px 0;
+    }
+
     /* ---------- BATCH PANEL ---------- */
     .batch-panel { display: none; }
     .batch-panel.visible { display: block; }
@@ -629,7 +727,6 @@
   <img src="https://www.lilsculpr.com/assets/img/logo.webp" alt="Lil Sculpr" />
   <h1>🎨 Student Admission Form</h1>
   <p>Enroll your child at Lil Sculpr Clay Modelling Academy, Chennai</p>
-  <a class="admin-link" href="admin.html">🔐 Admin Dashboard →</a>
 </div>
 
 <!-- FORM WRAP -->
@@ -719,28 +816,84 @@
     <!-- SECTION 3: CLASS TYPE & BATCH (with fees on tabs) -->
     <div class="card">
       <div class="card-title"><span class="badge">3</span> Class Type &amp; Batch Selection</div>
-      <div class="type-tabs">
-        <div class="type-tab active" onclick="switchType('offline',this)">
-          <span class="tab-icon">🏫</span>Offline (Chennai)
-          <span class="fee-badge">₹2,500 / month</span>
-          <span class="sub-label">in-person at Anna Nagar</span>
+
+      <!-- Batch Mode Toggle: Regular vs Flexi -->
+      <div class="batch-mode-tabs">
+        <div class="batch-mode-tab active" id="bmRegular" onclick="switchBatchType('regular')">
+          <span class="tab-icon">📅</span>Regular Batch
+          <span class="sub-label">Fixed schedule</span>
         </div>
-        <div class="type-tab" onclick="switchType('online',this)">
-          <span class="tab-icon">💻</span>Online (Live)
-          <span class="fee-badge">₹2,200 / month</span>
-          <span class="sub-label">live interactive sessions</span>
+        <div class="batch-mode-tab" id="bmFlexi" onclick="switchBatchType('flexi')">
+          <span class="tab-icon">🔄</span>Flexi-Batch
+          <span class="sub-label">Choose any 2 days &amp; time</span>
         </div>
+      </div>
+      <input type="hidden" id="batchType" value="regular" />
+      <input type="hidden" id="selectedType" value="offline" />
+
+      <!-- REGULAR BATCH BLOCK -->
+      <div id="regularBatchBlock">
+        <div class="type-tabs">
+          <div class="type-tab active" onclick="switchType('offline',this)">
+            <span class="tab-icon">🏫</span>Offline (Chennai)
+            <span class="fee-badge">₹2,500 / month</span>
+            <span class="sub-label">in-person at Anna Nagar</span>
+          </div>
+          <div class="type-tab" onclick="switchType('online',this)">
+            <span class="tab-icon">💻</span>Online (Live)
+            <span class="fee-badge">₹2,200 / month</span>
+            <span class="sub-label">live interactive sessions</span>
+          </div>
+        </div>
+
+        <div class="batch-panel visible" id="panel-offline">
+          <p style="font-size:0.8rem;color:var(--muted);margin-bottom:14px;">📍 Anna Nagar West Ext., Chennai · Wednesday holiday</p>
+          <div id="slots-offline"></div>
+        </div>
+        <div class="batch-panel" id="panel-online">
+          <p style="font-size:0.8rem;color:var(--muted);margin-bottom:14px;">💻 Live sessions from home · All India</p>
+          <div id="slots-online"></div>
+        </div>
+        <span class="err" id="e-batch" style="display:none;margin-top:8px;">Please select a batch slot</span>
       </div>
 
-      <div class="batch-panel visible" id="panel-offline">
-        <p style="font-size:0.8rem;color:var(--muted);margin-bottom:14px;">📍 Anna Nagar West Ext., Chennai · Wednesday holiday</p>
-        <div id="slots-offline"></div>
+      <!-- FLEXI-BATCH BLOCK -->
+      <div id="flexiBatchBlock" style="display:none;">
+        <div class="flexi-info">
+          🔄 With <strong>Flexi-Batch</strong>, pick any 2 days of the week and any 1 time slot.
+          No advance booking needed — just come to any of your selected slots!
+          <br><span style="opacity:0.85;">🍽️ Lunch break: 1:00 PM – 2:00 PM (no classes)</span>
+        </div>
+
+        <div class="field" style="margin-bottom:16px;">
+          <label>Class Type <span class="req">*</span></label>
+          <select id="flexiClassType">
+            <option value="offline">🏫 Offline (Chennai) — ₹2,500 / month</option>
+            <option value="online">💻 Online (Live) — ₹2,200 / month</option>
+          </select>
+        </div>
+
+        <div class="field" style="margin-bottom:16px;">
+          <label>Select Your Flexi Days <span class="req">*</span> <span class="hint">choose any 2 specific days (Mon–Sun)</span></label>
+          <div id="flexiDaysContainer" class="flexi-options"></div>
+        </div>
+
+        <div class="field" style="margin-bottom:16px;">
+          <label>Select Time Slot <span class="req">*</span> <span class="hint">11 AM – 7 PM (lunch 1–2 PM excluded)</span></label>
+          <div id="flexiTimesContainer" class="flexi-options"></div>
+        </div>
+
+        <div class="flexi-summary-box" id="flexiSummary">
+          <strong>Your Flexi Schedule:</strong> <span id="flexiSummaryText">—</span>
+        </div>
+
+        <div class="field">
+          <label>Additional Notes (Optional)</label>
+          <textarea id="flexiNotes" rows="2" placeholder="Any special requests or notes..."></textarea>
+        </div>
+
+        <span class="err" id="e-flexi" style="display:none;margin-top:8px;">Please select at least 2 days and 1 time slot.</span>
       </div>
-      <div class="batch-panel" id="panel-online">
-        <p style="font-size:0.8rem;color:var(--muted);margin-bottom:14px;">💻 Live sessions from home · All India</p>
-        <div id="slots-online"></div>
-      </div>
-      <span class="err" id="e-batch" style="display:none;margin-top:8px;">Please select a batch slot</span>
     </div>
 
     <!-- SECTION 4: KIT (highly visible) -->
@@ -906,97 +1059,10 @@
     };
 
     // ─── PHOTO PREVIEW ──────────────────────────────────
-    window.previewPhoto = function(input) {
-      const preview = document.getElementById('photoPreview');
-      if (input.files && input.files[0]) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          preview.src = e.target.result;
-          preview.style.display = 'block';
-        };
-        reader.readAsDataURL(input.files[0]);
-      } else {
-        preview.style.display = 'none';
-      }
-    };
-
-    // ─── BATCH SLOTS (mock data) ────────────────────────
-    const offlineSlots = [
-      { day: 'Monday', time: '4:00 – 5:30 PM', seats: 4, total: 8 },
-      { day: 'Monday', time: '6:00 – 7:30 PM', seats: 2, total: 8 },
-      { day: 'Tuesday', time: '4:00 – 5:30 PM', seats: 7, total: 8 },
-      { day: 'Tuesday', time: '6:00 – 7:30 PM', seats: 1, total: 8 },
-      { day: 'Thursday', time: '4:00 – 5:30 PM', seats: 5, total: 8 },
-      { day: 'Thursday', time: '6:00 – 7:30 PM', seats: 3, total: 8 },
-      { day: 'Friday', time: '4:00 – 5:30 PM', seats: 8, total: 8 },
-      { day: 'Friday', time: '6:00 – 7:30 PM', seats: 0, total: 8 },
-      { day: 'Saturday', time: '9:30 – 11:00 AM', seats: 6, total: 8 },
-      { day: 'Saturday', time: '11:30 – 1:00 PM', seats: 2, total: 8 },
-    ];
-    const onlineSlots = [
-      { day: 'Monday', time: '5:00 – 6:30 PM', seats: 6, total: 10 },
-      { day: 'Tuesday', time: '5:00 – 6:30 PM', seats: 3, total: 10 },
-      { day: 'Thursday', time: '5:00 – 6:30 PM', seats: 8, total: 10 },
-      { day: 'Friday', time: '5:00 – 6:30 PM', seats: 1, total: 10 },
-      { day: 'Saturday', time: '10:00 – 11:30 AM', seats: 9, total: 10 },
-    ];
-
-    function renderSlots(slots, containerId) {
-      const container = document.getElementById(containerId);
-      if (!container) return;
-      const groups = {};
-      slots.forEach(s => { if (!groups[s.day]) groups[s.day] = []; groups[s.day].push(s); });
-      container.innerHTML = '';
-      Object.keys(groups).forEach(day => {
-        const div = document.createElement('div');
-        div.className = 'batch-group';
-        div.innerHTML = `<h4>📅 ${day}</h4><div class="batch-slots"></div>`;
-        const slotWrap = div.querySelector('.batch-slots');
-        groups[day].forEach(slot => {
-          const btn = document.createElement('div');
-          const full = slot.seats === 0;
-          let seatClass = 'seats-ok';
-          if (slot.seats === 0) seatClass = 'seats-full';
-          else if (slot.seats <= 2) seatClass = 'seats-few';
-          btn.className = `slot-btn${full ? ' full' : ''}`;
-          btn.dataset.value = `${slot.day} · ${slot.time}`;
-          btn.innerHTML = `
-            <span class="time">${slot.time}</span>
-            <span class="seats ${seatClass}">${slot.seats} / ${slot.total} seats</span>
-          `;
-          if (!full) {
-            btn.addEventListener('click', function() {
-              document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('selected'));
-              this.classList.add('selected');
-              document.getElementById('e-batch').style.display = 'none';
-              document.getElementById('selectedSlot').value = this.dataset.value;
-            });
-          }
-          slotWrap.appendChild(btn);
-        });
-        container.appendChild(div);
-      });
-    }
-
-    const hiddenSlot = document.createElement('input');
-    hiddenSlot.type = 'hidden';
-    hiddenSlot.id = 'selectedSlot';
-    document.getElementById('admissionForm').appendChild(hiddenSlot);
-
-    renderSlots(offlineSlots, 'slots-offline');
-    renderSlots(onlineSlots, 'slots-online');
-
-    // ─── SWITCH TYPE ─────────────────────────────────────
-    window.switchType = function(type, el) {
-      document.querySelectorAll('.type-tab').forEach(t => t.classList.remove('active'));
-      el.classList.add('active');
-      document.querySelectorAll('.batch-panel').forEach(p => p.classList.remove('visible'));
-      document.getElementById(`panel-${type}`).classList.add('visible');
-      document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('selected'));
-      document.getElementById('selectedSlot').value = '';
-    };
+    // (window.previewPhoto is provided by assets/js/enrollment.js — do not redefine here)
 
     // ─── INIT ────────────────────────────────────────────
+    // Batch slots are rendered by assets/js/enrollment.js from the live database.
     setTimeout(window.calculateAgeFromDob, 120);
 
     // Kit checkbox toast
