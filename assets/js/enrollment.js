@@ -275,9 +275,6 @@
                 dayBatches.forEach(batch => {
                     const left = seatsLeft(batch);
                     const full = left === 0;
-                    const few  = left <= 2 && left > 0;
-                    const seatClass = full ? 'seats-full' : few ? 'seats-few' : 'seats-ok';
-                    const seatText  = full ? 'Full' : left === 1 ? '1 seat left' : `${left} seats left`;
 
                     const btn = $('<div></div>').addClass(`slot-btn ${full ? 'full' : ''}`)
                         .attr({
@@ -286,7 +283,9 @@
                             'data-time':   batch.time,
                             'data-batchid': batch._id
                         })
-                        .html(`<span class="time">⏰ ${batch.time}</span><span class="seats ${seatClass}">${seatText}</span>`);
+                        .html(full
+                            ? `<span class="time">⏰ ${batch.time}</span><span class="seats seats-full">Full</span>`
+                            : `<span class="time">⏰ ${batch.time}</span>`);
 
                     if (!full) {
                         btn.on('click', function() {
