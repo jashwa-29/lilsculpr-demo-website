@@ -4,592 +4,1085 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pay Monthly Fee - Lil Sculpr Academy</title>
+  <title>Monthly Fee Portal - Lil Sculpr Academy</title>
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary: #9C29B2;
+      --primary-2: #B84DD1;
+      --primary-soft: #f6ecfb;
+      --gradient: linear-gradient(135deg, #9C29B2 0%, #B84DD1 100%);
+      --bg: #f5f2fa;
+      --card: #ffffff;
+      --text: #241b2e;
+      --muted: #8b7f99;
+      --border: #ece6f3;
+      --green: #15803d;
+      --green-soft: #ecfdf3;
+      --green-line: #bbf7d0;
+      --amber: #b45309;
+      --amber-soft: #fffbeb;
+      --amber-line: #fde68a;
+      --red: #b91c1c;
+      --red-soft: #fef2f2;
+      --blue-soft: #eff6ff;
+      --radius: 22px;
+      --radius-sm: 14px;
+      --shadow: 0 2px 6px rgba(36, 27, 46, 0.05), 0 12px 32px rgba(36, 27, 46, 0.07);
+      --shadow-lg: 0 8px 24px rgba(156, 41, 178, 0.16);
+      --font: 'Poppins', sans-serif;
+      --font-display: 'Nunito', sans-serif;
+    }
+
     body {
-      font-family: 'Poppins', sans-serif;
-      background: #f8f7ff;
-      color: #1e1b18;
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
       min-height: 100vh;
+      padding: 24px 16px 60px;
+      -webkit-font-smoothing: antialiased;
     }
 
-    .container { max-width: 800px; margin: 0 auto; padding: 20px; }
+    /* Decorative background blobs */
+    body::before, body::after {
+      content: '';
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      z-index: 0;
+      pointer-events: none;
+    }
+    body::before {
+      width: 340px; height: 340px;
+      top: -120px; right: -100px;
+      background: rgba(184, 77, 209, 0.18);
+    }
+    body::after {
+      width: 300px; height: 300px;
+      bottom: -120px; left: -100px;
+      background: rgba(156, 41, 178, 0.12);
+    }
 
-    /* Header */
+    .app { position: relative; z-index: 1; max-width: 620px; margin: 0 auto; }
+
+    /* ── Header ─────────────────────────────── */
     .header {
-      background: linear-gradient(135deg, #9C29B2, #B84DD1);
-      color: white;
-      padding: 30px;
-      text-align: center;
-      border-radius: 16px 16px 0 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 24px;
     }
-    .header .logo { height: 50px; margin-bottom: 10px; }
-    .header h1 { font-family: 'Nunito', sans-serif; font-size: 1.8rem; }
-    .header p { opacity: 0.9; font-size: 0.95rem; }
-
-    /* Card */
-    .card {
-      background: white;
-      border-radius: 0 0 16px 16px;
-      padding: 30px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .brand img { height: 46px; width: 46px; border-radius: 12px; object-fit: cover; box-shadow: var(--shadow); }
+    .brand-name { font-family: var(--font-display); font-size: 1.35rem; font-weight: 900; color: var(--text); line-height: 1; }
+    .brand-name span { color: var(--primary); }
+    .header-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.8rem;
+      padding: 8px 14px;
+      border-radius: 999px;
+      box-shadow: var(--shadow);
+      white-space: nowrap;
+    }
+    .header-chip .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.15);
     }
 
-    .form-group { margin-bottom: 20px; }
-    .form-label {
-      display: block;
-      font-size: 0.85rem;
+    /* ── Step indicator ─────────────────────── */
+    .steps {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+    .step {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 0.78rem;
       font-weight: 600;
-      color: #6b7280;
-      margin-bottom: 6px;
+      background: #fff;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      opacity: .7;
+      transition: all .3s;
+    }
+    .step.active {
+      background: var(--gradient);
+      color: #fff;
+      border-color: transparent;
+      box-shadow: var(--shadow-lg);
+      opacity: 1;
+    }
+    .step.done { color: var(--green); border-color: var(--green-line); opacity: 1; }
+    .step .num {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 800;
+      background: rgba(255,255,255,.25);
+    }
+    .step.active .num { background: rgba(255,255,255,.28); }
+    .step.done .num { background: var(--green-soft); }
+    .step-line {
+      width: 34px; height: 2px;
+      background: var(--border);
+      border-radius: 2px;
+    }
+    .step-line.done { background: var(--green-line); }
+
+    /* ── Card ───────────────────────────────── */
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 28px;
+      margin-bottom: 18px;
+      animation: rise .4s ease both;
+    }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Login ──────────────────────────────── */
+    .login-icon {
+      width: 64px; height: 64px;
+      margin: 0 auto 14px;
+      background: var(--gradient);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-lg);
+    }
+    .login-icon svg { width: 30px; height: 30px; stroke: #fff; }
+    .login-title { text-align: center; font-family: var(--font-display); font-size: 1.45rem; font-weight: 800; }
+    .login-sub { text-align: center; color: var(--muted); font-size: 0.9rem; margin: 6px 0 24px; }
+
+    .form-group { margin-bottom: 16px; }
+    .form-label { display: block; font-size: 0.8rem; font-weight: 600; color: var(--muted); margin-bottom: 6px; }
+    .input-wrap { position: relative; }
+    .input-wrap svg {
+      position: absolute; left: 16px; top: 50%;
+      transform: translateY(-50%);
+      width: 18px; height: 18px;
+      stroke: #b5a9c4;
+      pointer-events: none;
     }
     .form-input {
       width: 100%;
-      padding: 12px 16px;
-      border: 2px solid #e8e4f0;
-      border-radius: 10px;
-      font-size: 1rem;
-      transition: border-color 0.2s;
-      font-family: 'Poppins', sans-serif;
+      padding: 14px 16px 14px 46px;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-family: var(--font);
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text);
+      background: #faf9fc;
+      transition: border-color .2s, box-shadow .2s, background .2s;
     }
+    .form-input::placeholder { color: #c3bad0; font-weight: 400; }
     .form-input:focus {
       outline: none;
-      border-color: #9C29B2;
-      box-shadow: 0 0 0 3px rgba(156, 41, 178, 0.1);
+      border-color: var(--primary);
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(156, 41, 178, 0.10);
     }
 
     .btn {
-      padding: 14px 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 15px 24px;
       border: none;
-      border-radius: 10px;
+      border-radius: var(--radius-sm);
+      font-family: var(--font);
       font-size: 1rem;
       font-weight: 700;
       cursor: pointer;
-      transition: all 0.3s;
-      font-family: 'Poppins', sans-serif;
-      width: 100%;
+      transition: transform .2s, box-shadow .2s, opacity .2s;
     }
-    .btn-primary {
-      background: linear-gradient(135deg, #9C29B2, #B84DD1);
-      color: white;
-    }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(156, 41, 178, 0.3); }
-    .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-    .btn-success {
-      background: linear-gradient(135deg, #22C55E, #16A34A);
-      color: white;
-    }
-    .btn-success:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(34, 197, 94, 0.3); }
+    .btn:active { transform: scale(0.98); }
+    .btn svg { width: 19px; height: 19px; }
+    .btn-primary { background: var(--gradient); color: #fff; box-shadow: var(--shadow-lg); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(156, 41, 178, 0.28); }
+    .btn-success { background: linear-gradient(135deg, #22c55e, #16a34a); color: #fff; box-shadow: 0 8px 22px rgba(34, 197, 94, 0.25); }
+    .btn-success:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(34, 197, 94, 0.32); }
+    .btn:disabled { opacity: .55; cursor: not-allowed; transform: none !important; }
 
-    .btn-outline {
-      background: transparent;
-      border: 2px solid #e8e4f0;
-      color: #6b7280;
+    .error-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--red-soft);
+      color: var(--red);
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 12px 14px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 16px;
+      border: 1px solid #fecaca;
     }
-    .btn-outline:hover { border-color: #9C29B2; color: #9C29B2; }
+    .error-box svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .help-line { text-align: center; margin-top: 18px; font-size: 0.8rem; color: var(--muted); }
+    .help-line a { color: var(--primary); font-weight: 700; text-decoration: none; }
 
-    /* Student Info */
-    .student-info {
-      display: none;
-      background: #f8f7ff;
-      border-radius: 12px;
-      padding: 20px;
-      margin: 20px 0;
-      border-left: 4px solid #9C29B2;
+    /* ── Profile ────────────────────────────── */
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 14px;
     }
-    .student-info.active { display: block; }
-    .student-info .row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #f0edf5; }
-    .student-info .row:last-child { border-bottom: none; }
-    .student-info .label { color: #6b7280; font-weight: 500; }
-    .student-info .value { font-weight: 600; }
+    .avatar {
+      width: 56px; height: 56px;
+      border-radius: 18px;
+      background: var(--gradient);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 800;
+      flex-shrink: 0;
+      box-shadow: var(--shadow-lg);
+    }
+    .profile-info { flex: 1; min-width: 0; }
+    .profile-info h3 { font-family: var(--font-display); font-size: 1.15rem; font-weight: 800; line-height: 1.2; }
+    .profile-info .sub { color: var(--muted); font-size: 0.82rem; margin-top: 2px; }
+    .pills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+    .pill {
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: var(--primary-soft);
+      color: var(--primary);
+    }
+    .pill.green { background: var(--green-soft); color: var(--green); }
+    .pill.blue { background: var(--blue-soft); color: #1d4ed8; }
+    .switch-link {
+      background: none;
+      border: none;
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.78rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--primary-soft);
+      transition: opacity .2s;
+    }
+    .switch-link:hover { opacity: .8; }
+    .switch-link svg { width: 14px; height: 14px; }
 
-    /* Fee History */
-    .fee-history { margin-top: 20px; }
-    .fee-history h3 { font-family: 'Nunito', sans-serif; font-size: 1.1rem; margin-bottom: 15px; }
-    .fee-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.9rem;
+    /* ── This month hero ────────────────────── */
+    .month-card {
+      border-radius: var(--radius);
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 18px;
+      animation: rise .4s .06s ease both;
     }
+    .month-card.pending {
+      background: var(--gradient);
+      color: #fff;
+      box-shadow: var(--shadow-lg);
+    }
+    .month-card.paid {
+      background: var(--green-soft);
+      border: 2px solid var(--green-line);
+      color: var(--text);
+    }
+    .month-card::after {
+      content: '';
+      position: absolute;
+      right: -40px; top: -40px;
+      width: 160px; height: 160px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.12);
+    }
+    .month-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      opacity: .85;
+    }
+    .month-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: .02em;
+      padding: 5px 12px;
+      border-radius: 999px;
+      text-transform: uppercase;
+    }
+    .month-card.pending .month-status { background: rgba(255,255,255,.22); color: #fff; }
+    .month-card.paid .month-status { background: #fff; color: var(--green); border: 1px solid var(--green-line); }
+    .month-status svg { width: 14px; height: 14px; }
+    .month-amount {
+      font-family: var(--font-display);
+      font-size: 2.6rem;
+      font-weight: 900;
+      line-height: 1.1;
+      margin: 10px 0 4px;
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+    }
+    .month-amount .cur { font-size: 1.6rem; }
+    .month-due { font-size: 0.85rem; opacity: .9; }
+
+    /* ── Stats row ──────────────────────────── */
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 18px; }
+    .stat {
+      background: var(--card);
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow);
+      padding: 14px;
+      border-top: 3px solid var(--border);
+      animation: rise .4s .1s ease both;
+    }
+    .stat.due-stat { border-top-color: var(--amber); }
+    .stat.paid-stat { border-top-color: var(--green); }
+    .stat.total-stat { border-top-color: var(--primary); }
+    .stat .s-label { font-size: 0.68rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+    .stat .s-value { font-family: var(--font-display); font-size: 1.25rem; font-weight: 800; margin-top: 3px; display: flex; align-items: baseline; gap: 2px; }
+    .stat .s-value .cur { font-size: 0.85rem; }
+    .stat .s-value.due { color: var(--amber); }
+    .stat .s-value.paid { color: var(--green); }
+    .stat .s-value.total { color: var(--primary); }
+    .stat .s-foot { font-size: 0.68rem; color: var(--muted); margin-top: 2px; }
+
+    /* ── Success strip ──────────────────────── */
+    .success-strip {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--green-soft);
+      border: 2px solid var(--green-line);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      color: var(--green);
+      margin-bottom: 18px;
+      animation: rise .4s .12s ease both;
+    }
+    .success-strip svg { width: 22px; height: 22px; flex-shrink: 0; }
+    .success-strip strong { display: block; font-family: var(--font-display); font-size: .98rem; }
+    .success-strip span { font-size: .8rem; opacity: .85; }
+
+    /* ── History ────────────────────────────── */
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .section-head h4 {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-head h4 svg { width: 18px; height: 18px; stroke: var(--primary); }
+    .section-head .hint { font-size: 0.75rem; color: var(--muted); }
+
+    .table-wrap { overflow-x: auto; }
+    .fee-table { width: 100%; border-collapse: collapse; }
     .fee-table th {
       text-align: left;
-      padding: 10px 12px;
-      background: #f8f7ff;
-      font-weight: 600;
-      color: #6b7280;
-      border-bottom: 2px solid #e8e4f0;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      padding: 8px 10px;
+      border-bottom: 2px solid var(--border);
     }
-    .fee-table td {
-      padding: 10px 12px;
-      border-bottom: 1px solid #f0edf5;
+    .fee-table td { padding: 12px 10px; border-bottom: 1px solid #f3eff7; font-size: 0.88rem; }
+    .fee-table tr:last-child td { border-bottom: none; }
+    .fee-table .month-cell { font-weight: 700; }
+    .fee-table .amt-cell { font-weight: 600; }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 999px;
+      white-space: nowrap;
     }
-    .status-badge {
-      display: inline-block;
-      padding: 2px 10px;
-      border-radius: 20px;
-      font-size: 0.75rem;
-      font-weight: 600;
-    }
-    .status-paid { background: #dcfce7; color: #166534; }
-    .status-pending { background: #fef9c3; color: #854d0e; }
+    .badge svg { width: 12px; height: 12px; }
+    .badge.paid { background: var(--green-soft); color: var(--green); }
+    .badge.pending { background: var(--amber-soft); color: var(--amber); }
+    .pay-method { font-size: 0.72rem; color: var(--muted); }
 
-    /* Payment Section */
-    .payment-section {
-      display: none;
-      margin-top: 20px;
-      padding: 20px;
-      background: #f0fdf4;
-      border-radius: 12px;
-      border: 2px solid #bbf7d0;
-    }
-    .payment-section.active { display: block; }
-    .payment-amount {
-      font-family: 'Nunito', sans-serif;
-      font-size: 2rem;
-      font-weight: 900;
-      color: #16A34A;
-    }
+    .empty { text-align: center; color: var(--muted); font-size: 0.85rem; padding: 18px 0; }
 
-    /* Loading */
-    .loading {
-      display: none;
+    /* ── Footer ─────────────────────────────── */
+    .footer {
       text-align: center;
-      padding: 20px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.9;
+      margin-top: 8px;
     }
-    .loading.active { display: block; }
+    .footer a { color: var(--primary); font-weight: 600; text-decoration: none; }
+    .secure { display: inline-flex; align-items: center; gap: 6px; margin-top: 6px; font-size: 0.72rem; }
+    .secure svg { width: 14px; height: 14px; stroke: #16a34a; }
+
+    /* ── Overlay / spinner ──────────────────── */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(36, 27, 46, 0.55);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 50;
+    }
+    .overlay.active { display: flex; }
+    .overlay-box {
+      background: #fff;
+      border-radius: var(--radius);
+      padding: 32px 36px;
+      text-align: center;
+      max-width: 320px;
+      width: 90%;
+      box-shadow: var(--shadow-lg);
+      animation: rise .3s ease both;
+    }
     .spinner {
-      width: 40px;
-      height: 40px;
-      border: 4px solid #e8e4f0;
-      border-top-color: #9C29B2;
+      width: 46px; height: 46px;
+      border: 4px solid var(--primary-soft);
+      border-top-color: var(--primary);
       border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-      margin: 0 auto 15px;
+      animation: spin .8s linear infinite;
+      margin: 0 auto 16px;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
+    .overlay-box h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 800; margin-bottom: 6px; }
+    .overlay-box p { color: var(--muted); font-size: 0.85rem; }
+    .overlay-meta {
+      margin-top: 14px;
+      background: #faf9fc;
+      border-radius: var(--radius-sm);
+      padding: 12px;
+      font-size: 0.85rem;
+      color: var(--text);
+      font-weight: 600;
+    }
 
-    /* Toast */
+    /* ── Toast ──────────────────────────────── */
     .toast-container {
       position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 9999;
+      top: 18px;
+      right: 18px;
+      z-index: 99;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
     .toast {
-      padding: 16px 24px;
-      border-radius: 12px;
-      color: white;
-      font-weight: 500;
-      margin-bottom: 8px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-      animation: slideIn 0.3s ease;
-      max-width: 400px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 18px;
+      border-radius: var(--radius-sm);
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.85rem;
+      box-shadow: var(--shadow-lg);
+      animation: slideIn .3s ease;
+      max-width: 340px;
     }
-    .toast-success { background: #22C55E; }
-    .toast-error { background: #EF4444; }
-    .toast-info { background: #3B82F6; }
+    .toast svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .toast.success { background: #16a34a; }
+    .toast.error { background: #dc2626; }
+    .toast.info { background: #2563eb; }
+    .toast.hide { opacity: 0; transform: translateX(40px); transition: all .3s ease; }
     @keyframes slideIn {
       from { opacity: 0; transform: translateX(40px); }
       to { opacity: 1; transform: translateX(0); }
     }
 
-    /* Responsive */
+    /* ── Responsive ─────────────────────────── */
     @media (max-width: 600px) {
-      .container { padding: 12px; }
-      .header { padding: 20px; }
-      .header h1 { font-size: 1.4rem; }
+      body { padding: 16px 12px 40px; }
       .card { padding: 20px; }
-      .student-info .row { flex-direction: column; gap: 4px; }
+      .header-chip span { display: none; }
+      .stats { gap: 8px; }
+      .stat { padding: 12px 10px; }
+      .month-amount { font-size: 2.2rem; }
+      .step-label { display: none; }
     }
   </style>
 </head>
 <body>
 
-<div class="toast-container" id="toastContainer"></div>
+  <!-- Toast container -->
+  <div class="toast-container" id="toastContainer"></div>
 
-<div class="container">
-  <!-- Header -->
-  <div class="header">
-    <img src="assets/img/logo.webp" alt="Lil Sculpr" class="logo">
-    <h1>💳 Monthly Fee Payment</h1>
-    <p>Pay your child's monthly fee securely online</p>
-  </div>
+  <div class="app">
 
-  <!-- Main Card -->
-  <div class="card">
-    <!-- Step 1: Login -->
-    <div id="stepLogin">
-      <h2 style="font-family:'Nunito',sans-serif; font-size:1.3rem; margin-bottom:15px;">🔐 Find Your Account</h2>
-      <p style="color:#6b7280; font-size:0.9rem; margin-bottom:20px;">
-        Enter your Enrollment ID and registered phone number to view your fee details.
-      </p>
-
-      <div class="form-group">
-        <label class="form-label">Enrollment ID</label>
-        <input type="text" id="enrollmentId" class="form-input" placeholder="e.g. LS-2024-001">
+    <!-- Header -->
+    <header class="header">
+      <a class="brand" href="https://www.lilsculpr.com">
+        <img src="assets/img/logo.webp" alt="Lil Sculpr" onerror="this.src='https://www.lilsculpr.com/assets/img/logo.webp'">
+        <span class="brand-name">Lil <span>Sculpr</span></span>
+      </a>
+      <div class="header-chip">
+        <span class="dot"></span>
+        <span>Fee Portal</span>
       </div>
-      <div class="form-group">
-        <label class="form-label">Registered Phone Number</label>
-        <input type="tel" id="contactNumber" class="form-input" placeholder="e.g. 9876543210">
-      </div>
+    </header>
 
-      <button class="btn btn-primary" id="lookupBtn">🔍 Look Up Account</button>
+    <!-- Steps -->
+    <div class="steps">
+      <div class="step active" id="stepAccount">
+        <span class="num">1</span>
+        <span class="step-label">Find Account</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step" id="stepOverview">
+        <span class="num">2</span>
+        <span class="step-label">Fee Overview</span>
+      </div>
     </div>
 
-    <!-- Loading -->
-    <div class="loading" id="loadingIndicator">
-      <div class="spinner"></div>
-      <p style="color:#6b7280;">Loading account details...</p>
+    <!-- ══ STEP 1: LOGIN ══════════════════════════════ -->
+    <div class="card" id="cardLogin">
+      <div class="login-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 5H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2Z"/>
+          <path d="m16 15-4-4-4 4"/>
+          <path d="M15 20v-2M9 20v-2"/>
+        </svg>
+      </div>
+      <h2 class="login-title">Welcome back!</h2>
+      <p class="login-sub">Enter your Enrollment ID &amp; registered phone number to view your fee account.</p>
+
+      <form id="loginForm" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="enrollmentId">Enrollment ID</label>
+          <div class="input-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+              <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+            </svg>
+            <input type="text" id="enrollmentId" class="form-input" placeholder="e.g. LS-2024-001" autocomplete="off">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="contactNumber">Registered Phone Number</label>
+          <div class="input-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+            <input type="tel" id="contactNumber" class="form-input" placeholder="e.g. 9876543210" autocomplete="tel">
+          </div>
+        </div>
+
+        <div class="error-box" id="errorBox" style="display:none;">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><path d="m15 9-6 6M9 9l6 6"/>
+          </svg>
+          <span id="errorMsg"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="lookupBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+          </svg>
+          <span id="lookupBtnText">Find My Account</span>
+        </button>
+      </form>
+
+      <div class="help-line">
+        Need help? Call us at <a href="tel:+919600443185">+91 96 00 44 31 85</a>
+      </div>
     </div>
 
-    <!-- Step 2: Student Info & Payment -->
-    <div id="stepPayment" style="display:none;">
-      <!-- Student Info -->
-      <div class="student-info active" id="studentInfo">
-        <div class="row">
-          <span class="label">Student Name</span>
-          <span class="value" id="displayChildName">—</span>
-        </div>
-        <div class="row">
-          <span class="label">Parent Name</span>
-          <span class="value" id="displayParentName">—</span>
-        </div>
-        <div class="row">
-          <span class="label">Enrollment ID</span>
-          <span class="value" id="displayEnrollmentId">—</span>
-        </div>
-        <div class="row">
-          <span class="label">Class Type</span>
-          <span class="value" id="displayClassType">—</span>
-        </div>
-        <div class="row">
-          <span class="label">Batch</span>
-          <span class="value" id="displayBatch">—</span>
-        </div>
-        <div class="row">
-          <span class="label">Current Level</span>
-          <span class="value" id="displayLevel">—</span>
+    <!-- ══ STEP 2: OVERVIEW ══════════════════════════ -->
+    <div id="cardDashboard" style="display:none;">
+
+      <!-- Profile -->
+      <div class="card">
+        <div class="profile">
+          <div class="avatar" id="avatarInitial">S</div>
+          <div class="profile-info">
+            <h3 id="childName">—</h3>
+            <div class="sub" id="parentName">—</div>
+            <div class="pills">
+              <span class="pill" id="classPill">—</span>
+              <span class="pill blue" id="levelPill">—</span>
+            </div>
+          </div>
+          <button class="switch-link" id="switchBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m15 14 3 3-3 3M21 17H9M9 10H5l-3 3 3 3h4"/>
+            </svg>
+            Switch
+          </button>
         </div>
       </div>
 
-      <!-- Fee Status -->
-      <div style="padding:15px; border-radius:10px; margin:15px 0;" id="feeStatus">
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
-          <div>
-            <span style="font-weight:600;">📅 <span id="displayMonthYear">—</span></span>
-          </div>
-          <div>
-            <span id="feeStatusBadge" class="status-badge status-pending">⏳ Pending</span>
-          </div>
+      <!-- This month -->
+      <div class="month-card pending" id="monthCard">
+        <div class="month-label">
+          <span id="monthLabel">This Month</span>
+          <span class="month-status" id="monthStatus">Due</span>
         </div>
-        <div style="margin-top:10px;">
-          <span style="font-size:0.9rem; color:#6b7280;">Monthly Fee:</span>
-          <span class="payment-amount" id="displayFeeAmount">—</span>
+        <div class="month-amount">
+          <span class="cur">₹</span><span id="monthAmount">0</span>
+        </div>
+        <div class="month-due" id="monthDue">—</div>
+      </div>
+
+      <!-- Totals -->
+      <div class="stats">
+        <div class="stat total-stat">
+          <div class="s-label">Total Fees</div>
+          <div class="s-value total"><span class="cur">₹</span><span id="totalFees">0</span></div>
+          <div class="s-foot" id="totalFeesFoot">—</div>
+        </div>
+        <div class="stat paid-stat">
+          <div class="s-label">Paid</div>
+          <div class="s-value paid"><span class="cur">₹</span><span id="totalPaid">0</span></div>
+          <div class="s-foot" id="totalPaidFoot">—</div>
+        </div>
+        <div class="stat due-stat">
+          <div class="s-label">Outstanding</div>
+          <div class="s-value due"><span class="cur">₹</span><span id="totalDue">0</span></div>
+          <div class="s-foot" id="totalDueFoot">—</div>
         </div>
       </div>
 
-      <!-- Payment Button -->
-      <button class="btn btn-success" id="payNowBtn">
-        💳 Pay Now
+      <!-- CTA / success -->
+      <button class="btn btn-success" id="payBtn" style="margin-bottom:18px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/><path d="M12 6v12M6 12h12"/>
+        </svg>
+        <span id="payBtnText">Pay Now</span>
       </button>
+      <div class="success-strip" id="successStrip" style="display:none;">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/>
+        </svg>
+        <div>
+          <strong id="successTitle">All caught up!</strong>
+          <span id="successSub">Fee for this month is paid.</span>
+        </div>
+      </div>
 
-      <button class="btn btn-outline" id="backBtn" style="margin-top:10px; width:auto; padding:10px 20px;">
-        ← Back
-      </button>
-
-      <!-- Fee History -->
-      <div class="fee-history" id="feeHistory">
-        <h3>📋 Recent Fee History</h3>
-        <div style="overflow-x:auto;">
+      <!-- History -->
+      <div class="card" style="padding-top:22px;">
+        <div class="section-head">
+          <h4>
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+            </svg>
+            Fee History
+          </h4>
+          <span class="hint" id="historyHint">Last 6 months</span>
+        </div>
+        <div class="table-wrap">
           <table class="fee-table">
             <thead>
-              <tr>
-                <th>Month</th>
-                <th>Amount</th>
-                <th>Status</th>
-              </tr>
+              <tr><th>Month</th><th>Amount</th><th>Status</th><th>Paid Via</th></tr>
             </thead>
-            <tbody id="feeHistoryBody">
-              <tr><td colspan="3" style="text-align:center; color:#6b7280;">Loading...</td></tr>
-            </tbody>
+            <tbody id="feeHistoryBody"></tbody>
           </table>
+        </div>
+        <div class="empty" id="feeHistoryEmpty" style="display:none;">No fee records found yet.</div>
+      </div>
+
+      <!-- Footer -->
+      <div class="footer">
+        Lil Sculpr Clay Modelling Academy · Anna Nagar West Ext., Chennai – 600101<br>
+        <a href="tel:+919600443185">+91 96 00 44 31 85</a> · <a href="mailto:lilsculpr@gmail.com">lilsculpr@gmail.com</a>
+        <div class="secure">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+          Secure payments powered by Razorpay
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Footer -->
-  <div style="text-align:center; padding:20px; font-size:0.8rem; color:#6b7280;">
-    © Lil Sculpr Clay Modelling Academy · Anna Nagar West Ext., Chennai – 600101<br>
-    <a href="tel:+919600443185" style="color:#9C29B2; text-decoration:none;">+91 96 00 44 31 85</a> ·
-    <a href="mailto:lilsculpr@gmail.com" style="color:#9C29B2; text-decoration:none;">lilsculpr@gmail.com</a>
+  <!-- Processing overlay -->
+  <div class="overlay" id="processingOverlay">
+    <div class="overlay-box">
+      <div class="spinner"></div>
+      <h3>Processing Payment</h3>
+      <p>Please wait, do not close this window…</p>
+      <div class="overlay-meta" id="overlayMeta">—</div>
+    </div>
   </div>
-</div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-$(document).ready(function() {
-  const API_BASE = 'https://backend.lilsculpr.com/api/fee-payment';
-  // For local testing, uncomment:
-  // const API_BASE = 'http://localhost:5000/api/fee-payment';
+(function () {
+  'use strict';
 
-  let currentStudent = null;
-  let currentFeeDetails = null;
+  const API_BASE = 'https://backend.lilsculpr.com/api/fee-payment';
+  // Local dev: const API_BASE = 'http://localhost:5000/api/fee-payment';
+
+  const $ = (id) => document.getElementById(id);
+  const fmtINR = (n) => (Number(n) || 0).toLocaleString('en-IN');
+  const MONTH_INDEX = { January: 1, February: 2, March: 3, April: 4, May: 5, June: 6, July: 7, August: 8, September: 9, October: 10, November: 11, December: 12 };
+
+  let student = null;
+  let feeDetails = null;
+  let feeHistory = [];
 
   // ─── TOAST ──────────────────────────────────────────────
-  function showToast(message, type = 'info') {
-    const container = document.getElementById('toastContainer');
-    const toast = document.createElement('div');
-    toast.className = `toast toast-${type}`;
-    toast.textContent = message;
-    container.appendChild(toast);
-    setTimeout(() => {
-      toast.style.opacity = '0';
-      toast.style.transform = 'translateX(40px)';
-      toast.style.transition = 'all 0.3s ease';
-      setTimeout(() => toast.remove(), 300);
+  function toast(message, type) {
+    const wrap = $('toastContainer');
+    const el = document.createElement('div');
+    el.className = 'toast ' + (type || 'info');
+    const icon = type === 'success'
+      ? '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>'
+      : type === 'error'
+        ? '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6M9 9l6 6"/></svg>'
+        : '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>';
+    el.innerHTML = icon + '<span>' + message + '</span>';
+    wrap.appendChild(el);
+    setTimeout(function () {
+      el.classList.add('hide');
+      setTimeout(function () { el.remove(); }, 320);
     }, 4000);
   }
 
-  // ─── SHOW/HIDE LOADING ────────────────────────────────
-  function setLoading(loading) {
-    document.getElementById('loadingIndicator').classList.toggle('active', loading);
-    document.getElementById('stepLogin').style.display = loading ? 'none' : 'block';
+  // ─── ERROR BOX ──────────────────────────────────────────
+  function showError(msg) {
+    $('errorMsg').textContent = msg;
+    $('errorBox').style.display = 'flex';
+  }
+  function clearError() { $('errorBox').style.display = 'none'; }
+
+  // ─── STEPS ──────────────────────────────────────────────
+  function setStep(which) {
+    const account = $('stepAccount');
+    const overview = $('stepOverview');
+    if (which === 'overview') {
+      account.classList.remove('active');
+      account.classList.add('done');
+      overview.classList.add('active');
+    } else {
+      overview.classList.remove('active');
+      account.classList.add('active');
+      account.classList.remove('done');
+    }
   }
 
-  // ─── LOOKUP STUDENT ────────────────────────────────────
-  $('#lookupBtn').on('click', async function() {
-    const enrollmentId = $('#enrollmentId').val().trim();
-    const contact1 = $('#contactNumber').val().trim();
+  // ─── LOGIN ──────────────────────────────────────────────
+  $('loginForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const enrollmentId = $('enrollmentId').value.trim().toUpperCase();
+    const contact1 = $('contactNumber').value.trim();
 
     if (!enrollmentId || !contact1) {
-      showToast('Please enter both Enrollment ID and Phone Number.', 'error');
+      showError('Please fill in both Enrollment ID and phone number.');
       return;
     }
-
-    setLoading(true);
+    clearError();
+    $('lookupBtn').disabled = true;
+    $('lookupBtnText').textContent = 'Finding…';
 
     try {
-      const response = await fetch(`${API_BASE}/student-details`, {
+      const res = await fetch(API_BASE + '/student-details', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ enrollmentId, contact1 })
       });
+      const data = await res.json();
 
-      const data = await response.json();
-
-      if (data.success) {
-        currentStudent = data.student;
-        currentFeeDetails = data.feeDetails;
-        renderStudentDetails(data);
-        document.getElementById('stepLogin').style.display = 'none';
-        document.getElementById('stepPayment').style.display = 'block';
-        showToast(`Welcome ${data.student.childName}!`, 'success');
-      } else {
-        showToast(data.error || 'Student not found. Please check your details.', 'error');
-      }
-    } catch (error) {
-      console.error('Lookup error:', error);
-      showToast('Error connecting to server. Please try again.', 'error');
-    } finally {
-      setLoading(false);
-    }
-  });
-
-  // ─── RENDER STUDENT DETAILS ──────────────────────────
-  function renderStudentDetails(data) {
-    const s = data.student;
-    const f = data.feeDetails;
-
-    $('#displayChildName').text(s.childName);
-    $('#displayParentName').text(s.parentName);
-    $('#displayEnrollmentId').text(s.enrollmentId);
-    $('#displayClassType').text(s.classType === 'offline' ? '🏫 Offline' : '💻 Online');
-    $('#displayBatch').text(s.batch);
-    $('#displayLevel').text(s.currentLevel || 'Not Started');
-    $('#displayMonthYear').text(`${f.currentMonth} ${f.currentYear}`);
-
-    const amount = f.monthlyFee || 2500;
-    $('#displayFeeAmount').text(`₹${amount.toLocaleString('en-IN')}`);
-
-    // Fee status
-    const badge = $('#feeStatusBadge');
-    const statusContainer = $('#feeStatus');
-    if (f.isPaid) {
-      badge.text('✅ Paid');
-      badge.removeClass('status-pending').addClass('status-paid');
-      statusContainer.css('background', '#f0fdf4').css('border', '2px solid #bbf7d0');
-      $('#payNowBtn').text('✅ Already Paid for This Month').prop('disabled', true);
-    } else {
-      badge.text('⏳ Pending');
-      badge.removeClass('status-paid').addClass('status-pending');
-      statusContainer.css('background', '#fefce8').css('border', '2px solid #fde68a');
-      $('#payNowBtn').text('💳 Pay Now').prop('disabled', false);
-    }
-
-    // Fee history
-    renderFeeHistory(f.feeHistory);
-  }
-
-  // ─── RENDER FEE HISTORY ──────────────────────────────
-  function renderFeeHistory(history) {
-    const tbody = $('#feeHistoryBody');
-    tbody.empty();
-
-    if (!history || history.length === 0) {
-      tbody.html('<tr><td colspan="3" style="text-align:center; color:#6b7280;">No fee records found.</td></tr>');
-      return;
-    }
-
-    history.forEach(f => {
-      const statusBadge = f.status === 'Paid'
-        ? '<span class="status-badge status-paid">✅ Paid</span>'
-        : '<span class="status-badge status-pending">⏳ Pending</span>';
-      tbody.append(`
-        <tr>
-          <td><strong>${f.month}</strong> ${f.year}</td>
-          <td>₹${(f.amount || 0).toLocaleString('en-IN')}</td>
-          <td>${statusBadge}</td>
-        </tr>
-      `);
-    });
-  }
-
-  // ─── BACK BUTTON ──────────────────────────────────────
-  $('#backBtn').on('click', function() {
-    document.getElementById('stepPayment').style.display = 'none';
-    document.getElementById('stepLogin').style.display = 'block';
-    currentStudent = null;
-    currentFeeDetails = null;
-  });
-
-  // ─── PAY NOW ──────────────────────────────────────────
-  $('#payNowBtn').on('click', async function() {
-    if ($(this).prop('disabled')) return;
-    if (!currentStudent) {
-      showToast('Please find your account first.', 'error');
-      return;
-    }
-
-    const month = currentFeeDetails.currentMonth;
-    const year = currentFeeDetails.currentYear;
-    const amount = currentFeeDetails.monthlyFee || 2500;
-
-    $(this).text('⏳ Processing...').prop('disabled', true);
-
-    try {
-      // Create Razorpay order
-      const orderResponse = await fetch(`${API_BASE}/create-order`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          studentId: currentStudent.id,
-          month: month,
-          year: year,
-          amount: amount
-        })
-      });
-
-      const orderData = await orderResponse.json();
-
-      if (!orderData.success) {
-        showToast(orderData.error || 'Failed to create payment order.', 'error');
-        $(this).text('💳 Pay Now').prop('disabled', false);
+      if (!data.success) {
+        showError(data.error || 'Student not found. Please check your details.');
         return;
       }
 
-      // Open Razorpay checkout
+      student = data.student;
+      feeDetails = data.feeDetails;
+      feeHistory = data.feeDetails?.feeHistory || [];
+
+      renderDashboard();
+      setStep('overview');
+      $('cardLogin').style.display = 'none';
+      $('cardDashboard').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      toast('Welcome, ' + data.student.childName + '!', 'success');
+    } catch (err) {
+      console.error('Lookup error:', err);
+      showError('Network error. Please try again.');
+    } finally {
+      $('lookupBtn').disabled = false;
+      $('lookupBtnText').textContent = 'Find My Account';
+    }
+  });
+
+  // Enter-key submits the form already (native). 
+
+  // ─── RENDER DASHBOARD ───────────────────────────────────
+  function renderDashboard() {
+    const s = student;
+    const f = feeDetails;
+    const monthlyFee = f.monthlyFee || 2500;
+    const monthLabel = (f.currentMonth || '') + ' ' + (f.currentYear || '');
+
+    // Profile
+    $('avatarInitial').textContent = (s.childName || 'S').trim().charAt(0).toUpperCase();
+    $('childName').textContent = s.childName;
+    $('parentName').textContent = 'Parent: ' + s.parentName;
+    $('classPill').textContent = (s.classType === 'offline' ? 'Offline' : 'Online') + ' · ' + (s.batch || '—');
+    $('levelPill').textContent = 'Level ' + (s.currentLevel || 0);
+
+    // This month
+    $('monthLabel').textContent = 'This Month · ' + monthLabel;
+    $('monthAmount').textContent = fmtINR(monthlyFee);
+    $('monthDue').textContent = 'Due by the 5th of every month';
+
+    const card = $('monthCard');
+    const statusEl = $('monthStatus');
+    if (f.isPaid) {
+      card.className = 'month-card paid';
+      statusEl.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg> Paid';
+      $('payBtn').style.display = 'none';
+      $('successStrip').style.display = 'flex';
+      $('successTitle').textContent = 'All caught up!';
+      $('successSub').textContent = 'Fee for ' + monthLabel + ' is paid.';
+    } else {
+      card.className = 'month-card pending';
+      statusEl.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Due';
+      $('payBtn').style.display = 'inline-flex';
+      $('successStrip').style.display = 'none';
+      $('payBtnText').textContent = 'Pay ₹' + fmtINR(monthlyFee) + ' for ' + (f.currentMonth || '') + '';
+    }
+
+    // Totals from history
+    let totalFees = 0, totalPaid = 0, totalDue = 0, paidCount = 0, pendingCount = 0;
+    feeHistory.forEach(function (h) {
+      const amt = Number(h.amount) || 0;
+      totalFees += amt;
+      if (h.status === 'Paid') { totalPaid += amt; paidCount++; }
+      else { totalDue += amt; pendingCount++; }
+    });
+
+    $('totalFees').textContent = fmtINR(totalFees);
+    $('totalFeesFoot').textContent = feeHistory.length + (feeHistory.length === 1 ? ' record' : ' records');
+    $('totalPaid').textContent = fmtINR(totalPaid);
+    $('totalPaidFoot').textContent = paidCount + (paidCount === 1 ? ' month paid' : ' months paid');
+    $('totalDue').textContent = fmtINR(totalDue);
+    $('totalDueFoot').textContent = pendingCount + (pendingCount === 1 ? ' month due' : ' months due');
+
+    $('historyHint').textContent = 'Last ' + feeHistory.length + ' month' + (feeHistory.length === 1 ? '' : 's');
+
+    renderHistory();
+  }
+
+  // ─── RENDER HISTORY ─────────────────────────────────────
+  function renderHistory() {
+    const tbody = $('feeHistoryBody');
+    tbody.innerHTML = '';
+
+    if (!feeHistory.length) {
+      $('feeHistoryEmpty').style.display = 'block';
+      return;
+    }
+    $('feeHistoryEmpty').style.display = 'none';
+
+    feeHistory.forEach(function (h) {
+      const isPaid = h.status === 'Paid';
+      const badge = isPaid
+        ? '<span class="badge paid"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>Paid</span>'
+        : '<span class="badge pending"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Due</span>';
+
+      let method = h.paymentMethod || '—';
+      if (method === 'Razorpay') method = 'Online';
+
+      const tr = document.createElement('tr');
+      tr.innerHTML =
+        '<td class="month-cell">' + h.month + ' ' + h.year + '</td>' +
+        '<td class="amt-cell">₹' + fmtINR(h.amount) + '</td>' +
+        '<td>' + badge + '</td>' +
+        '<td class="pay-method">' + method + '</td>';
+      tbody.appendChild(tr);
+    });
+  }
+
+  // ─── SWITCH ACCOUNT ─────────────────────────────────────
+  $('switchBtn').addEventListener('click', function () {
+    student = null;
+    feeDetails = null;
+    feeHistory = [];
+    $('cardDashboard').style.display = 'none';
+    $('cardLogin').style.display = 'block';
+    setStep('login');
+    $('enrollmentId').value = '';
+    $('contactNumber').value = '';
+    $('enrollmentId').focus();
+  });
+
+  // ─── PAY NOW ────────────────────────────────────────────
+  $('payBtn').addEventListener('click', async function () {
+    if (!student || !feeDetails) return;
+
+    const month = feeDetails.currentMonth;
+    const year = feeDetails.currentYear;
+    const amount = feeDetails.monthlyFee || 2500;
+
+    $('payBtn').disabled = true;
+    $('payBtnText').textContent = 'Preparing…';
+
+    try {
+      const orderRes = await fetch(API_BASE + '/create-order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ studentId: student.id, month, year, amount })
+      });
+      const orderData = await orderRes.json();
+
+      if (!orderData.success) {
+        toast(orderData.error || 'Failed to create payment order.', 'error');
+        $('payBtn').disabled = false;
+        $('payBtnText').textContent = 'Pay ₹' + fmtINR(amount) + '';
+        return;
+      }
+
       const options = {
         key: orderData.key_id,
         amount: orderData.order.amount,
         currency: orderData.order.currency,
         name: 'Lil Sculpr Academy',
-        description: `Monthly Fee - ${month} ${year}`,
+        description: 'Monthly Fee - ' + month + ' ' + year,
         image: 'https://www.lilsculpr.com/assets/img/logo.webp',
         order_id: orderData.order.id,
         prefill: {
-          name: currentStudent.parentName,
-          email: currentStudent.email || '',
-          contact: currentStudent.contact1 || ''
+          name: student.parentName,
+          email: student.email || '',
+          contact: student.contact1 || ''
         },
         theme: { color: '#9C29B2' },
-        handler: function(response) {
-          verifyPayment(response);
-        },
+        handler: function (response) { verifyPayment(response, month, year, amount); },
         modal: {
-          ondismiss: function() {
-            $('#payNowBtn').text('💳 Pay Now').prop('disabled', false);
+          ondismiss: function () {
+            $('payBtn').disabled = false;
+            $('payBtnText').textContent = 'Pay ₹' + fmtINR(amount) + '';
           }
         }
       };
 
+      $('overlayMeta').textContent = month + ' ' + year + '  ·  ₹' + fmtINR(amount);
+      $('processingOverlay').classList.add('active');
+
       const rzp = new Razorpay(options);
       rzp.open();
-
-    } catch (error) {
-      console.error('Payment initiation error:', error);
-      showToast('Failed to initiate payment. Please try again.', 'error');
-      $(this).text('💳 Pay Now').prop('disabled', false);
+    } catch (err) {
+      console.error('Payment initiation error:', err);
+      toast('Failed to initiate payment. Please try again.', 'error');
+      $('payBtn').disabled = false;
+      $('payBtnText').textContent = 'Pay ₹' + fmtINR(amount) + '';
+      $('processingOverlay').classList.remove('active');
     }
   });
 
-  // ─── VERIFY PAYMENT ──────────────────────────────────
-  async function verifyPayment(response) {
+  // ─── VERIFY ─────────────────────────────────────────────
+  async function verifyPayment(response, month, year, amount) {
     try {
-      const verifyResponse = await fetch(`${API_BASE}/verify`, {
+      const verifyRes = await fetch(API_BASE + '/verify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           razorpay_payment_id: response.razorpay_payment_id,
           razorpay_order_id: response.razorpay_order_id,
           razorpay_signature: response.razorpay_signature,
-          studentId: currentStudent.id,
-          month: currentFeeDetails.currentMonth,
-          year: currentFeeDetails.currentYear,
-          amount: currentFeeDetails.monthlyFee || 2500
+          studentId: student.id,
+          month, year, amount
         })
       });
+      const data = await verifyRes.json();
 
-      const data = await verifyResponse.json();
+      $('processingOverlay').classList.remove('active');
 
       if (data.success) {
-        showToast(`✅ Payment confirmed! Fee for ${currentFeeDetails.currentMonth} ${currentFeeDetails.currentYear} is paid.`, 'success');
-        // Refresh the details
-        const refreshResponse = await fetch(`${API_BASE}/student-details`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            enrollmentId: currentStudent.enrollmentId,
-            contact1: currentStudent.contact1
-          })
-        });
-        const refreshData = await refreshResponse.json();
-        if (refreshData.success) {
-          currentFeeDetails = refreshData.feeDetails;
-          renderStudentDetails(refreshData);
-        }
-        $('#payNowBtn').text('✅ Already Paid for This Month').prop('disabled', true);
+        toast('Payment confirmed! ' + month + ' ' + year + ' is paid.', 'success');
+        await refreshDetails();
       } else {
-        showToast(data.error || 'Payment verification failed.', 'error');
-        $('#payNowBtn').text('💳 Pay Now').prop('disabled', false);
+        toast(data.error || 'Payment verification failed.', 'error');
       }
-    } catch (error) {
-      console.error('Verification error:', error);
-      showToast('Failed to verify payment. Please contact support.', 'error');
-      $('#payNowBtn').text('💳 Pay Now').prop('disabled', false);
+      $('payBtn').disabled = false;
+      $('payBtnText').textContent = 'Pay ₹' + fmtINR(amount) + '';
+    } catch (err) {
+      console.error('Verification error:', err);
+      $('processingOverlay').classList.remove('active');
+      toast('Failed to verify payment. Please contact support.', 'error');
+      $('payBtn').disabled = false;
+      $('payBtnText').textContent = 'Pay ₹' + fmtINR(amount) + '';
     }
   }
 
-  // ─── ENTER KEY SUPPORT ───────────────────────────────
-  $('#enrollmentId, #contactNumber').on('keypress', function(e) {
-    if (e.key === 'Enter') {
-      $('#lookupBtn').click();
+  // ─── REFRESH ────────────────────────────────────────────
+  async function refreshDetails() {
+    try {
+      const res = await fetch(API_BASE + '/student-details', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ enrollmentId: student.enrollmentId, contact1: student.contact1 })
+      });
+      const data = await res.json();
+      if (data.success) {
+        feeDetails = data.feeDetails;
+        feeHistory = data.feeDetails?.feeHistory || [];
+        renderDashboard();
+      }
+    } catch (err) {
+      console.error('Refresh error:', err);
     }
-  });
-});
+  }
+})();
 </script>
 </body>
 </html>
